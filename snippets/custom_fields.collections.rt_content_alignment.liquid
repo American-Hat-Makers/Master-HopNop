@@ -1,0 +1,8 @@
+{% if collection.metafields.custom_fields["rt_content_alignment"] != blank %}
+  <div class="custom-field custom-field__rt-content-alignment custom-field__type--text-list">
+    <h3 class="custom-field--title">Content alignment</h3>
+    <div class="custom-field--value">  
+      {{ collection.metafields.custom_fields["rt_content_alignment"] }}
+    </div>
+  </div>
+{% endif %}

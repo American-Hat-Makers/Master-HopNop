@@ -1,0 +1,298 @@
+<section class="collection-image-section">
+  <div class="container">
+    <ul class="tabs">
+      <li class="tab-link" data-tab="tab-1">{{ section.settings.mens_title }}</li>
+      <li class="tab-link" data-tab="tab-2">{{ section.settings.womens_title }}</li>
+    </ul>
+    {%- for block in section.blocks -%}
+      <div id="tab-{{ block.settings.tab_id }}" class="tab-content">
+        <div class="collection-image-detail">
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_1 }}">
+              <img class="lazyload hs-lazyload hs-id-eabfa07f" data-src="{{ block.settings.collection_image_1 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_1 }}</h4>
+            </a>
+          </div>
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_2 }}">
+              <img class="lazyload hs-lazyload hs-id-013e1f64" data-src="{{ block.settings.collection_image_2 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_2 }}</h4>
+            </a>
+          </div>
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_3 }}">
+              <img class="lazyload hs-lazyload hs-id-b6083870" data-src="{{ block.settings.collection_image_3 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_3 }}</h4>
+            </a>
+          </div>
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_4 }}">
+              <img class="lazyload hs-lazyload hs-id-e82062d4" data-src="{{ block.settings.collection_image_4 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_4 }}</h4>
+            </a>
+          </div>
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_5 }}">
+              <img class="lazyload hs-lazyload hs-id-845a5265" data-src="{{ block.settings.collection_image_5 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_5 }}</h4>
+            </a>
+          </div>
+          <div class="collection-image">
+            <a href="{{ block.settings.collection_url_6 }}">
+              <img class="lazyload hs-lazyload hs-id-e5123b5f" data-src="{{ block.settings.collection_image_6 | img_url :'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              <h4>{{ block.settings.collection_title_6 }}</h4>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+    "name": "Collection Image Section",
+    "settings": [
+        {
+            "id" : "mens_title",
+            "type" : "text",
+            "label" : "Mens title"
+        },
+        {
+            "id" : "womens_title",
+            "type" : "text",
+            "label" : "Womens title"
+        }
+    ],
+    "blocks": [
+        {
+            "type":"select",
+            "name":"Tab",
+            "settings":[
+                {
+                    "type" : "text",
+                    "id" : "tab_id",
+                    "label" : "Tab id"
+                },
+                {
+                    "id" : "collection_image_1",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 1"
+                },
+                {
+                    "id" : "collection_title_1",
+                    "type" : "text",
+                    "label" : "Collection Title 1"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_1",
+                        "label": "Collection URL"
+                },
+                {
+                    "id" : "collection_image_2",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 2"
+                },
+                {
+                    "id" : "collection_title_2",
+                    "type" : "text",
+                    "label" : "Collection Title 2"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_2",
+                        "label": "Collection URL"
+                },
+                {
+                    "id" : "collection_image_3",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 3"
+                },
+                {
+                    "id" : "collection_title_3",
+                    "type" : "text",
+                    "label" : "Collection Title 3"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_3",
+                        "label": "Collection URL"
+                },
+                {
+                    "id" : "collection_image_4",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 4"
+                },
+                {
+                    "id" : "collection_title_4",
+                    "type" : "text",
+                    "label" : "Collection Title 4"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_4",
+                        "label": "Collection URL"
+                },
+                {
+                    "id" : "collection_image_5",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 5"
+                },
+                {
+                    "id" : "collection_title_5",
+                    "type" : "text",
+                    "label" : "Collection Title 5"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_5",
+                        "label": "Collection URL"
+                },
+                {
+                    "id" : "collection_image_6",
+                    "type" : "image_picker",
+                    "label" : "Collection Image 6"
+                },
+                {
+                    "id" : "collection_title_6",
+                    "type" : "text",
+                    "label" : "Collection Title 6"
+                },
+                {
+                        "type": "url",
+                        "id": "collection_url_6",
+                        "label": "Collection URL"
+                }
+            ]
+        } 
+    ],
+    "presets": [
+        {
+            "name": "Collection Image Section",
+            "category": "Gallery"
+        }
+    ]
+}
+{% endschema %}
+
+
+<!-- tab script start here -->
+<script>
+  $(document).ready(function(){
+    $('ul.tabs li:first').addClass('current');
+    $('.tab-content:first').addClass('current');
+    $('ul.tabs li').click(function(){
+      var tab_id = $(this).attr('data-tab');
+      $('ul.tabs li').removeClass('current');
+      $('.tab-content').removeClass('current');
+      $(this).addClass('current');
+      $("#"+tab_id).addClass('current');
+    })
+  })
+</script>
+<!-- tab script end here -->
+
+
+
+<style>
+  @font-face {
+    font-family: 'Myanmar Text';
+    src: url('{{ 'MyanmarText.eot' | asset_url }}');
+      src: url('{{ 'MyanmarText.eot' | asset_url }}') format('embedded-opentype'),
+        url('{{ 'MyanmarText.woff2' | asset_url }}') format('woff2'),
+          url('{{ 'MyanmarText.woff' | asset_url }}') format('woff'),
+            url('{{ 'MyanmarText.ttf' | asset_url }}') format('truetype'),
+              url('{{ 'MyanmarText.svg' | asset_url }}#MyanmarTex') format('svg');
+                }
+  .collection-image-section {
+    padding-bottom: 25px;
+  }
+  .collection-image-section .container {
+    max-width: 100%;
+    padding: 0;
+  }
+  .collection-image-detail {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+  .collection-image-detail .collection-image a{
+    display: inline-block;
+    padding: 0;
+  }
+  .collection-image h4 {
+    font-family: 'Myanmar Text' !important;
+    margin: 0;
+    text-align: center;
+    background-color: #362E24;
+    color: #fff;
+    line-height: 1;
+    font-size: 30px;
+    padding-top: 15px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .collection-image-section ul.tabs {
+    text-align: center;
+    padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .collection-image-section ul.tabs  li.tab-link.current {
+    background-color: #362E24;
+    color: #fff;
+  }
+  .collection-image-section ul.tabs li {
+    background: transparent;
+    text-transform: uppercase;
+    font-size: 30px;
+    color: #362e24;
+    padding-top: 8px;
+    font-family: 'Myanmar Text' !important;
+    border: 1px solid #362E24;
+    max-width: 374px;
+    height: 47px;
+    cursor: pointer;
+    width: 100%;
+  }
+  ul{
+    padding: 0;
+    margin: 0;
+    list-style: none !important;
+  }
+  ul.tabs li.current{
+    background: #ededed;
+    color: #222;
+  }
+  .tab-content{
+    display: none;
+  }
+  .tab-content.current{
+    display: block;
+  }
+  .banner__panel--alt .banner__title {
+    font-weight: 400;
+  }
+  @media screen and (max-width: 1100px){
+    .collection-image h4{
+      font-size: 22px;
+    }
+  }
+  @media screen and (max-width: 991px){
+    .collection-image-section ul.tabs{
+      padding: 20px 0;
+    }
+  }
+  @media screen and (max-width: 767px){
+    .collection-image h4{
+      height: 62px;
+    }
+    .collection-image-detail{
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

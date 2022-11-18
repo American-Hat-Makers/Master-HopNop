@@ -1,0 +1,204 @@
+{%- comment %}
+
+  Product Detail Galleries
+  ------------------------------------------------------------------------------
+
+  - In order to build multiple galleries for every color option, we need to loop through all the colors, then all the available product images to see if we have one or more image for each
+  - This snippet only to be used inside the product-detail snippet
+  - It's too bad that we have to duplicate the gallery code twice in the same file but liquid kind of sucks so this is the best we can do
+  - Normal and variant galleries share the same code structure
+    .product-galleries
+      .product-gallery
+        .product-gallery__slideshow.swiper-container
+          .swiper-wrapper
+            .swiper-slide
+              a <- Needed for zoom to work
+                img
+        .product-gallery__thumbnails
+          .product-gallery__thumbnails-slide
+            img
+
+  - The only difference between the two is that .product-gallery elements gets a `data-option-value` attribute matching the color value associated with it
+
+  Usage:
+
+  {% include 'product-detail-galleries',
+              product: { product } - required
+              current_variant: { current_variant }
+  %}
+
+{% endcomment -%}
+
+{% assign photo_thumb_dimension = '200x200' %}
+{% assign photo_main_dimension  = '900x900' %}
+{% assign photo_zoom_dimension  = '1400x1400' %}
+{% assign alt_swatch_identifier = 'swatch' %} {% comment %} Used to find swatch images attached at the product level.  We dont want to display them in the gallery. {% endcomment %}
+
+{% comment %} Defaults {% endcomment %}
+{% assign current_variant = current_variant | default: product.selected_or_first_available_variant %}
+
+{% comment %}
+  This block of logic loops through all product images and checks if we have at least 1 with valid alt text for *each* color option.
+{% endcomment %}
+{% assign variant_gallery_possible = false %}
+
+{% for option in product.options_with_values %}
+  {% assign option_name_downcase = option.name | downcase %}
+  {%- comment %} If the variant option name is "color" {% endcomment -%}
+  {% if option_name_downcase == "color" %}
+    {% assign colors_with_images = 0 %}
+    {% for color in option.values %}
+      {% assign color_downcase = color | downcase %}
+      {% for image in product.images %}
+        {% assign image_alt_downcase = image.alt | downcase %}
+        {% if image_alt_downcase contains color_downcase %}
+          {% unless image_alt_downcase contains alt_swatch_identifier %}
+            {% assign colors_with_images = colors_with_images | plus: 1 %}
+            {% break %}
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% if colors_with_images == option.values.size %}
+      {% assign variant_gallery_possible = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+
+<div class="product-galleries" data-product-detail-galleries>
+
+  <div class="product-galleries__zoom-container" data-zoom-container>
+  </div>
+
+
+
+    {% comment %} Make one gallery for all the images {% endcomment %}
+    <div class="product-gallery" data-product-gallery>
+      <div class="product-gallery__grid d-md-flex slider-for">
+        {% assign video_thumbnail_rendered = false %}
+        {% for image in product.images %}
+          {% assign image_alt_downcase = image.alt | downcase %}
+          {% unless image_alt_downcase contains alt_swatch_identifier %}
+            <div class="product-gallery__grid-item" data-imageid="{{image.id}}">
+              {% if image_alt_downcase contains 'video' and video_thumbnail_rendered == false%}
+              {% assign video_thumbnail_rendered = true %}
+                <div class="video-overlay" data-product-video-toggler>
+                  {% include 'icon-play-btn-full-color' %}
+                </div>
+              {% endif %}
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                   data-src="{{ image | img_url: photo_main_dimension }}"
+                   data-sizes="auto"
+                   alt="{{ image.alt | escape }}"
+                   class="lazyload"
+                   data-original="{{ image | img_url: photo_zoom_dimension, crop: 'center' }}">
+			{% comment %} Find product badge {% endcomment %}
+              {% assign badge = null %}
+                {% for tag in product.tags %}
+
+                  {% if tag contains 'badge' %}
+					
+                  {% assign badge = tag | split: ":" | last %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% if badge != blank%}
+<!--             <style>
+                .product-gallery__grid-item .findify-product_card-badge {
+                  top: 20px;
+                  left: 21px;
+                }
+				.product-gallery__grid-item .findify-product_card-badge_text {
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      width: 65px;
+                      height: 65px;
+                      text-align: center;
+                      display: -webkit-box;
+                      display: -ms-flexbox;
+                      display: flex;
+                      -webkit-box-pack: center;
+                      -ms-flex-pack: center;
+                      justify-content: center;
+                      -webkit-box-align: center;
+                      -ms-flex-align: center;
+                      align-items: center;
+				}
+              </style> -->
+				{% if product.compare_at_price_max > product.price %}
+                   {% comment %} <span> {{ product.compare_at_price_max | minus: product.price | times: 100.0 | divided_by: product.compare_at_price_max | money_without_currency | times: 100 | remove: '.0'}}%<br> OFF </span> {% endcomment %}
+                {% else %}
+                  <div class="findify-product_card-badge">
+                    <svg width="65" height="65" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="30" cy="30" r="29.5" fill="white" stroke="#545352"></circle>
+                      <line x1="18" y1="45.5" x2="42" y2="45.5" stroke="#E0E0E0"></line>
+                      <line x1="18" y1="13.5" x2="42" y2="13.5" stroke="#E0E0E0"></line>
+                    </svg>
+                    <div class="findify-product_card-badge_text"><span width="65" height="65">{{ badge}}</span></div>
+                  </div>
+			   {% endif %}
+            {% endif %}
+            </div>
+          {% endunless %}
+        {% endfor %}
+        {% if video_thumbnail_rendered == false and product.metafields.custom_fields['video_default_thumbnail'] != blank %}
+          <div class="product-gallery__grid-item" data-imageid="{{image.id}}">
+            <div class="video-overlay" data-product-video-toggler>
+              {% include 'icon-play-btn-full-color' %}
+            </div>
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                 data-src="{{product.metafields.custom_fields['video_default_thumbnail']}}"
+                 data-sizes="auto"
+                 alt="{{ image.alt | escape }}"
+                 class="lazyload"
+                 data-original="{{ image | img_url: photo_zoom_dimension, crop: 'center' }}">
+          </div>
+        {% endif %}
+      </div>
+      <div id="slideshow-{{ product.id }}" class="product-gallery__slideshow swiper-container hide" data-product-gallery-slideshow>
+        <div class="swiper-wrapper">
+          {% assign video_thumbnail_rendered = false %}
+          {% for image in product.images %}
+            {% assign image_alt_downcase = image.alt | downcase %}
+            {% unless image_alt_downcase contains alt_swatch_identifier %}
+              <div class="swiper-slide" data-image="{{ image.id }}" {% if image.id == current_variant.featured_image.id %} data-initial-slide{% endif %}>
+                {% if image_alt_downcase contains 'video' %}
+                {% assign video_thumbnail_rendered = true %}
+                  <div class="video-overlay" data-product-video-toggler>
+                    {% include 'icon-play-btn-full-color' %}
+                  </div>
+                {% endif %}
+                <img data-src="{{ image | img_url: photo_main_dimension, crop: 'center'}}" alt="{{ image.alt | escape }}" class="img-fluid swiper-lazy">
+                <span class="swiper-lazy-preloader"></span>
+              </div>
+            {% endunless %}
+          {% endfor %}
+          {% if video_thumbnail_rendered == false and product.metafields.custom_fields['video_default_thumbnail'] != blank %}
+            <div class="swiper-slide">
+              <div class="video-overlay" data-product-video-toggler>
+                {% include 'icon-play-btn-full-color' %}
+              </div>
+              <img data-src="{{ product.metafields.custom_fields['video_default_thumbnail']}}" class="img-fluid swiper-lazy">
+            </div>
+          {% endif %}
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+ 
+
+	{% if product.images.size > 1 %}
+      <ul class="product-single__thumbnails slider-nav ass">
+          {% for image in product.images %}
+              <li data-imageid="{{image.id}}">
+                <img alt="{{ image.alt | escape }}" class="list-image-for-slider lazyload hs-lazyload hs-id-80837854" data-imageid="{{image.id}}" data-src="{{ image.src | img_url: '160x' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              </li>
+          {% endfor %}
+      </ul>
+	{% endif %}
+
+</div>
+
+                

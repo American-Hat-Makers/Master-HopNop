@@ -1,0 +1,93 @@
+
+{% include 'richtext-block'
+           rt_id: section.id,
+           rt_eyebrow: section.settings.eyebrow,
+           rt_title: section.settings.title,
+           rt_text: section.settings.text,
+           rt_content_alignment: section.settings.content_alignment,
+           rt_content_max_width: section.settings.content_max_width,
+           rt_background_color: section.settings.background_color,
+           rt_cta_title: section.settings.cta_title,
+           rt_cta_url: section.settings.cta_url
+%}
+
+{% schema %}
+{
+  "name": "Richtext",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+ 	{
+      "type": "checkbox",
+      "id": "read_more",
+      "label": "Enable read more",
+      "default": false
+    },
+    {
+      "type": "html",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "CTA title"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Url"
+    },
+    {
+      "type":      "select",
+      "id":        "content_alignment",
+      "label":     "Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default":   "center"
+    },
+    {
+      "type": "range",
+      "id":   "content_max_width",
+      "min":  300,
+      "max":  950,
+      "step": 25,
+      "unit": "px",
+      "label": "Max Content Width",
+      "default": 700
+    },
+    {
+      "type":      "select",
+      "id":        "background_color",
+      "label":     "Background Color",
+      "options": [
+        { "value": "bg-white", "label": "White" },
+        { "value": "bg-pearl", "label": "Pearl" }
+      ],
+      "default":   "bg-white"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich Text",
+      "category": "Misc",
+      "settings": {
+        "eyebrow": "Eyebrow text",
+        "title": "Rich text title",
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum reiciendis asperiores distinctio sequi repellat nostrum tempore molestiae totam quia. Asperiores eligendi aspernatur ut numquam earum ratione consectetur libero in iste.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

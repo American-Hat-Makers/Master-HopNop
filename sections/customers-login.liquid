@@ -1,0 +1,119 @@
+{%- comment %}
+  Combines customer login + register forms into one template
+{% endcomment -%}
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="customers-login">
+
+  <div class="row login align-items-center">
+    <div class="col-xl-6 col-lg-6 login__image-container">
+      {% include 'image_tag', image: section.settings.login_image %}
+    </div>
+    <div class="col-xl-6 col-lg-6 login__content-container login__normal">
+      <div class="form-success alert alert-success text-center hide" id="ResetSuccess">
+        {{ 'customer.recover_password.success' | t }}
+      </div>
+
+      <div id="CustomerLoginForm" class="login__form-container">
+        <h3 class="login__title">{{ 'customer.login.title' | t }}</h3>
+        <p class="p1 login__subtitle">{{ 'customer.login.subtitle' | t }}</p>
+
+        {% form 'customer_login' %}
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-group">
+            <label for="CustomerEmail">
+              {{ 'customer.login.email' | t }}
+            </label>
+
+            <input type="email"
+              name="customer[email]"
+              id="CustomerEmail"
+              class="form-control {% if form.errors contains 'email' %}is-invalid{% endif %}"
+              autocomplete="off"
+              autocapitalize="off"
+              required>
+          </div>
+
+          <div class="form-group">
+            <label for="CustomerPassword">
+              {{ 'customer.login.password' | t }}
+            </label>
+
+            <input type="password"
+              name="customer[password]"
+              id="CustomerPassword"
+              class="form-control {% if form.errors contains 'password' %}is-invalid{% endif %}"
+              required>
+          </div>
+
+          <div class="form-group login__forgot-password">
+            <a href="#recover" id="RecoverPassword" class="btn btn-link text-gray-darkest text-right">{{ 'customer.login.forgot_password' | t }}</a>
+          </div>
+
+          <div class="form-group login__submit-container">
+            <input data-submit-form type="submit" class="btn btn-primary btn-block" value="{{ 'customer.login.log_in' | t }}">
+          </div>
+
+          <p class="p2 login__message">{{ 'customer.login.guest_title' | t }} <a href="/account/register" class="btn btn-link text-gray-darkest">{{ 'customer.login.guest_continue' | t }}</a></p>
+        {% endform %}
+      </div>
+
+      <div id="RecoverPasswordForm" class="login__recover-password hide">
+        <h3 class="login__title">{{ 'customer.recover_password.title' | t }}</h3>
+        <p class="p1 login__subtitle">{{ 'customer.recover_password.subtext' | t }}</p>
+
+        {% form 'recover_customer_password' %}
+          {% if form.errors %}
+            {% for field in form.errors %}
+               {% unless form.errors.messages[field] contains 'login' %}
+                  {{ form.errors | default_errors }}
+               {% endunless %}
+            {% endfor %}
+          {% endif %}
+
+          {% if form.posted_successfully? %}
+            <span class="hide reset-password-success"></span>
+          {% endif %}
+
+          <div class="form-group">
+            <label for="RecoverEmail">
+              {{ 'customer.recover_password.email' | t }}
+            </label>
+            <input type="email"
+              name="email"
+              id="RecoverEmail"
+              class="form-control"
+              autocomplete="off"
+              autocapitalize="off">
+          </div>
+
+          <div class="form-group login__submit-container">
+            <input type="submit" class="btn btn-primary btn-block" value="{{ 'customer.recover_password.submit' | t }}">
+          </div>
+          <div class="login__cancel">
+            <button type="button" class="btn btn-link" id="HideRecoverPasswordLink">
+              {{ 'customer.recover_password.cancel' | t }}
+            </button>
+          </div>
+        {% endform %}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Customer Login",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "login_image",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}
+

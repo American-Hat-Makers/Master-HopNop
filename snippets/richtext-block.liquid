@@ -1,0 +1,96 @@
+{%- comment %}
+
+  Rich text
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'richtext-block'
+              rt_id: { string } - required
+              rt_eyebrow: {string} - optional,
+              rt_title: {string} - optional,
+              rt_text: { string } - optional
+              rt_cta_title: { string } - optional,
+              rt_cta_url: { string } - optional,
+              rt_content_max_width: { number } - optional
+              rt_content_alignment: { string } - optional - defaults to "center"
+              rt_background_color: { string } - optional - defaults to "white"
+              rt_alt_spacing: {boolean} - defaults to false - sets the spacing of the module from even to uneven
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if rt_content_alignment == blank %}
+  {% assign content_alignment = 'center' %}
+{% endif %}
+
+{% comment %} End Defaults {% endcomment %}
+
+{% if rt_content_max_width %}
+  <style type="text/css">
+    #rich-text-{{ rt_id }} .rich-text__content{
+      max-width: {{ rt_content_max_width | append: 'px' }};
+    }
+  </style>
+{% endif %}
+
+<div id="rich-text-{{ rt_id }}" class="rich-text
+  rich-text--text-{{rt_content_alignment}}
+  {{- rt_background_color -}}
+  {% if rt_alt_spacing %}
+    rich-text--alt
+  {% endif %}
+">
+  <div class="container-fluid-max" {{ block.shopify_attributes }}>
+    <div class="rich-text__content">
+      {% if rt_eyebrow != blank %}
+        <div class="rich-text__eyebrow">
+          {{ rt_eyebrow}}
+        </div>
+      {% endif %}
+      {% if rt_title != blank %}
+        <div class="rich-text__title h2">
+          {{ rt_title }}
+        </div>
+      {% endif %}
+      {% if rt_text != blank %}
+        <div class="rich-text__text-container">   
+          {% if rt_read_more == true %}
+          	<div class="short-rich-text">
+            	{{ rt_text | truncatewords: 43, "" }} <span class="rich_read_more"> more...</span>  
+          	</div>
+          	<div class="full-rich-text" style="display:none">
+              {{ rt_text }} <p><span class="rich_read_less"> less </span></p>
+          	</div>
+          {% else %}
+          		{{ rt_text }}
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if rt_cta_title != blank and rt_cta_url != blank %}
+        <div class="rich-text__cta-container">
+          <a href="{{ rt_cta_url }}" class="btn btn-primary">{{ rt_cta_title }}</a>  
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  jQuery(document).ready(function(){
+    jQuery('.rich_read_more').click(function(){
+      jQuery('.short-rich-text').hide();
+      jQuery('.full-rich-text').show();
+    });
+    jQuery('.rich_read_less').click(function(){
+      jQuery('.short-rich-text').show();
+      jQuery('.full-rich-text').hide();
+    });
+  });
+</script>
+
+<style>
+  .rich_read_more, .rich_read_less { color: black; text-decoration:none;cursor: pointer;}
+  .full-rich-text p { display: inline; }
+</style>

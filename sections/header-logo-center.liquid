@@ -1,0 +1,445 @@
+{% assign left_menu_html     = '' %}
+{% assign right_menu_html    = '' %}
+{% assign dropdowns_html     = '' %}
+
+{% assign MAX_DROPDOWN_MENUS = 4 %}
+{% assign MAX_DROPDOWN_CTAS  = 1 %}
+
+{% for block in section.blocks %}
+  {% if block.type == "nav_item" or block.type == "nav_item_alt" %}
+
+    {% comment %} These variables get redefined / captured below {% endcomment %}
+    {% assign menu_item_html = '' %}
+    {% assign dropdown_html  = '' %}
+    {% assign dropdown_content_html = '' %}
+    {% assign dropdown_id = "dropdown-" | append: block.id %}
+
+    {% assign cta_count = 0 %}
+
+    {% if block.type == "nav_item_alt" %}
+      {% assign alt_template = true %}
+    {% else %}
+      {% assign alt_template = false %}
+    {% endif %}
+
+    {% comment %} Generate the dropdown contents and then we can check if it's blank {% endcomment %}
+    {% capture dropdown_menus_html %}
+      {% if block.settings.linklist_1 != blank or block.settings.linklist_2 != blank %}
+        {% for i in (1..MAX_DROPDOWN_MENUS) %}
+          {% assign linklist_title_handle = 'linklist_title_' | append: i %}
+          {% assign linklist_setting_handle = 'linklist_' | append: i %}
+          {% assign linklist_bottom_title_handle = 'linklist_bottom_title_' | append: i %}
+          {% assign linklist_bottom_url_handle = 'linklist_bottom_url_' | append: i %}
+          {% include 'header-dropdown-menu',
+          ll_title: block.settings[linklist_title_handle],
+          ll_handle: block.settings[linklist_setting_handle],
+          ll_bottom_title: block.settings[linklist_bottom_title_handle],
+          ll_bottom_url: block.settings[linklist_bottom_url_handle]
+           %}
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+
+    {% capture dropdown_ctas_html %}
+      {% for i in (1..MAX_DROPDOWN_CTAS) %}
+        {% assign cta_link_setting_handle  = "cta_" | append: i | append: "_url" %}
+        {% assign cta_text_setting_handle  = "cta_" | append: i | append: "_text" %}
+        {% assign cta_image_setting_handle = "cta_" | append: i | append: "_image" %}
+        {% assign cta_paragraph_setting_handle = "cta_" | append: i | append: "_paragraph" %}
+        {% capture dropdown_cta_html %}
+          {% include 'header-dropdown-cta',
+                      cta_link: block.settings[cta_link_setting_handle],
+                      cta_image: block.settings[cta_image_setting_handle],
+                      cta_text: block.settings[cta_text_setting_handle],
+                      cta_paragraph: block.settings[cta_paragraph_setting_handle]
+
+          %}
+        {% endcapture %}
+
+        {% comment %} If the settings are there to render a CTA, then output it here in this capture block {% endcomment %}
+        {% if dropdown_cta_html != blank %}
+          {{ dropdown_cta_html }}
+          {% assign cta_count = cta_count | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+    {% comment %} END Generate the dropdown contents {% endcomment %}
+
+    {% capture dropdown_content_html %}
+      {% if dropdown_menus_html != blank or dropdown_ctas_html != blank %}
+        <div class="row">
+          {% if alt_template %}
+            <div class="col-md-2">
+          {% else %}
+            <div class="col-md-7">
+          {% endif %}
+            {% if dropdown_menus_html != blank %}
+              <div class="header-dropdown__menus">
+                {{ dropdown_menus_html }}
+              </div>
+            {% endif %}
+          </div>
+          {% if alt_template %}
+            <div class="col-md-10">
+          {% else %}
+            <div class="col-md-5">
+          {% endif %}
+            {% if dropdown_ctas_html != blank %}
+              <div class="header-dropdown__ctas">
+                {{ dropdown_ctas_html }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% comment %} Put the dropdown content inside a dropdown {% endcomment %}
+    {% capture dropdown_html %}
+      {% include 'header-dropdown',
+                  dropdown_id: dropdown_id,
+                  dropdown_content: dropdown_content_html,
+                  alt_template: alt_template
+      %}
+    {% endcapture %}
+
+    {% comment %} Now that we have the dropdown {% endcomment %}
+
+    {% assign has_dropdown = false %}
+    {% if dropdown_html != blank %}
+      {% assign has_dropdown = true %}
+    {% endif %}
+
+    {% comment %} Create a menu item {% endcomment %}
+    {% capture menu_item_html %}
+
+      <li class="header-nav__menu-item" {{ block.shopify_attributes }}>
+        <a href="{{ block.settings.url }}" {% if has_dropdown %}data-block="{{ block.id }}" data-dropdown-trigger="#{{ dropdown_id }}"{% endif %}>
+          {{ block.settings.title }}
+          {% if has_dropdown %}
+            {% include 'icon-caret-down' %}
+          {% endif %}
+        </a>
+      </li>
+
+    {% endcapture %}
+
+    {% comment %} Append the menu item + dropdown to the correct variable to be outputted later {% endcomment %}
+    {% assign dropdowns_html = dropdowns_html | append: dropdown_html %}
+
+    {% if block.settings.position == "left" %}
+      {% assign left_menu_html = left_menu_html | append: menu_item_html %}
+    {% else %}
+      {% assign right_menu_html = right_menu_html | append: menu_item_html %}
+    {% endif %}
+
+  {% endif %}
+{% endfor %}
+
+{% if left_menu_html != blank %}
+  {% assign left_menu_html = left_menu_html | prepend: '<ul class="header-nav__menu">' %}
+  {% assign left_menu_html = left_menu_html | append: '</ul>' %}
+{% endif %}
+
+{% if right_menu_html != blank %}
+  {% assign right_menu_html = right_menu_html | prepend: '<ul class="header-nav__menu">' %}
+  {% assign right_menu_html = right_menu_html | append: '</ul>' %}
+{% endif %}
+
+<div data-section-id="{{ section.id }}" data-section-type="header">
+
+  <header class="header" role="banner" data-header>
+    <div class="header-container">
+      
+       <div class="header-nav header-nav--left header-nav--user header-nav--hide-on-desktop">
+        <ul class="header-nav__menu header-nav__menu--hamburger">
+          <li class="header-nav__menu-item">
+            <a href="#" title="Toggle menu" data-mobile-menu-toggle>
+              {% include 'icon-hamburger' %}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      {% comment %} Logo {% endcomment %}
+      <div class="header-nav header-nav--left header-nav--logo">
+        {% include 'header-logo' %}
+      </div>
+
+      {% comment %} Search + Left Menu {% endcomment %}
+      <div class="header-nav header-nav--center header-nav--hide-on-mobile">
+
+        {{ left_menu_html }}
+
+        {{ right_menu_html }}
+        
+      </div>
+
+      {% comment %} Right Menu + User Nav (Account + Cart) {% endcomment %}
+      <div class="header-nav header-nav--right header-nav--hide-on-mobile">
+
+        
+
+        {% include 'header-menu-user' %}
+
+      </div>
+
+      {% comment %} Header nav on mobile size screens - search, account, hamburger {% endcomment %}
+      <div class="header-nav header-nav--right header-nav--hide-on-desktop">
+
+        {% include 'header-menu-mobile' %}
+
+      </div>
+
+    </div>
+  <div class="asm_ser center-search" style="background-color: white;"> 
+  <div class="search-container-desk" data-search-container>
+      <form action="/search" method="get" role="search" class="search-bar-center">
+        <input type="hidden" name="type" value="product,article" />
+        <div class="minimal-input-box">
+          <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input" data-search-input/>
+        </div>
+        <button type="submit" class="minimal-input-box__submit btn btn-primary">
+          <span class="search-text">search</span>
+          <img class="lazyload hs-lazyload hs-id-64f6c3e4" data-src="{{ 'search_icon.png' | asset_url }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+          <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+        </button>
+      </form>
+    </div>
+      </div>
+    {{ dropdowns_html }}
+
+  </header>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Header",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "nav_item",
+        "name": "Navigation Item",
+        "settings": [
+          {
+             "type": "header",
+             "content": "Info",
+             "info": "A title and a link are required for each navigation item.  If a menu or CTA is added, the nav item will display a dropdown below it on hover."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "position",
+            "label": "Position",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "right", "label": "Right" }
+            ],
+            "info": "Select which side of the logo this item will appear on",
+            "default": "left"
+          },
+          {
+             "type": "header",
+             "content": "Menus",
+             "info": "Each navigation item dropdown supports up to 4 menus."
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_1",
+            "label": "Navigation title 1"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_1",
+            "label": "Menu 1"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_1",
+            "label": "Bottom link title 1"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_1",
+            "label": "Bottom link URL 1"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_2",
+            "label": "Navigation title 2"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_2",
+            "label": "Menu 2"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_2",
+            "label": "Bottom link title 2"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_2",
+            "label": "Bottom link URL 2"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_3",
+            "label": "Navigation title 3"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_3",
+            "label": "Menu 3"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_3",
+            "label": "Bottom link title 3"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_3",
+            "label": "Bottom link URL 3"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_4",
+            "label": "Navigation title 4"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_4",
+            "label": "Menu 4"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_4",
+            "label": "Bottom link title 4"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_4",
+            "label": "Bottom link URL 4"
+          },
+          {
+             "type": "header",
+             "content": "CTAs",
+             "info": "Each navigation item dropdown supports up to 1 CTA blocks. A link and text are optional"
+          },
+          {
+            "type": "header",
+            "content": "CTA 1"
+          },
+          {
+            "type": "text",
+            "id": "cta_1_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_1_url",
+            "label": "Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_1_image",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "nav_item_alt",
+        "name": "Navigation Item - Alt",
+        "settings": [
+          {
+             "type": "header",
+             "content": "Info",
+             "info": "A title and a link are required for each navigation item.  If a menu or CTA is added, the nav item will display a dropdown below it on hover."
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "position",
+            "label": "Position",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "right", "label": "Right" }
+            ],
+            "info": "Select which side of the logo this item will appear on",
+            "default": "left"
+          },
+          {
+             "type": "header",
+             "content": "Menu",
+             "info": "This navigation item dropdown supports 1 menu."
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_1",
+            "label": "Navigation title"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_1",
+            "label": "Menu"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_1",
+            "label": "Bottom link title"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_1",
+            "label": "Bottom link URL"
+          },
+          {
+             "type": "header",
+             "content": "CTAs",
+             "info": "This navigation item dropdown supports 1 CTA block with a title and a paragraph"
+          },
+          {
+            "type": "header",
+            "content": "CTA 1"
+          },
+          {
+            "type": "text",
+            "id": "cta_1_text",
+            "label": "Text"
+          },
+          {
+            "type": "textarea",
+            "id": "cta_1_paragraph",
+            "label": "Paragraph"
+          },
+          {
+            "type": "image_picker",
+            "id": "cta_1_image",
+            "label": "Image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

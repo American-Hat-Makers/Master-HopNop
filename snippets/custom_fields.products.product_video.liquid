@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["product_video"] != blank %}
+  <div class="custom-field custom-field__product-video custom-field__type--url">
+    <h3 class="custom-field--title">Product Video</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["product_video"] }}
+    </div>
+  </div>
+{% endif %}

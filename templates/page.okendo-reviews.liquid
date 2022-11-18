@@ -1,0 +1,17 @@
+<div class="layout-content-wrapper">
+    <div class="row justify-content-center">
+      <div class="col-auto page-text-only__content">
+        {% if page.metafields.custom_fields['eyebrow'] != blank %}
+        <div class="page-text-only__eyebrow-container">
+          <span class="page-text-only__eyebrow">{{ page.metafields.custom_fields['eyebrow'] }}</span>
+        </div>
+        {% endif %}
+        <h1 class="page-text-only__title">{{ page.title }}</h1>
+        <div class="page-text-only__content-container">
+          {% if shop.metafields.okendo.WidgetPreRenderBodyStyleTags != blank %}{{ shop.metafields.okendo.WidgetPreRenderBodyStyleTags }}{% endif %}<div data-oke-widget></div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% section 'custom-fields-pages' %}

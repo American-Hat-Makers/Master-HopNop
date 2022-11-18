@@ -1,0 +1,178 @@
+
+<style>
+  .column {
+    float: left;
+    width: 46%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 2%;
+    border: 1px solid black;
+  }
+  .sign-in-button {
+    width: 100%;
+    height: 40px;
+    border: 1px solid black;
+    background-color: #362e24;
+    color: white;
+    border-radius: 5px;
+  }
+  .sign-in-button:hover {
+    background-color: black;
+  }
+</style>
+
+<div data-section-id="{{ section.id }}" data-section-type="ajax-cart">
+  <div class="ajax-cart-container" data-ajax-cart-container>
+    <form action="/cart" method="post" class="ajax-cart-form" novalidate>
+      <div class="ajax-cart__header" role="complementary" aria-label="cart header">
+        <a href="#" class="ajax-cart__close" data-ajax-cart-close aria-label="Close Cart">{% include 'icon-close' %}</a>
+        <h5 class="ajax-cart-title">{{ 'cart.general.title' | t }}</h5>
+        <h5 class="ajax-cart-item-added">An item has been added to cart!</h5>
+        {% if section.settings.minicart_message != blank and cart.item_count > 0 %}
+          <div class="minicart-message">{{ section.settings.minicart_message }}</div>
+        {% endif %}
+      </div>
+
+      <div class="ajax-cart__body" role="complementary" aria-label="cart body" data-ajax-cart-body>
+        {% comment %} Filled in via JS {% endcomment %}
+      </div>
+      <div class="ajax-cart__footer" data-ajax-cart-footer>
+        <div class="ajax-cart__footer-top" data-ajax-cart-footer-top>
+          {% comment %} Filled in via JS {% endcomment %}
+        </div>
+
+        <div class="ajax-cart__footer-bottom">
+          <div class="ajax-cart__footer-row text-center">
+            <button id="checkout__btn" type="submit" name="checkout" class="btn btn-block btn-primary btn-checkout">{{ 'cart.general.checkout' | t }}</button>
+            {% comment %}<a class="btn btn-link" href="/cart">{{ 'cart.general.view' | t }}</a>{% endcomment %}
+            <a class="btn btn-link" href="/collections/all">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% raw %}
+  <script type="text/x-handlebars-template" data-ajax-cart-body-template>
+    {{#if items}}
+
+      <ul class="ajax-cart__list">
+      {{#each items}}
+        <li class="ajax-cart__item pro-{{id}}" data-key="{{ key }}" data-qty="{{ quantity }}" data-ajax-item>
+          <div class="ajax-cart__image-container">
+            <img src="{{ image }}" class="ajax-cart__item-image">
+          </div>
+          <div class="ajax-cart__item-info">
+            <a href="{{ url }}" class="ajax-cart__item-header">
+              <div class="ajax-cart__item-title">{{ product_title }}</div>
+            </a>
+            <ul class="ajax-cart__item-options">
+              {{#unless has_only_default_variant}}
+                {{#if (empty variant_options)}}
+                  {{#each variant_options}}
+                    <li>
+                      {{ name }}: {{ value }}
+                    </li>
+                  {{/each}}
+                {{/if}}
+              {{/unless}}
+              
+              <li class="ajax-cart__item-price-main main_price" style="display:none"> $25.99</li>
+              <li class="ajax-cart__item-price-main zero_price" style="display:none"> $0.00</li>
+              <li class="ajax-cart__item-price dis_price"><span class="Bold-theme-hook-DO-NOT-DELETE
+          bold_cart_item_total" style="display:none !important;"></span> <span class="fin-price">{{{ price }}}</span></li>
+              <li>
+                {{#if variant_quantity_limit}}
+                  <div class="quantity-adjuster" data-quantity-adjuster>
+                    <button class="quantity-adjuster__decrement" data-decrement>-</button>
+                    <input type="number" value="{{ quantity }}" min="0" max="{{ variant_quantity_limit }}" />
+                    <button class="quantity-adjuster__increment" data-increment>+</button>
+                  </div>
+                {{else}}
+                  Quantity: {{ quantity }}
+                {{/if}}
+              </li>
+              <li>
+                <a href="#" class="ajax-cart__item-remove" data-ajax-cart-item-remove>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14 15.0606L20.4698 21.5303L21.5305 20.4697L15.0607 14L21.5303 7.53036L20.4697 6.46969L14 12.9393L7.53031 6.46969L6.46965 7.53036L12.9393 14L6.46965 20.4697L7.53031 21.5303L14 15.0606Z" fill="#545352"/>
+                  </svg>
+                  Remove
+                </a>
+                <span class="bold-options-container">
+              <span class="Bold-theme-hook-DO-NOT-DELETE bold_cart_item_properties" style="display:none !important;"></span>
+            </span>
+              </li>
+            </ul>
+          </div>
+          
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class="ajax-cart__empty-message">
+      {% endraw %}
+      {% if section.settings.empty_text != blank %}
+        {{ section.settings.empty_text }}
+      {% else %}
+        {{ 'cart.general.empty' | t }}
+      {% endif %}
+      {% raw %}
+    </div>
+  {{/if}}
+  </script>
+  <script type="text/x-handlebars-template" data-ajax-cart-footer-top-template>
+    <div class="ajax-cart__footer-row">
+      <p class="clearfix u-fw-bold h6">Subtotal: <span style="float: right">
+      <span data-total="{{{ total_price }}}" class="Bold-theme-hook-DO-NOT-DELETE bold_cart_total" style="display:none !important;"></span>{{{ total_price }}}</span></p>
+    </div>
+    <div class="ajax-cart__footer-row text-center">
+      <div class="ajax-cart__afterpay text-center" data-ajax-cart-footer-afterpay></div>
+      <span class="taxes">{% endraw %}{{ 'cart.general.taxes_at_checkout' | t }}{% raw %}</span>
+    </div>
+  </script>
+{% endraw %}
+
+
+{% schema %}
+  {
+    "name": "Ajax Cart",
+    "settings": [
+      {
+        "id": "empty_text",
+        "type": "richtext",
+        "label": "Empty Text",
+        "default": "<p>Your bag is empty</p>"
+      },
+      {
+        "id": "minicart_message",
+        "type": "richtext",
+        "label": "Minicart Message"
+      }
+    ]
+  }
+{% endschema %}
+<script>
+  $(document).on('click','.header-cart__badge',awardPointUpdate);
+  $(document).on('click','.ajax-cart__item-remove',awardPointUpdate);
+  $(document).on('click','.quantity-adjuster__decrement',awardPointUpdate);
+  $(document).on('click','.quantity-adjuster__increment',awardPointUpdate);
+  $(document).on('click','.btn-add-to-cart',function(){
+    setTimeout(  
+      awardPointUpdate
+    , 2000);
+  });
+  function awardPointUpdate() {
+    setTimeout(
+      function() {
+        let price_data = document.querySelectorAll(".price-data");
+        let cart_price = price_data[0].innerText.toString();
+        cart_price = cart_price.substring(0, cart_price.length - 2);
+        document.getElementById("total-price").innerHTML = cart_price;
+      },
+      3000
+    );
+  }
+</script>

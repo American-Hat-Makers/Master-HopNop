@@ -1,0 +1,58 @@
+{% comment %}
+
+  Add any 3rd party scripts here that need to be included before the closing <body> tag
+
+{% endcomment %}
+
+<!-- Gorgias Chat Widget Start -->
+<div id="gorgias-chat">
+<script>window.gorgiasChatParameters = {}</script>
+<noscript class="hs-load-onaction"><script defer src="https://config.gorgias.io/production/1QNmd2YZDK79XA0W/chat/VvEzB7NBRm97beky.js"></script></noscript>
+</div>
+<!-- Gorgias Chat Widget End -->
+
+{% include "afterpay-script" %}
+
+{% comment %}Klaviyo tracking{% endcomment %}
+{% if product != blank %}
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+  var item_price = {{ product.selected_variant.price }} ? {{ product.selected_variant.price|money|json }} : {{ product.price|money|json }};
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: item_price,
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+  var classname = document.getElementsByClassName("btn-add-to-cart");
+  var addToCart = function() {
+  _learnq.push(['track', 'Added to Cart', item]);
+  };   for (var i = 0; i < classname.length; i++) {
+  classname[i].addEventListener('click', addToCart, false);
+  }
+  </script> 
+
+{% endif %}

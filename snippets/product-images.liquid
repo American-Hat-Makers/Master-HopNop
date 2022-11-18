@@ -1,0 +1,138 @@
+<div class="product-single__photos" id="ProductPhoto">
+  {% comment %}
+    {% assign featured_image = current_variant.featured_image | default: product.featured_image %}
+    <img alt="{{ featured_image.alt | escape }}" class="ProductPhotoImg lazyload hs-lazyload hs-id-750fa12a" data-src="{{ featured_image | img_url: '480x' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+  {% endcomment %}
+  {% if product.images.size > 1 %}
+    <ul class="product-single__main slider-for">
+        {% for image in product.images %}
+            <li data-imageid="{{image.id}}">
+                <img alt="{{ image.alt | escape }}" class="lazyload hs-lazyload hs-id-04c55b11" data-imageid="{{image.id}}" data-src="{{ image.src | img_url: 'master' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              	<div class="yt-video"></div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+</div>
+{% comment %}
+Create thumbnails if we have more than one product image
+{% endcomment %}
+
+{% if product.images.size > 1 %}
+    <ul class="product-single__thumbnails slider-nav">
+        {% for image in product.images %}
+            <li data-imageid="{{image.id}}">
+              <img alt="{{ image.alt | escape }}" class="list-image-for-slider lazyload hs-lazyload hs-id-56f4c830" data-imageid="{{image.id}}" data-src="{{ image.src | img_url: '160x' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $(document).on('click','.swatch-list .swatch-element',function(){
+//         console.log("swatch click");
+        setTimeout(function(){
+            var varId = (new URL(location.href)).searchParams.get('variant');
+            productOptions.forEach(function(variant,index){
+                if(variant.id == varId){
+                    var imgId = variant.featured_image.id;
+//                     console.log(varId,imgId);
+//                   	console.log($('.slick-list .slick-slide[data-imageid="'+imgId+'"]').index() );
+                  	var img_index = $('.slick-list .slick-slide[data-imageid="'+imgId+'"]').index();
+//                   	console.log(img_index)
+                    $('.slick-list .slick-slide[data-imageid="'+imgId+'"]').addClass('trigger').find('img').trigger('click');
+                  
+                }
+            })
+        },100);
+    });
+  });
+  $(document).ready(function(){
+    $('.slider-for').slick({
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      speed: 700,
+      arrows: false,
+      adaptiveHeight: true,
+      fade: false,
+      asNavFor: '.slider-nav',
+      responsive: [
+      {
+        breakpoint: 575,
+        settings: {
+          infinite: false,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerMode: true,
+          dots: false,
+          dotsClass:'slick-dots',
+          speed: 700,
+          arrows: false, 
+          adaptiveHeight: true,
+          fade: false,
+        }
+      }
+    ]
+    });
+    $('.slider-nav').slick({
+      slidesToShow: 5,
+      slidesToScroll: 1,
+      asNavFor: '.slider-for',
+      prevArrow:"<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+      nextArrow:"<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
+      focusOnSelect: true,
+      infinite:false,
+      responsive: [
+      	
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 5
+          }
+        },
+        {
+          breakpoint: 421,
+          settings: {
+            slidesToShow: 4
+          }
+        }
+      ]
+    });
+  });
+  
+</script>
+
+<script>
+// jQuery(document).ready(checkContainer);
+
+// function checkContainer () {
+//     var slides = $('.product-single__main').find('.slick-slide');
+//   if(slides.is(':visible')){ 
+//         slides.each(function(){
+//             var img_alt = $(this).children('img').attr('alt');
+//             var img = $(this).children('img');
+//             if(img_alt.includes("youtube.com")){
+//                 img.hide();
+//                 var html = '<iframe class="yt-video-src" width="560" height="315" src="'+img_alt+'" frameborder="0" allowfullscreen="" data-gtm-yt-inspected-8905615_5="true" id="99374685"></iframe>';
+//                 img.siblings('.yt-video').show();
+//                 img.siblings('.yt-video').html(html);
+//             }
+//         })
+//   } else {
+//     setTimeout(checkContainer, 50);
+//   }
+// }
+
+</script>
+
+<style>
+  @media screen and (max-width: 575px){
+    .slider-nav{
+      display: none !important;
+    }
+  }
+</style>

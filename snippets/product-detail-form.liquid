@@ -1,0 +1,369 @@
+{%- if product.metafields.inventory.ShappifyHidden == 'true' -%}{%- break -%}{%- endif -%}
+
+<style>
+  .findify-components-common--grid__column-3 {
+    width: 33.33%;
+  }
+
+  .form-group {
+    margin-bottom: 0px !important;
+  }
+
+  .bold_options {
+    margin-bottom: 0px !important;
+  }
+
+  .sidebar {
+    width: 475px;
+  }
+  #shipping-time {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-top: 10px;
+    color: #9f2739;
+    text-align: center;
+  }
+  #product-price {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #9f2739;
+  }
+  .sizing_tooltip {
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    text-transform: lowercase;
+    position: relative;
+    display: inline-block;
+    margin-left: 5px;
+    border-radius: 50%;
+    background-color: #9f2739;
+    color: white;
+    top: 3px;
+    /* from before */
+  }
+  .sizing_tooltip::before {
+    content: attr(data-text);
+    position: absolute;
+    white-space: pre;
+    z-index: 1;
+    /* vertically center */
+    top: 140%;
+    transform: translate(-20%,-140%);
+    
+    /* basic styles */
+    width: 250px;
+    padding: 10px;
+    background: white;
+    color: black;
+    border: 1px solid #E9E9E9;
+    text-align: center;
+    text-transform: none;
+
+    display:none; /* hide by default */
+  }
+  .sizing_tooltip:hover::before {
+    display: block;
+  }
+  @media screen and (max-width: 359px) {
+    .sizing_tooltip::before {
+      transform: none;
+      margin-top: -130px;
+      margin-left: -102px;
+    }
+  }
+  @media screen and (min-width: 391px) and (max-width: 456px) {
+    .sizing_tooltip::before {
+      transform: translate(0%,-140%);
+    }
+  }
+  @media screen and (min-width: 457px) and (max-width: 991px) {
+    .sizing_tooltip::before {
+      transform: translate(-85%,-140%);
+    }
+  }
+  @media screen and (min-width: 992px) and (max-width: 1218px) {
+    .sizing_tooltip::before {
+      transform: translate(-70%,-140%);
+    }
+  }
+  li {
+    font-size: 20px !important;
+  }
+</style>
+
+{%- comment %}
+
+  Product Detail Form Snippet
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'product-detail-form',
+              product: { product } - required
+              current_variant: { variant} - optional
+  %}
+
+{% endcomment -%}
+
+{% comment %}assign custom field shorthand{% endcomment %}
+{% assign cf = product.metafields.custom_fields %}
+
+{% if template.name == 'product' and template.suffix == 'quick-view' %}
+  {% assign is_quick_view = true %}
+{% endif %}
+
+{% if current_variant == blank %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+{% endif %}
+
+{% capture details_html %}
+
+  {% if cf['hat_sizes'] != blank %}
+    <div class="details__item">
+      <div class="details__item-icon">
+        {% include 'icon-hat' %}
+      </div>
+      <div class="details__text">
+        {{ cf['hat_sizes'] }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cf['sun_protection'] != blank %}
+    <div class="details__item">
+      <div class="details__item-icon">
+        {% include 'icon-sun' %}
+      </div>
+      <div class="details__text">
+        {{ cf['sun_protection'] }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if section.settings.measurement_button_text != blank and section.settings.measurement_video != blank and product.type == 'Hats' %}
+    <div class="details__item" data-toggle-measure-modal>
+      <div class="details__item-icon">
+        {% include 'icon-play' %}
+      </div>
+      <div class="details__text details__text--link">
+        {{ section.settings.measurement_button_text }}
+      </div>
+    </div>
+  {% endif %}
+
+{% endcapture %}
+<div class="sidebar">
+  <div class="sidebar__inner">
+    <div id="product-details" data-product-detail-form>
+      <div class="desktop-title-container" data-desktop-title-container>
+        <h1 class="product__title">{{ product.title }}</h1>
+      
+      </div>
+
+      <div class="product__price-container" style="margin-bottom: 0px">
+        {% render 'okendo-reviews-product-rating-summary', product: product %}
+        <p id="product-short-description"></p>
+      </div>
+
+      <div style="margin-top: 10px">
+        <div class="product__form-container" data-add-to-cart-form-wrapper>
+          <form action="/cart/add" method="post" enctype="multipart/form-data" data-add-to-cart-form>
+            {% unless product.has_only_default_variant %}
+              {% assign has_size = false %}
+              {% for option in product.options_with_values %}
+
+                {% assign option_name_downcase = option.name | downcase %}
+
+                {% capture option_alt_ui %}
+                  {% if option_name_downcase == "color" %}
+                    {% include 'product-dots-color', product: product, selected_color: option.selected_value %}
+                  {% elsif option_name_downcase == "size" %}
+                    {% assign has_size = true %}
+                    {% include 'product-dots-size', product: product, selected_size: option.selected_value %}
+                  {% endif %}
+                {% endcapture %}
+
+                <div class="selector-wrapper form-group js" {% if option.name == 'Size' %}style="border-bottom: 1px solid #e9e9e9;"{% endif %}>
+
+                  <label class="product__option-label" for="SingleOptionSelector-{{ option.position }}">
+                    {% if option.name == 'Size' %}PICK A SIZE{% else %}{{ option.name }}{% endif %}: 
+                    <span {% if option.name == 'Size' %}id="size-span"{% endif %} class="product__option-label-selected" data-option-label>
+                      {% if option.name != 'Size' %}
+                        {{ option.selected_value }}
+                      {% endif %}
+                    </span>
+                  </label>
+
+                  <select
+                    id="SingleOptionSelector-{{ option.position }}"
+                    class="form-control"
+                    data-single-option-selector
+                    data-index="option{{ option.position }}"
+                    {% if option.name == 'Size' %}onchange="addSizing();"{% endif %}
+                    {% if option_alt_ui != blank %}style="display:none;" data-no-chosen{% endif %}>
+                    {% for value in option.values %}
+                      <option
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value and option.name != "Size" %}selected="selected"{% endif %}>
+                          {{ value }}
+                      </option>
+                    {% endfor %}
+                  </select>
+
+                  {% comment %} Output alternative option UI here {% endcomment %}
+                  {{ option_alt_ui }}
+
+                  {% if option.name == 'Size' %}
+                    <a href="#size_chart_title">Click Here for Sizing Chart</a>
+                  {% endif %}
+                </div>
+
+              {% endfor %}
+            {% endunless %}
+            
+            <select name="id" class="no-js" data-product-select>
+              {% if has_size %}
+                <option value=""></option>
+              {% endif %}
+              {% for variant in product.variants %}
+                <option
+                  {% unless variant.available %}disabled="disabled"{% endunless %}
+                  value="{{ variant.id }}">
+                    {{ variant.title }}
+                </option>
+              {% endfor %}
+            </select>
+            {% include 'product-detail-price',
+                  product: product,
+                  current_variant: current_variant %}
+            <div class="bold_options" data-product-id="{{ product.id }}"></div>
+
+            <input type="hidden" name="quantity" value="1">
+
+            <button
+              type="submit"
+              onclick="pintrk('track', 'addtocart');"
+              name="add"
+              class="btn btn-primary btn-block btn-add-to-cart"
+              data-add-to-cart
+              {% if has_size or current_variant.available == false %}
+                disabled="disabled"
+              {% endif %}>
+                <span data-add-to-cart-text>
+                  {% if has_size %}
+                    Pick a size
+                  {% else %}
+                    {% if current_variant.available %}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {% else %}
+                      {{ 'products.product.sold_out' | t }}
+                    {% endif %}
+                  {% endif %}
+                </span>
+            </button>
+            <p class="p shipping_time_pdp" id="shipping-time">Ships in 1 business day</p>
+          </form>
+        </div>
+
+      </div>
+
+      <div id="product-bullet-description"></div>
+
+      {% if is_quick_view %}
+        {% comment %} This link will get updated on variant change.  See productDetailForm.js {% endcomment %}
+        <a href="{{ current_variant.url }}" data-full-details-link>View Full Details</a>
+      {% endif %}
+
+      {% unless product == empty %}
+        <script type="application/json" data-product-json>
+        {% include 'product-json', product: product %}
+        </script>
+      {% endunless %}
+    </div>
+  </div>
+</div>
+
+{% if section.settings.measurement_video != blank %}
+  <div class="modal fade" id="hat-measure-modal" tabindex="-1" role="dialog" aria-labelledby="hat-measure-modal-title" data-hat-measure-modal>
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            {% include 'icon-close' %}
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="hat-measure-video"
+               class="video-player {{ video_custom_class }} {% if video_cover_container %}video-player--cover-container{% endif %}"
+               data-video-player
+               data-video-id="{{ section.settings.measurement_video.id }}"
+               data-video-type="vimeo"
+               data-background="false"
+               data-embed-color="000000"
+               data-inline="false"
+               data-controls="true"
+          >
+            {% comment %} VIDEO PLAYER {% endcomment %}
+            <div class="video-player__embed" data-video-player-embed></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  // Getting Short description from Shopify Description
+  var shopifyDescriptionString = JSON.stringify({{ hs_product_description | json }});
+  var startPosition = shopifyDescriptionString.search("<!--Short Description Start-->");
+  var endPosition = shopifyDescriptionString.search("<!--Short Description End-->");
+  if(startPosition > 0) {
+    var shortDescription = shopifyDescriptionString.substring(startPosition + 35,endPosition - 6);
+    document.getElementById("product-short-description").innerHTML = shortDescription;
+  }
+
+  // Getting Bullet description from Shopify Description
+  startPosition = shopifyDescriptionString.search("<!--Bullet Description Start-->");
+  endPosition = shopifyDescriptionString.search("<!--Bullet Description End-->");
+  if(startPosition > 0) {
+    var bulletDescription = shopifyDescriptionString.substring(startPosition + 33,endPosition).replace(/\\n/g,'');
+    bulletDescription = bulletDescription.replace(/\\/g,'');
+    document.getElementById("product-bullet-description").innerHTML = bulletDescription;
+  }
+
+  function addSizing() {
+    var sizingPopupHTML = "<span data-text=\"HEAD MEASUREMENT:\n";
+    var thisSpan = document.getElementById("size-span");
+    thisSpan.style.color = "black";
+    var currentSize = thisSpan.innerText.substring(0,3);
+    if(currentSize == "XXS") {
+      thisSpan.innerHTML += " - US HAT SIZE 6<sup>1/4</sup>";
+      sizingPopupHTML += "19 to 19 5/8 (in)\n 50 to 51 (cm)";
+    } else if(currentSize == "XS") {
+      thisSpan.innerHTML += " - US HAT SIZE 6<sup>1/2</sup>";
+      sizingPopupHTML += "20 to 20 7/8 (in)\n 52 to 53 (cm)";
+    } else if(currentSize == "SM") {
+      thisSpan.innerHTML += " - US HAT SIZE 6<sup>7/8</sup>";
+      sizingPopupHTML += "21 to 21 7/8 (in)\n 54 to 55 (cm)";
+    } else if(currentSize == "MD") {
+      thisSpan.innerHTML += " - US HAT SIZE 7<sup>1/8</sup>";
+      sizingPopupHTML += "22 to 22 3/4 (in)\n 56 to 57 (cm)";
+    } else if(currentSize == "LG") {
+      thisSpan.innerHTML += " - US HAT SIZE 7<sup>3/8</sup>";
+      sizingPopupHTML += "22 7/8 to 23 1/2 (in)\n 58 to 59 (cm)";
+    } else if(currentSize == "XL") {
+      thisSpan.innerHTML += " - US HAT SIZE 7<sup>5/8</sup>";
+      sizingPopupHTML += "23 5/8 to 24 1/4 (in)\n 60 to 61 (cm)";
+    } else if(currentSize == "2X" || currentSize == "XX") {
+      thisSpan.innerHTML += " - US HAT SIZE 7<sup>7/8</sup>";
+      sizingPopupHTML += "24 3/8 to 24 7/8 (in)\n 62 to 63 (cm)";
+    } else if(currentSize == "3X") {
+      thisSpan.innerHTML += " - US HAT SIZE 8<sup>1/8</sup>";
+      sizingPopupHTML += "25 to 25 5/8 (in)\n 64 to 65 (cm)";
+    }
+    sizingPopupHTML += "\" class=\"tooltip sizing_tooltip\">i</span>";
+    thisSpan.innerHTML += sizingPopupHTML;
+  }
+</script>

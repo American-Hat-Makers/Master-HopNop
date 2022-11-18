@@ -1,0 +1,496 @@
+{% comment %}
+  Custom template for testing styles applied to RTE content.
+  Remove before deploying to production/publishing your theme.
+{% endcomment %}
+
+<div class="layout-content-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+
+        {% include 'page-header',
+                    ph_title: 'Styleguide',
+                    ph_subtitle: 'This page is here to show off styles for standard page elements such as typography, form elements, and icons. These are hard coded in an alternate page template file named <code>page.styles.liquid</code>.'
+        %}
+
+        <h3 class="docs-title">Table of Contents</h3>
+        <ul>
+          <li><a href="#docs-colors">Colors</a></li>
+          <li><a href="#docs-fonts">Type</a></li>
+          <li><a href="#docs-typography">Typography</a></li>
+          <li><a href="#docs-buttons">Buttons</a></li>
+          <li>
+            <a href="#docs-ui-elements">UI Elements</a>
+            <ul>
+              <li><a href="#docs-dots">Dots</a></li>
+              <li><a href="#docs-arrows">Arrows</a></li>
+              <li><a href="#docs-checkbox">Checkbox</a></li>
+              <li><a href="#docs-swatches">Color Swatches</a></li>
+              <li><a href="#docs-quantity">Quantity Selector</a></li>
+              <li><a href="#docs-social-sharing">Social Sharing</a></li>
+            </ul>
+          </li>
+          <li><a href="#docs-icons">Icons & Logos</a></li>
+          <li><a href="#docs-form">Forms</a></li>
+          <li><a href="#docs-utilities">Utilities</a></li>
+          <li><a href="#docs-frames">Frames</a></li>
+        </ul>        
+
+        <h4 id="docs-colors" class="docs-title">Colors</h4>
+
+        {% assign gray_scale_colors = '' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'white:White:#FFFFFF:$color-white' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-light:Gray Light:#F2F2F2:$gray-light' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray:Gray:#E9E9E9:$gray' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-dark:Gray Dark:#898989:$gray-dark' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-darker:Gray Darker:#545352:$gray-darker' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'gray-darkest:Gray Darkest:#343433:$gray-darkest' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | append: 'black:Black:#000000:$black' | append: '|' %}
+        {% assign gray_scale_colors = gray_scale_colors | split: '|' %}
+        <div>
+          {% for color in gray_scale_colors %}
+            {% assign parts = color | split: ':' %}
+            <div class="styleguide-color">
+              <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
+              <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+            </div>            
+          {% endfor %}         
+        </div>
+
+        {% assign main_colors = '' %}
+        {% assign main_colors = main_colors | append: 'pearl:Pearl:#fffcf4:$pearl' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'brown-dark:Brown Dark:#362e24:$brown-dark' | append: '|' %}
+        {% assign main_colors = main_colors | append: 'maroon:Maroon:#9f2739:$maroon' | append: '|' %}
+        
+        {% assign main_colors = main_colors | split: '|' %}
+
+        <div>
+          {% for color in main_colors %}
+            {% assign parts = color | split: ':' %}
+            <div class="styleguide-color">
+              <div class="styleguide-color__swatch styleguide-color__swatch--{{ parts[0] }}"></div>
+              <p>{{ parts[1] }}<br />{{ parts[2] }}<br /><code>{{ parts[3] }}</code></p>
+            </div>            
+          {% endfor %}         
+        </div>
+
+        <h4 id="docs-fonts" class="docs-title">Fonts</h4>
+        <div class="row docs-space">
+          <div class="col-md-6 h4">
+            <div>BEBAS NEUE PRO BOLD</div>
+          </div>
+
+          <div class="col-md-6 h4">
+            <div>ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div>abcdefghijklmnopqrstuvwxyz</div>
+            <div>0123456789!@#$%^&*()_+</div>
+          </div>
+        </div>
+
+        <div class="row docs-space">
+          <div class="col-md-6 p2">
+            <div>Filosofia OT Regular</div>
+          </div>
+          <div class="col-md-6 p2">
+            <div>ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div>abcdefghijklmnopqrstuvwxyz</div>
+            <div>0123456789!@#$%^&*()_+</div>    
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 p2">
+            <div>Filosofia OT Unicase</div>
+          </div>
+          <div class="col-md-6 p2">
+            <div>ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+            <div>abcdefghijklmnopqrstuvwxyz</div>
+            <div>0123456789!@#$%^&*()_+</div>    
+          </div>
+        </div>
+
+        <h4 id="docs-typography" class="docs-title">Typography</h4>
+
+        <h1>H1 BEBAS NEUE PRO BOLD</h1>
+        <h2>H2 BEBAS NEUE PRO BOLD</h2>
+        <h3>H3 BEBAS NEUE PRO BOLD</h3>
+        <h4>H4 BEBAS NEUE PRO BOLD</h4>
+        <h5>H5 BEBAS NEUE PRO BOLD</h5>
+        <h6>H6 BEBAS NEUE PRO BOLD</h6>
+        <br>
+        <p class="p1">P1 Filosofia OT Regular</p>
+        <p class="p2">P2 Filosofia OT Regular</p>
+        <p class="p3">P3 Filosofia OT Regular</p>
+        <p class="p4">P4 Filosofia OT Regular</p>
+
+        <h4 id="docs-buttons" class="docs-title">CTAs / Buttons</h4>
+
+        <h5 class="docs-subtitle">Button Regular</h5>
+        <div class="row docs-space">
+          <div class="col-md-6">
+            <a href="#" class="btn btn-primary">Button</a>
+            <a href="#" class="btn btn-primary disabled">Button (Disabled)</a>
+          </div>
+          <div class="col-md-6">
+            <a href="#" class="btn btn-secondary">Button</a>
+            <a href="#" class="btn btn-secondary disabled">Button (Disabled)</a>
+          </div>
+        </div>
+
+        <h5 class="docs-subtitle">Button Transparent</h5>
+
+        <div class="row docs-space">
+          <div class="col-md-6">
+            <a href="#" class="btn btn-gray-darkest btn-transparent">Button Transparent</a>
+            <a href="#" class="btn btn-gray-darkest disabled">Button Transparent (Disabled)</a>
+          </div>
+          <div class="col-md-6">
+            <a href="#" class="btn btn-secondary btn-transparent">Button Transparent</a>
+            <a href="#" class="btn btn-secondary disabled">Button Transparent (Disabled)</a>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="row col-md-6">
+            <h5 class="docs-subtitle col-md-12">Text Link</h5>
+
+            <div class="col-md-6">
+              <a href="#" class="btn btn-link text-gray-darkest">Text Link</a>
+            </div>
+            <div class="col-md-6">
+              <a href="#" class="btn btn-link text-maroon">Text Link</a>
+            </div>
+          </div>
+          <div class="row col-md-6">
+            <h5 class="docs-subtitle col-md-12">Text Link SMALL</h5>
+            <div class="col-md-6">
+              <a href="#" class="btn btn-link text-gray-darkest btn-sm">LINK SMALL</a>
+            </div>
+            <div class="col-md-6">
+              <a href="#" class="btn btn-link text-maroon btn-sm">LINK SMALL</a>
+            </div>
+          </div>
+        </div>
+
+        <h4 id="docs-ui-elements" class="docs-title">UI Elements</h4>
+
+
+        <div class="row">
+          <div class="col-md-4 docs-space">
+            <h5 class="docs-subtitle">Drop Down</h5>
+
+            <div class="form-group">
+              <select class="form-control" data-placeholder="Sort By">
+                <option value=""></option>
+                <option value="0">Price : Low to high</option>
+                <option value="1">Price : High To Low</option>
+                <option value="2">Newest to oldest</option>
+                <option value="3">Oldest to newest</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 docs-space offset-md-2">
+            <h5 class="docs-subtitle docs-space">Size Selector</h5>
+
+            <div class="dots">
+              <div class="dot__selected h5">
+                Size: <span>Select One</span>
+              </div>
+              <div class="dot" title="Small">
+                <div class="dot__inner">S</div>
+              </div>
+              <div class="dot is-disabled" title="Medium">
+                <div class="dot__inner">M</div>
+              </div>
+              <div class="dot" title="Large">
+                <div class="dot__inner">L</div>
+              </div>
+              <div class="dot" title="Extra Large">
+                <div class="dot__inner">XL</div>
+              </div>
+              <div class="dot" title="XXL">
+                <div class="dot__inner">XXL</div>
+              </div>
+              <div class="dot" title="XXXL">
+                <div class="dot__inner">XXXL</div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-md-6">
+            <div class="col-md-6">
+              <h5 id="docs-dots" class="docs-subtitle docs-space">Slider Dots</h5>
+              
+              <div class="docs-block bg-black">
+                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination--white">
+                  <span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1"></span>
+                  <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span>
+                </div>
+              </div>
+              <div class="docs-block">
+                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+                  <span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1"></span>
+                  <span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5 id="docs-arrows" class="docs-subtitle docs-space">Arrows</h5>
+            
+            <a href="#" class="arrow">
+              <span class="arrow__icon"></span>
+            </a>
+            <a href="#" class="arrow arrow--right">
+              <span class="arrow__icon"></span>
+            </a>
+          </div>
+          <div class="col-md-6 docs-space">
+            <h5 id="docs-checkbox" class="docs-subtitle docs-space">Checkbox</h5>
+            
+            <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 docs-space">
+            <h5 id="docs-swatches" class="docs-subtitle docs-space">Color Swatches</h5>
+            
+            <div class="dots dots--circular">
+              <div class="dot__selected h5">
+                Color: <span>Select One</span>
+              </div>
+              <div class="dot" title="Black Mesh">
+                <div class="dot__inner lazyload hs-lazyload hs-id-3a44dada" data-bg="{{ 'test-swatch-1.png' | asset_img_url: '50x50', crop: 'center' }}" style=""></div>
+              </div>
+              <div class="dot" title="Brown Mesh">
+                <div class="dot__inner lazyload hs-lazyload hs-id-57b85d70" data-bg="{{ 'test-swatch-2.png' | asset_img_url: '50x50', crop: 'center' }}" style=""></div>
+              </div>
+              <div class="dot is-disabled" title="Eggshell Mesh">
+                <div class="dot__inner lazyload hs-lazyload hs-id-7ec720d9" data-bg="{{ 'test-swatch-3.png' | asset_img_url: '50x50', crop: 'center' }}" style=""></div>
+              </div>                              
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h5 id="docs-quantity" class="docs-subtitle docs-space">Quantity Selector</h5>
+            
+            <div class="quantity-adjuster" data-quantity-adjuster>
+              <button class="quantity-adjuster__decrement" data-decrement>-</button>
+              <input type="number" value="1" min="0" max="12" />
+              <button class="quantity-adjuster__increment" data-increment>+</button>
+            </div>
+          </div>
+          <div class="col-md-6 row">
+            <h5 class="docs-subtitle col-md-12 docs-space">Close Icon</h5>
+
+            <div class="col-md-6">
+              <h6 class="docs-subtitle docs-space">Large</h6>
+              
+              <a href="#" class="unstyled">
+                <span class="close-icon close-icon--big">
+                  {% include 'icon-close' %}
+                </span>
+              </a>
+            </div>
+            <div class="col-md-6">
+              <h6 class="docs-subtitle docs-space">Small</h6>
+              
+              <a href="#" class="unstyled">
+                <span class="close-icon">
+                  {% include 'icon-close' %}
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <h4 id="docs-icons" class="docs-title">Icons & Logos</h4>
+
+        <div class="row">
+          <div class="col-md-12 docs-space">
+            <h5 class="docs-subtitle docs-space">Icons</h5>
+            
+            <ul class="styleguide-icons">
+              <li>{% include 'icon-search' %}</li>
+              <li>{% include 'icon-account' %}</li>
+              <li>{% include 'icon-bag' %}</li>
+              <li>{% include 'icon-facebook' %}</li>
+              <li>{% include 'icon-instagram' %}</li>
+              <li>{% include 'icon-twitter' %}</li>
+              <li>{% include 'icon-youtube' %}</li>
+              <li>{% include 'icon-pinterest' %}</li>
+            </ul>
+          </div>
+
+          <div class="col-md-12 row">
+            <h5 class="docs-subtitle docs-space col-md-12">Logos</h5>
+
+            <div class="col-md-6">
+              <h6 class="docs-subtitle docs-space">Mobile</h6>
+              
+              <a href="#" itemprop="url" class="unstyled header-logo docs-space header-logo--mobile">
+                {% assign logo_img = 'logo.png' %}
+                {% assign logo_img_size = '120x' %}
+                  <img src="{{ logo_img | asset_img_url: logo_img_size }}"
+                      srcset="{{ logo_img | asset_img_url: logo_img_size }} 1x, {{ logo_img | asset_img_url: logo_img_size, scale: 2 }} 2x"
+                      alt="{{ shop.name }}"
+                      class="header-logo__image"
+                      itemprop="logo">
+              </a>
+              <a href="#" itemprop="url" class="unstyled header-logo header-logo--mobile">
+                {% assign logo_img = 'logo-compressed.png' %}
+                {% assign logo_img_size = '120x' %}
+                  <img src="{{ logo_img | asset_img_url: logo_img_size }}"
+                      srcset="{{ logo_img | asset_img_url: logo_img_size }} 1x, {{ logo_img | asset_img_url: logo_img_size, scale: 2 }} 2x"
+                      alt="{{ shop.name }}"
+                      class="header-logo__image"
+                      itemprop="logo">
+              </a>
+            </div>
+            <div class="col-md-6">
+              <h6 class="docs-subtitle docs-space">Desktop</h6>
+              
+              <a href="#" itemprop="url" class="unstyled header-logo">
+                {% assign logo_img = 'logo.png' %}
+                {% assign logo_img_size = '200x' %}
+                  <img src="{{ logo_img | asset_img_url: logo_img_size }}"
+                      srcset="{{ logo_img | asset_img_url: logo_img_size }} 1x, {{ logo_img | asset_img_url: logo_img_size, scale: 2 }} 2x"
+                      alt="{{ shop.name }}"
+                      class="header-logo__image"
+                      itemprop="logo">
+              </a>
+            </div>
+            
+          </div>
+        </div>
+
+        <h4 id="docs-form" class="docs-title">Forms</h4>
+        
+        <form>
+          <div class="form-group">
+            <label for="textDefault1">Input Field Inactive</label>
+            <input type="text" id="textDefault1" class="form-control" disabled>
+          </div>
+          <div class="form-group">
+            <label for="textDefault2">Input field active</label>
+            <input type="text" id="textDefault2" class="form-control" value="johnsmith@gma">
+          </div>
+          <div class="form-group">
+            <label for="textDefault4">Input field error</label>
+            <input type="text" id="textDefault4" class="form-control is-invalid" value="johnsmith@gma">
+            <div class="invalid-feedback">
+              Not a valid email address
+            </div>
+          </div>
+        </form>
+
+        <h5 class="docs-subtitle">Email pop ups</h5>
+          
+        <form clasS="form-inline">
+          <div class="form-group">
+            <label for="testInvisibleLabel1" class="sr-only">Email</label>
+            <input type="text" id="testInvisibleLabel1" name="testInvisibleLabel1" class="form-control">
+            <button type="submit" class="btn btn-primary">Join Up</button>
+          </div>
+          <div class="form-group">
+            <label for="testInvisibleLabel2" class="sr-only">Email</label>
+            <input type="text" id="testInvisibleLabel2" name="testInvisibleLabel2" value="johnsmith@gma" class="form-control">
+            <button type="submit" class="btn btn-primary">Join Up</button>
+          </div>
+          <div class="form-group">
+            <label for="testInvisibleLabel3" class="sr-only">Email</label>
+            <input type="text" id="testInvisibleLabel3" name="testInvisibleLabel3" class="form-control is-invalid" value="johnsmith@gma">
+            <button type="submit" class="btn btn-primary">Join Up</button>
+            <div class="invalid-feedback">
+              Not a valid email address
+            </div>
+          </div>
+        </form>
+
+        <h4 id="docs-utilities" class="docs-subtitle">Text Utilities</h4>
+
+        <ul class="docs-text-list">
+          <li class="font-weight-normal">.font-weight-normal</li>
+          <li class="font-weight-bold">.font-weight-bold</li>
+          <li class="letter-spacing-base">.letter-spacing-base</li>
+          <li class="text-black">.text-black</li>
+          <li class="text-gray-darkest">.text-gray-darkest</li>
+          <li class="text-gray-darker">.text-gray-darker</li>
+          <li class="text-gray-dark">.text-gray-dark</li>
+          <li class="text-gray">.text-gray</li>
+          <li class="text-gray-light">.text-gray-light</li>
+          <li class="text-white">.text-white</li>
+          <li class="text-muted">.text-muted</li>
+          <li class="text-black-50">.text-black-50</li>
+          <li class="text-white-50">.text-white-50</li>
+          <li class="text-primary">.text-primary</li>
+          <li class="text-secondary">.text-secondary</li>
+          <li class="text-success">.text-success</li>
+          <li class="text-info">.text-info</li>
+          <li class="text-warning">.text-warning</li>
+          <li class="text-danger">.text-danger</li>
+        </ul>
+
+        <h5 class="docs-subtitle">Background Color Utilities</h5>
+        <ul class="docs-text-list">
+          <li class="bg-black text-white">.bg-black</li>
+          <li class="bg-gray-darkest text-white">.bg-gray-darkest</li>
+          <li class="bg-gray-darker text-white">.bg-gray-darker</li>
+          <li class="bg-gray-dark">.bg-gray-dark</li>
+          <li class="bg-gray">.bg-gray</li>
+          <li class="bg-gray-light">.bg-gray-light</li>
+          <li class="bg-gray-lighter">.bg-gray-lighter</li>
+          <li class="bg-white">.bg-white</li>
+          <li class="bg-primary">.bg-primary</li>
+          <li class="bg-secondary">.bg-secondary</li>
+          <li class="bg-success">.bg-success</li>
+          <li class="bg-info">.bg-info</li>
+          <li class="bg-warning">.bg-warning</li>
+          <li class="bg-danger">.bg-danger</li>
+        </ul>
+
+        <h4 id="docs-frames" class="docs-title">Frames</h4>
+
+        <p>Use frames to create elements with defined aspect ratios.  All frames require the <code>.frame</code> base class and a modifier class to define their aspect ratio.  See <code>/_styles/components/frames.scss</code> to adjust available ratios.</p>
+        <p>There is also a child element <code>.frame__inner</code> that is positioned absolutely and stretches the full dimensions of the frame.</p>
+        <div class="row">
+          {% assign ratios = '16x9 6x4 4x3 1x1 3x4 4x6 9x16' | split: " " %}
+          {% for ratio in ratios %}
+            <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+              <div style="margin-bottom: 30px;">
+                <div class="frame frame--{{ ratio }}" style="background-color: white; border: 1px solid #d8d8d8">
+                  <div class="frame__inner flex align-items-center justify-content-center">
+                    {{ ratio }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <h5 class="docs-subtitle">Responsive Frames</h5>
+        <p>Responsive frame sizing is available and works similar to Bootstrap responsive utilities, any breakpoint class applies to that breakpoint and <em>up</em>.  If you add another class for a larger breakpoint it will override any ones applying at smaller breakpoints.  Frame sizing being applied to screen sizes smaller than <code>$grid-breakpoints('sm')</code> do not need a responsive class.</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="frame frame--16x9 frame--sm-6x4 frame--md-1x1 frame--lg-3x4 frame--xl-4x6 frame--xxl-4x6" style="border: 1px solid #d8d8d8">
+                <div class="frame__inner flex flex-column align-items-center justify-content-center text-center" style="padding: 10px;">
+                  <code>.frame</code><br />
+                  <code>.frame--16x9</code><br />
+                  <code>.frame--sm-6x4</code><br />
+                  <code>.frame--md-1x1</code><br />
+                  <code>.frame--lg-3x4</code><br />
+                  <code>.frame--xl-4x6</code>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% section 'custom-fields-pages' %}

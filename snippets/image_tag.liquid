@@ -1,0 +1,109 @@
+{%- comment %}
+
+  Image Tag
+  ------------------------------------------------------------------------------
+  Renders an image tag with lazyloading and responsive attributes, optional: backward compatibility of object fit with IE11
+
+
+  Usage:
+
+  {% render 'image_tag'
+              image: { image object / url } Required
+              mobile_image: { image object / url } Optional
+              object_fit: { string } - Optional - Receives object-fit property values
+              object_position: { string } - Optional - Receives object-position property values
+              fallback_layout: { boolean } - Optional - Sets a 2 image layout for extra compatibility.
+    %}
+
+{% endcomment -%}
+
+
+{% if mobile_image == blank %}
+  {% assign image_mobile = image %}
+{% else %}
+  {% assign image_mobile = mobile_image %}
+{% endif %}
+
+{% if object_fit != blank %}
+  {% assign object_fit_attribute = 'data-object-fit="' | append: object_fit | append: '"'  %}
+{% endif %}
+{% if object_position != blank %}
+  {% assign object_position_attribute = 'data-object-position="' | append: object_position | append: '"'  %}
+{% endif %}
+
+{% if fallback_layout == true %}
+  {% if image contains 'http' or image contains 'cdn'%}
+    <img
+      alt="{{ image.alt }}"
+      data-srcset="
+        {{ image }} 1920w"
+      class="lazyload image--desktop"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }} >
+      <img
+      alt="{{ image_mobile.alt }}"
+      data-srcset="
+        {{ image_mobile }} 768w"
+      class="lazyload image--mobile"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }} >
+  {% else %}
+    <img
+      alt="{{ image.alt }}"
+      data-src="{{ image | img_url: '1800x' }}"
+      class="lazyload image--desktop"
+      data-sizes="auto"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }}
+      data-srcset="
+        {{ image | img_url: '1024x' }} 1024w,
+        {{ image | img_url: '2048x' }} 1024w,
+        {{ image | img_url: '1920x' }} 1920w,
+        {{ image | img_url: '3480x' }} 1920w
+    ">
+    <img
+      alt="{{ image_mobile.alt }}"
+      data-src="{{ image_mobile | img_url: '1800x' }}"
+      class="lazyload image--mobile"
+      data-sizes="auto"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }}
+      data-srcset="
+        {{ image_mobile | img_url: '414x' }} 414w,
+        {{ image_mobile | img_url: '828x' }} 414w,
+        {{ image_mobile | img_url: '768x' }} 768w,
+        {{ image_mobile | img_url: '1536x' }} 768w
+    ">
+  {% endif %}
+{% else %}
+  {% if image contains 'http' or image contains 'cdn' %}
+    <img alt="{{ image.alt }}"
+      data-srcset="
+        {{ image_mobile }} 768w,
+        {{ image }} 1920w"
+      class="lazyload"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }} >
+  {% else %}
+    <img alt="{{ image.alt }}"
+      data-src="{{ image | img_url: '1800x' }}"
+      class="lazyload"
+      data-sizes="auto"
+      {{  object_fit_attribute  }}
+      {{  object_position_attribute  }}
+      data-srcset="
+        {{ image_mobile | img_url: '414x' }} 414w,
+        {{ image_mobile | img_url: '828x' }} 414w,
+        {{ image_mobile | img_url: '768x' }} 768w,
+        {{ image_mobile | img_url: '1536x' }} 768w,
+        {{ image | img_url: '1024x' }} 1024w,
+        {{ image | img_url: '2048x' }} 1024w,
+        {{ image | img_url: '1920x' }} 1920w,
+        {{ image | img_url: '3480x' }} 1920w
+    ">
+  {% endif %}
+{% endif %}
+
+{% comment %}Reset fields to prevent leaking from causing troubles{% endcomment %}
+{% assign image = blank %}
+{% assign image_mobile = blank %}

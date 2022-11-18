@@ -1,0 +1,40 @@
+{% include 'video-module'
+    v_id: section.id,
+    v_image_desktop: section.settings.image_desktop,
+    v_video: section.settings.video
+    v_background: section.settings.background
+%}
+
+{% schema %}
+{
+  "name": "Image-Video module",
+  "class": "video-module",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Image",
+      "info": "If video is set this will work as the overlay image when the video is paused."
+    },
+    {
+      "type": "video_url",
+      "id": "video",
+      "label": "Video Url",
+      "accept": ["vimeo"]
+    },
+    {
+      "type": "checkbox",
+      "id" : "background",
+      "label": "Background Video",
+      "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image/Video module",
+      "category": "Media"
+    }
+  ]
+}
+{% endschema %}

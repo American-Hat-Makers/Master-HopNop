@@ -1,0 +1,94 @@
+<div class="contact-page layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="page-contact">
+  <div class="container-fluid">
+
+    <div class="contact-header text-center">
+      {% if section.settings.eyebrow != blank %}
+        <p class="contact-page__eyebrow eyebrow eyebrow-dotted">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      {% if section.settings.title != blank %}
+        <h1 class="contact-page__title">{{ section.settings.title }}</h1>
+      {% endif %}
+    </div>
+
+
+    {% if section.blocks.size != 0 %}
+      <div class="contact-information row">
+        {% for block in section.blocks %}
+          {% assign title = block.settings.title %}
+          {% assign copy = block.settings.copy %}
+
+          <div class="contact-information-block col-lg-3 text-center">
+            <h5 class="contact-information__title">{{ title }}</h5>
+            <div class="contact-information__copy">{{ copy }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.form != blank %}
+      <div class="contact-form-container row justify-content-center">
+        <div class="contact-form-inner col-lg-6 col-xl-4">
+          {{ section.settings.form }}
+        </div>
+
+        {% if section.settings.background != blank %}
+          <div class="contact-form-background">
+            {% render 'image_tag'
+                    image: section.settings.background,
+                    object_fit: "cover",
+                    object_position: "bottom"
+            %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Contact Page",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "id": "eyebrow",
+        "type": "text",
+        "label": "Eyebrow"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "form",
+        "type": "textarea",
+        "label": "Form Snippet"
+      },
+      {
+        "id": "background",
+        "type": "image_picker",
+        "label": "Background Image"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "information_column",
+        "name": "Information Column",
+        "settings":[
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "copy",
+            "type": "richtext",
+            "label": "Copy"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

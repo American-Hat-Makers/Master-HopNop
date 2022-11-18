@@ -1,0 +1,47 @@
+{%- comment %}
+
+  Header Dropdown Menu
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'header-dropdown-menu',
+              ll_title: { string },
+              ll_handle: { string },
+              ll_bottom_title: { srtring },
+              ll_bottom_url: { url }
+  %}
+
+{% endcomment -%}
+
+{% assign linklist = linklists[ll_handle] %}
+
+{% if linklist and linklist.links.size > 0 %}
+
+    <div class="header-dropdown__menu" style="max-width: none;">
+      {% if ll_title != blank %}
+        <span class="header-dropdown__menu-title h6">
+          {{ ll_title }}
+        </span>
+      {% endif %}
+      <ul>
+        {% for link in linklist.links %}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            {% if link.links.size > 0 %}
+              <ul>
+                {% for sublink in link.links %}
+                  <li>
+                    <a href="{{ sublink.url }}">{{ sublink.title }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+      {% if ll_bottom_title != blank and ll_bottom_url != blank %}
+        <a href="{{ ll_bottom_url }}" class="header-dropdown__menu-title btn btn-link" title="{{ ll_bottom_title }}">{{ ll_bottom_title }}</a>
+      {% endif %}
+    </div>
+{% endif %}

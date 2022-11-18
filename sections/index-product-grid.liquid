@@ -1,0 +1,184 @@
+{% comment %} Variables {% endcomment %}
+{% assign category_1_cta_text = section.settings.category_1_cta_text %}
+{% assign category_1_cta_link = section.settings.category_1_cta_link %}
+{% assign category_2_cta_text = section.settings.category_2_cta_text %}
+{% assign category_2_cta_link = section.settings.category_2_cta_link %}
+
+{% comment %} Category 1 HTML {% endcomment %}
+{% capture category_1_html %}
+  {% assign category_1_count = 0 %}
+  {% for block in section.blocks %}
+    {% if block.type == "product_category_1" %}
+      {% assign product = all_products[block.settings.product] %}
+      {% if product != blank %}
+        <div class="col-6 col-lg-3" {{ block.shopify_attributes }}>
+          {% include 'product-card',
+                      product: product
+          %}
+        </div>
+        {% assign category_1_count = category_1_count | plus: 1 %}
+      {% endif %}
+    {% endif %}
+    {% if category_1_count == 4 %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="col-12">
+    {% if category_1_cta_text != blank and category_1_cta_link != blank %}
+      <a href="{{ category_1_cta_link }}" class="btn btn-primary">{{ category_1_cta_text }}</a>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% comment %} Category 2 HTML {% endcomment %}
+{% capture category_2_html %}
+  {% assign category_2_count = 0 %}
+  {% for block in section.blocks %}
+    {% if block.type == "product_category_2" %}
+      {% assign product = all_products[block.settings.product] %}
+      {% if product != blank %}
+        <div class="col-6 col-lg-3" {{ block.shopify_attributes }}>
+          {% include 'product-card',
+                      product: product
+          %}
+        </div>
+        {% assign category_2_count = category_2_count | plus: 1 %}
+      {% endif %}
+    {% endif %}
+    {% if category_2_count == 4 %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+
+  <div class="col-12">
+    {% if category_2_cta_text != blank and category_2_cta_link != blank %}
+      <a href="{{ category_2_cta_link }}" class="btn btn-primary">{{ category_2_cta_text }}</a>
+    {% endif %}
+  </div>
+{% endcapture %}
+
+{% comment %} Only display if there are products present {% endcomment %}
+{% if category_1_count > 0 or category_2_count > 0 %}
+  <div data-section-id="{{ section.id }}" data-section-type="product-grid">
+    <div class="product-grid">
+      <div class="container-fluid-max">
+
+        <h2 class="mb-0">{{ section.settings.title }}</h2>
+
+        <div class="product-grid__nav">
+          {% comment %} Hide tabs, if one of the categories does not have any products {% endcomment %}
+          {% unless category_1_count == 0 or category_2_count == 0 %}
+
+            {% comment %} Show tabs only if both the titles are present {% endcomment %}
+            {% if section.settings.category_1_title != blank and section.settings.category_2_title != blank %}
+              <a href="javascript:;" data-category-link="category-primary" class="product-grid__nav-link is-active">{{ section.settings.category_1_title }}</a>
+              <a href="javascript:;" data-category-link="category-secondary" class="product-grid__nav-link">{{ section.settings.category_2_title }}</a>
+            {% endif %}
+          {% endunless %}
+        </div>
+
+        {% if category_1_count > 0 %}
+          <div class="row" data-category="category-primary">
+            {{ category_1_html }}
+          </div>
+        {% endif %}
+
+        {% if category_2_count > 0 %}
+          <div class="row {% if category_1_count > 0 %} hide {% endif %}" data-category="category-secondary">
+            {{ category_2_html }}
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Grid",
+    "max_blocks": 8,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "header",
+        "content": "Category 1"
+      },
+      {
+        "type": "text",
+        "id": "category_1_title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "category_1_cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "category_1_cta_link",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Category 2"
+      },
+      {
+        "type": "text",
+        "id": "category_2_title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "category_2_cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "category_2_cta_link",
+        "label": "CTA Link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "product_category_1",
+        "name": "Product (Category 1)",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product",
+            "info": "Category 1"
+          }
+        ]
+      },
+      {
+        "type": "product_category_2",
+        "name": "Product (Category 2)",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product",
+            "info": "Category 2"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Product",
+        "name": "Product Grid",
+        "settings": {
+          "title": "Our Products"
+        },
+        "blocks": []
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,67 @@
+{% render "blocks.custom_fields" with resource_type: "collections", blocks: section.blocks %}
+{% schema %}
+  {
+    "name": {
+        "en": "Custom Fields"
+    },
+    "settings": [
+        {
+            "type": "paragraph",
+            "content": "[View Documentation](https:\/\/custom-fields.docs.bonify.io\/)"
+        },
+        {
+            "type": "paragraph",
+            "content": "[Edit Custom Fields](https:\/\/customfields.bonify.io\/dashboard\/headn-home.myshopify.com\/collections\/configure)"
+        }
+    ],
+    "templates": [
+        "collection"
+    ],
+    "presets": [
+        {
+            "name": "Custom Fields",
+            "blocks": []
+        }
+    ],
+    "blocks": [
+        {
+            "type": "cf_f_txtl",
+            "name": {
+                "en": "Text (List)"
+            },
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "key",
+                    "label": "Select a Field",
+                    "options": [
+                        {
+                            "value": "custom_fields.bp_height",
+                            "label": "Height"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "cf_w_acc",
+            "name": {
+                "en": "Accordion V1"
+            },
+            "settings": [
+                {
+                    "type": "select",
+                    "id": "key",
+                    "label": "Select a Widget",
+                    "options": [
+                        {
+                            "value": "custom_fields.faqs",
+                            "label": "faqs"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

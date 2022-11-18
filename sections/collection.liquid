@@ -1,0 +1,347 @@
+{%- comment %}
+
+  Collection Section
+  ------------------------------------------------------------------------------
+
+  The tags using for filtering are the ones that starts with:
+    - `color:`
+    - `size:`
+
+{% endcomment -%}
+
+{% comment %}Assing custom field shorthand{% endcomment %}
+{% assign cf = collection.metafields.custom_fields %}
+
+{% assign filter_types = 'color,size' | split: "," %}
+
+{% for product in collection.products %}
+  <!-- Product Schema -->
+  <div itemscope itemtype="https://schema.org/Product">
+    <meta itemprop="name" content="{{ product.title }}">
+    <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+
+    <div itemprop="brand" itemscope itemtype="https://schema.org/Brand">
+      <meta itemprop="name" content="American Hat Makers">
+      <meta itemprop="url" content="{{ shop.url }}">
+      <meta itemprop="slogan" content="Hats for Everyone">
+    </div>
+
+    <meta itemprop="image" content="{{ product.selected_or_first_available_variant.featured_image | img_url: '600x600' }}">
+
+    {% for image in product.images %}
+      <meta itemprop="image" content="{{ image.src | product_img_url: 'medium' }}">
+    {% endfor %}
+
+    <meta itemprop="sku" content="{{ product.selected_or_first_available_variant.sku }}">
+    <meta itemprop="description" content="{{ product.metafields.global.description_tag }}">
+
+    {% for item in  product.selected_or_first_available_variant.tags %}
+      <meta itemprop="keywords" content="{{ item }}">
+    {% endfor %}
+
+    {% for variant in product.variants %}
+      {%- assign floating_point_price = variant.price | money_without_currency -%}
+      <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="USD">
+        <meta itemprop="price" content="{{ floating_point_price | strip_html | escape }}">
+        <meta itemprop="itemCondition" content="https://schema.org/NewCondition">
+        <meta itemprop="url" content="{{ shop.url }}{{ variant.url }}">
+        <meta itemprop="sku" content="{{ variant.sku }}">
+        {% if variant.available %}
+          <meta itemprop="availability" content="https://schema.org/InStock">
+        {% else %}
+          <meta itemprop="availability" content="https://schema.org/OutOfStock">
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    {% if product.metafields.okendo.summaryData.reviewCount > 0 %}
+      <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+        <meta itemprop="ratingValue" content="{{ product.metafields.okendo.summaryData.reviewAverageValue }}">
+        <meta itemprop="ratingCount" content="{{ product.metafields.okendo.summaryData.reviewCount }}">
+      </div>
+    {% elsif product.metafields.okendo.ReviewCount > 0 %}
+      <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+        <meta itemprop="ratingValue" content="{{ product.metafields.okendo.ReviewAverageValue }}">
+        <meta itemprop="ratingCount" content="{{ product.metafields.okendo.ReviewCount }}">
+      </div>
+    {% endif %}
+    
+    {% assign keywordArray = product.metafields.custom.schemakeywords | split: "," %}
+    {% for keyword in keywordArray %}
+      <meta itemprop="keywords" content="{{ keyword }}">
+    {% endfor %}
+  </div>
+{% endfor %}
+
+{% paginate collection.products by 6 %}
+
+{%- comment %}
+  Collection Schema:
+    This is just assigning each product to a product schema and putting 
+    all of them in one place
+{% endcomment -%}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="collection">
+  <div class="row headerRow">
+    <div id="headerColumn1" class="column headerColumn">
+      <img id="header-icon-1" src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-hat-icon.png?v=1664831909">
+      <p style="display:inline">1 Million Hats made since 1972</p>
+    </div>
+    <div id="headerColumn2" class="column headerColumn">
+      <img id="header-icon-2" src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-family-icon.png?v=1664831907">
+      <p style="display:inline">50 Years Family Owned</p>
+    </div>
+    <div id="headerColumn3" class="column headerColumn">
+      <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-shipping-icon.png?v=1664831907">
+      <p style="display:inline">Ships in 1 Business Day</p>
+    </div>
+    <div id="headerColumn4" class="column headerColumn">
+      <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-reviews-icon.png?v=1664831907">
+      <p style="display:inline">13,000+ 5-Star Reviews</p>
+    </div>
+  </div>
+  {% assign bp_background_image = cf['bp_background_image'] | default: collection.image %}
+  {% if bp_background_image == blank %}
+    {% include 'page-header',
+                ph_title: collection.title,
+                ph_subtitle: collection.description
+    %}
+  {% else %}
+    {% assign bp_content_max_width = cf['bp_content_max_width'] | default: 400 | plus: 0 %}
+    {% assign bp_light_text = false %}
+    {% if cf['bp_light_text'] == 1 %}
+      {% assign bp_light_text = true %}
+    {% endif %}
+    <div class="banner">
+      {% include 'banner-panel',
+        bp_id: 'collection-banner-panel',
+        bp_height: cf['bp_height'],
+        bp_content_alignment: cf['bp_content_alignment'],
+        bp_text_alignment: cf['bp_content_alignment'],
+        bp_content_max_width: bp_content_max_width,
+        bp_background_image: bp_background_image,
+        bp_light_text: bp_light_text,
+        bp_overlay: cf['bp_overlay'],
+        bp_eyebrow: cf['bp_eyebrow'],
+        bp_title_semantic_tag: 'h1',
+        bp_title_style_tag: 'h1',
+        bp_title: cf['bp_title'],
+        bp_text: cf['bp_text']
+      %}
+    </div>
+  {% endif %}
+
+  
+
+  <div class="container-fluid-max">
+    <style>.findify-component-spinner,.findify-component-spinner:after{border-radius:50%;width:60px;height:60px}.findify-component-spinner{margin:60px auto 0!important;position:relative;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);-webkit-animation:findify-component-spinner-animation .7s infinite cubic-bezier(.67,.35,.7,.8);animation:findify-component-spinner-animation .7s infinite cubic-bezier(.67,.35,.7,.8);-ms-transform-origin:50% 50%;-webkit-transform-origin:50% 50%;transform-origin:50% 50%;border-top:3px solid #eaeaea;border-right:3px solid #eaeaea;border-bottom:3px solid #eaeaea;border-left:3px solid #c6c6c6}@-webkit-keyframes findify-component-spinner-animation{0%{-webkit-transform:rotate(90deg);transform:rotate(90deg)}100%{-webkit-transform:rotate(450deg);transform:rotate(450deg)}}@keyframes findify-component-spinner-animation{0%{-webkit-transform:rotate(90deg);transform:rotate(90deg)}100%{-webkit-transform:rotate(450deg);transform:rotate(450deg)}}</style>
+    <div data-findify="search" style="min-height: 400px;">
+      <div class="findify-component-spinner"></div>
+      <div class="findify-fallback" style="display:none;">
+        {% if collection.products.size > 0 %}
+          <div class="collection-filter-bar">
+            {% comment %}
+              Vertically align groupings.  Space them out horizontally, flush to the edges
+              Make sure you put the if statements *inside* the .collection-filter-bar__grouping elements to always output tags even if they are empty.
+              This will ensure that flex will always space them out appropriately
+            {% endcomment %}
+            <div class="breadcrumbs">
+              <div class="breadcrumbs__crumb">
+                <a href="/">Home</a>
+              </div>
+              {% unless collection.title == "All Hats" %}
+              <div class="breadcrumbs__crumb">
+                <a href="/collections/all-hats">All Hats</a>
+              </div>
+              {% endunless %}
+              <div class="breadcrumbs__crumb">
+                <span class="breadcrumbs__crumb--current">{{ collection.title }}</span>
+              </div>
+            </div>
+            <div class="collection-filter-bar__grouping">
+              {% if section.settings.enable_filters %}
+
+                {% assign mobile_filter_id = 'mobile-filters' %}
+
+                {% include 'collection-mobile-filters', id: mobile_filter_id, filter_types: filter_types %}
+
+                <div class="d-md-none">
+                  <a href="#" data-toggle="drawer" data-target="#{{ mobile_filter_id }}" data-backdrop="true">
+                    <span style="margin-right: 6px;">{% include 'icon-filters' %}</span>
+                    Filter By
+                  </a>
+                </div>
+
+                <div class="d-none d-md-block">
+                  {% include 'collection-filters', filter_types: filter_types %}
+                </div>
+
+              {% endif %}
+            </div>
+            <div class="collection-filter-bar__grouping">
+              {% if section.settings.enable_sort %}
+                {% include 'collection-sort' %}
+              {% endif %}
+            </div>
+          </div>
+
+          <p class="d-none d-md-block">
+            <small>Showing {{ collection.products.size }} {{ collection.products.size | pluralize: 'Item', 'Items' }}</small>
+          </p>
+
+          <div class="content-grid">
+            {% for product in collection.products %}
+              {%- if product.metafields.inventory.ShappifyHidden == 'true' -%}{%- continue -%}{%- endif -%}
+              <div class="content-grid__item">
+                {% include 'product-card', product: product, lazy_load: true %}
+              </div>
+            {% endfor %}
+          </div>
+
+          {% if paginate.pages > 1 %}
+            {% include 'pagination' %}
+          {% endif %}
+
+          {% comment %} This JSON is required for filtering and sorting {% endcomment %}
+          {% capture collection_url %}
+            {% if collection.handle == "all" %}
+              /collections/all
+            {% else %}
+              {{ collection.url }}
+            {% endif %}
+          {% endcapture %}
+
+          <script type="application/json" data-collection-json>
+            {
+              "url": {{ collection_url | strip | json }},
+              "sortDefault": {{ collection.default_sort_by | json }},
+              "sortApplied": {{ collection.sort_by | json }}
+            }
+          </script>
+
+        {% else %}
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="filter-sticky">
+    <a href="javascript:;">Filters</a>
+  </div>  
+  <script>
+    $(document).ready(function(){
+      $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 270) {
+          $(".filter-sticky").addClass("active");
+        } else {
+          $(".filter-sticky").removeClass("active");
+        }
+      });
+      $(".filter-sticky").click(function(){
+        $("button.findify-components--button.findify-components-search--mobile-actions__button").click();
+      });
+    });    
+  </script>
+  {% if cf['rt_enable_module'] == 1 %}
+  {% if cf['rt_background_color'] != blank %}
+    {% assign rt_bg_color = 'bg-' | append: cf['rt_background_color'] %}
+  {% endif %}
+    {% include 'richtext-block'
+               rt_id: 'collection-rich-text',
+               rt_eyebrow: cf['rt_eyebrow'],
+               rt_title: cf['rt_title'],
+               rt_text: cf['rt_text'],
+               rt_cta_title: cf['rt_cta_title'],
+               rt_cta_url: cf['rt_cta_url'],
+               rt_content_alignment: cf['rt_content_alignment'],
+               rt_content_max_width: cf['rt_content_max_width'],
+               rt_background_color: rt_bg_color
+    %}
+  {% endif %}
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "id": "enable_filters",
+        "type": "checkbox",
+        "label": "Enable Filters",
+        "default": true,
+        "info": "Filtering is based on product tags."
+      },
+      {
+        "id": "enable_sort",
+        "type": "checkbox",
+        "label": "Enable Sort",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+  @media screen and (min-width: 768px) {
+    .headerColumn {
+      width: max-content !important;
+      border: none !important;
+    }
+  }
+  .headerRow {
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+    flex-wrap: nowrap;
+    background-color: #F2F2F2;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1240px) {
+    .headerRow {
+      left: calc((-100vw + 100%)/4);
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .headerRow {
+      flex-wrap: wrap;
+      left: calc((-100vw + 100%)/4);
+    }
+    .headerColumn {
+      width: 50%;
+      border: 1px solid #e9e9e9;
+    }
+    #headerColumn1 {
+      border-top: none;
+      border-left: none;
+      border-right: 1px solid #e9e9e9;
+      border-bottom: none;
+      margin-bottom: 0px;
+    }
+    #headerColumn2 {
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px solid #e9e9e9;
+      border-right: none;
+      margin-bottom: 0px;
+      margin-left: 0px;
+    }
+    #headerColumn3 {
+      display: none;
+    }
+    #headerColumn4 {
+      display: none;
+    }
+    #header-icon-1 {
+      display: none;
+    }
+    #header-icon-2 {
+      display: none;
+    }
+  }
+</style>

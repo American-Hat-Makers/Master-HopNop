@@ -1,0 +1,89 @@
+{% comment %} Capture content grid {% endcomment %}
+{% capture content_grid_html %}
+  {% for block in section.blocks %}
+    {% if block.type == "two-up"  %}
+
+        {% include 'content-card',
+                    cc_id: block.id,
+                    cc_icon: block.settings.icon,
+                    cc_title: block.settings.title,
+                    cc_text: block.settings.text,
+                    cc_light_text: block.settings.light_text
+                    cc_cta_text: block.settings.cta_text,
+                    cc_cta_url: block.settings.cta_url,
+                    cc_cta_block_style: false
+                    cc_background_image: block.settings.background_image,
+                    cc_custom_class: 'col-lg-6'
+        %}
+
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+
+{% if content_grid_html != blank %}
+  <div class="container-fluid" data-section-id="{{ section.id }}" data-section-type="2-up-content-grid">
+    <div class="row justify-content-center">
+      {{ content_grid_html }}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "2 Up Content Grid",
+    "max_blocks": 2,
+    "settings": [],
+    "blocks": [
+      {
+        "type": "two-up",
+        "name": "Content Card",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Background Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "category": "Media",
+        "name": "2 Up Content Grid",
+        "settings": {},
+        "blocks": []
+      }
+    ]
+  }
+{% endschema %}

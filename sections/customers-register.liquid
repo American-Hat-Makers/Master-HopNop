@@ -1,0 +1,30 @@
+{% assign title = 'customer.register.title' | t %}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="customers-register">
+  <div class="row login align-items-center">
+    <div class="col-xl-6 col-lg-6 login__image-container">
+      {% include 'image_tag', image: section.settings.register_image %}
+    </div>
+    <div class="col-xl-6 col-lg-6 login__content-container">
+      <h3 class="login__title">{{ 'customer.register.title' | t }}</h3>
+      <p class="p1 login__subtitle">{{ 'customer.register.subtitle' | t }}</p>
+      <div class="login__form-container">
+        {% include 'customer-register-form' %}
+        <p class="p2 login__message">{{ 'customer.register.message' | t }} <a href="/account/login" class="btn btn-link text-gray-darkest">{{ 'customer.register.login' | t }}</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Customer register",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "register_image",
+        "label": "Image"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,8 @@
+{% if collection.metafields.custom_fields["rt_content_max_width"] != blank %}
+  <div class="custom-field custom-field__rt-content-max-width custom-field__type--number">
+    <h3 class="custom-field--title">Content max width</h3>
+    <div class="custom-field--value">
+      {{ collection.metafields.custom_fields["rt_content_max_width"] }}
+    </div>
+  </div>
+{% endif %}

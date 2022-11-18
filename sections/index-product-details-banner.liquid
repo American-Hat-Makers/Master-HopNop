@@ -1,0 +1,126 @@
+{% assign eyebrow = section.settings.eyebrow %}
+{% assign title = section.settings.title %}
+{% assign product_image = section.settings.image %}
+{% assign blocks_divider = section.blocks.size | divided_by: 2 | ceil %}
+
+<div data-section-id="{{ section.id }}" class="product-details-banner" data-section-type="product-details">
+  {% if section.blocks.size > 0 %}
+    {% capture left_blocks %}
+      {% for block in section.blocks %}
+        {% assign detail_title = block.settings.detail_title %}
+        {% assign detail_text = block.settings.detail_text %}
+
+        <div class="single-detail">
+          <h5 class="single-detail__title">{{ detail_title }}</h5>
+          <p class="single-detail__copy p3">{{ detail_text }}</p>
+        </div>
+
+        {% if forloop.index == blocks_divider %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+
+    {% capture right_blocks %}
+      {% for block in section.blocks %}
+        {% if forloop.index > blocks_divider %}
+          {% assign detail_title = block.settings.detail_title %}
+          {% assign detail_text = block.settings.detail_text %}
+
+          <div class="single-detail">
+            <h5 class="single-detail__title">{{ detail_title }}</h5>
+            <p class="single-detail__copy p3">{{ detail_text }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+  {% endif %}
+
+  <div class="container-fluid container--product-details">
+    <div class="row justify-content-center">
+
+      {% if title != blank or eyebrow != blank %}
+        <div class="top-details col-lg-12">
+          <p class="product-details__eyebrow eyebrow eyebrow--dotted">{{ eyebrow }}</p>
+          <h2 class="product-details__title ">{{ title }}</h2>
+        </div>
+      {% endif %}
+
+      {% if left_blocks != blank %}
+        <div class="left-details col-lg-3">{{ left_blocks }}</div>
+      {% endif %}
+
+      {% if title != blank and product_image != blank %}
+        <div class="center-details col-lg-6">
+          <div class="product-details__image frame frame--4x3">
+            {% render 'image_tag'
+                      image: product_image,
+                      object_fit: "contain"
+            %}
+          </div>
+        </div>
+      {% endif %}
+
+      {% if right_blocks != blank %}
+        <div class="right-details col-lg-3">{{ right_blocks }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product Details",
+    "max_blocks": 6,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Section Eyebrow"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Section Image"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "detail",
+        "name": "Product Detail",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "detail_title",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text",
+            "label": "Detail Text"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Product Details",
+      "category": "Product",
+      "settings": {}
+    }]
+  }
+{% endschema %}

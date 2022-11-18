@@ -1,0 +1,82 @@
+<div data-section-id="{{ section.id }}"
+  data-section-type="gdpr-slideup"
+  data-enabled="{{ section.settings.enabled }}"
+  data-delay="{{ section.settings.delay }}"
+  data-seen-expiration="{{ section.settings.seen_expiration }}"
+  role="complementary"
+  aria-label="cookies message"
+  >
+
+  <div class="slideup gdpr-slideup" data-gdpr-slideup>
+    <div class="container-fluid-max">
+      <div class="row justify-content-center">
+        <div class="gdpr-slideup__container col-lg-10 col-xl-8">
+          <div class="gdpr-slideup__content">
+            {% if section.settings.gdpr_text != blank %}
+              {{ section.settings.gdpr_text }}
+            {% endif %}
+          </div>
+          <a href="#" class="gdpr-slideup__cta btn" data-slideup-close>{{ section.settings.gdpr_confirmation_text }}</a>
+        </div>
+      </div>
+      <span data-slideup-close class="close-icon close-icon--big">
+        {% include 'icon-close' %}
+      </span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "GDPR Slideup",
+    "settings": [
+      {
+         "type": "header",
+         "content": "Logic"
+      },
+      {
+        "type": "checkbox",
+        "id": "enabled",
+        "label": "Enabled?",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "delay",
+        "min":  0,
+        "max":  10,
+        "step": 1,
+        "unit": "s",
+        "label": "Seconds to wait before displaying",
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "seen_expiration",
+        "min":  0,
+        "max":  365,
+        "step": 5,
+        "unit": "d",
+        "label": "Days before showing again",
+        "default": 365,
+        "info": "If the user accepts cookies or closes the slideup, this is how long we wait before showing again.  Set to '0' to never show again."
+      },
+      {
+         "type": "header",
+         "content": "Content",
+         "info": "Changing these settings will clear cookies and cause all users to see this again."
+      },
+      {
+        "type": "richtext",
+        "id": "gdpr_text",
+        "label": "GDPR Text"
+      },
+      {
+        "type": "text",
+        "id": "gdpr_confirmation_text",
+        "label": "Confirmation Text",
+        "default": "GOT IT!"
+      }
+    ]
+  }
+{% endschema %}

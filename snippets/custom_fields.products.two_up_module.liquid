@@ -1,0 +1,42 @@
+{% if product.metafields.custom_fields["two_up_module"] != blank %}
+  <div class="custom-field custom-field__two-up-module custom-field__type--field-collection">
+    <h3 class="custom-field--title">Two up module</h3>
+    <div class="custom-field--value">
+      {% assign separator = "|###|" %}
+      {% assign cc_icon_array = product.metafields.custom_fields["cc_icon"] | split: separator %}
+      {% assign cc_title_array = product.metafields.custom_fields["cc_title"] | split: separator %}
+      {% assign cc_text_array = product.metafields.custom_fields["cc_text"] | split: separator %}
+      {% assign cc_light_text_array = product.metafields.custom_fields["cc_light_text"] | split: separator %}
+      {% assign cc_cta_title_array = product.metafields.custom_fields["cc_cta_title"] | split: separator %}
+      {% assign cc_cta_url_array = product.metafields.custom_fields["cc_cta_url"] | split: separator %}
+      {% assign cc_background_image_array = product.metafields.custom_fields["cc_background_image"] | split: separator %}
+      {% assign fc_keys = product.metafields.custom_fields["two_up_module"] | split: "," %}
+      {% for i in fc_keys %}
+        {% assign index = i | plus: 0 %}
+        <div class="fc-item fc-item-- fc-index--{{ index }}">
+          <div class="fc-field field__cc-icon">
+            {{ cc_icon_array[index] }}
+          </div>
+          <div class="fc-field field__cc-title">
+            {{ cc_title_array[index] }}
+          </div>
+          <div class="fc-field field__cc-text">
+            {{ cc_text_array[index] }}
+          </div>
+          <div class="fc-field field__cc-light-text">
+            {{ cc_light_text_array[index] }}
+          </div>
+          <div class="fc-field field__cc-cta-title">
+            {{ cc_cta_title_array[index] }}
+          </div>
+          <div class="fc-field field__cc-cta-url">
+            {{ cc_cta_url_array[index] }}
+          </div>
+          <div class="fc-field field__cc-background-image">
+            {{ cc_background_image_array[index] }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

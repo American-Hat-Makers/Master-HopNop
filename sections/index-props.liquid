@@ -1,0 +1,36 @@
+{% if section.blocks.size != 0 %}
+    {% include 'props', props_list: section.blocks %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Props",
+	"class": "Props_index",
+    "max_blocks": 4,
+    "settings": [],
+    "blocks":[
+      {
+        "type": "text",
+        "name": "Props",
+        "settings":[
+          {
+            "id": "props",
+            "type": "text",
+            "label": "Prop"
+          },
+		 {
+            "id": "prop_link",
+            "type": "url",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+        {
+            "category": "Misc",
+            "name":"Props"
+        }
+    ]    
+  }
+{% endschema %}

@@ -1,0 +1,90 @@
+{% capture sidebar_html %}
+  {% include 'account-sidebar' %}
+{% endcapture %}
+
+{% paginate customer.orders by 1000 %}
+  
+  <div class="layout-content-wrapper customers-account-orders" data-section-id="{{ section.id }}" data-section-type="customers-account-orders">
+    <div class="container">
+      
+      <div class="row">
+
+        {{ sidebar_html }}
+
+        <div class="account-content{% if sidebar_html != blank %} account-content--has-sidebar{% endif %} col-lg-8 offset-lg-1">
+
+          <h4 class="orders-title">{{ 'customer.account.order_history' | t }}</h4>
+
+          {% if customer.orders.size == 0 %}
+            <div class="account-block">
+              <div class="account-block__content">{{ 'customer.orders.none' | t }}</div>
+            </div>
+          {% else %}
+            <div class="d-block d-lg-none">
+              {% for order in customer.orders %}
+                <div class="ordes-table-container">
+                  <table class="table table-borderless table-sm orders-table">
+                    <tr>
+                      <th>{{ 'customer.orders.shipped_to' | t }}</th>
+                      <td class="text-right">{{ order.customer.name }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{ 'customer.orders.date' | t }}</th>
+                      <td class="text-right">{{ order.created_at | time_tag: format: 'month_day_year_short_form' }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{ 'customer.orders.order_number' | t }}</th>
+                      <td class="text-right">{{ order.order_number }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{ 'customer.orders.payment' | t }}</th>
+                      <td class="text-right">{{ order.financial_status_label }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{ 'customer.orders.fulfillment' | t }}</th>
+                      <td class="text-right">{{ order.fulfillment_status_label }}</td>
+                    </tr>
+                    <tr>
+                      <th>{{ 'customer.orders.amount' | t }}</th>
+                      <td class="text-right">{{ order.total_price | money }}</td>
+                    </tr>
+                  </table>
+                  <a href="{{ order.customer_url }}" class="btn btn-primary">{{ 'customer.orders.order_details' | t }}</a>
+                </div>
+              {% endfor %}
+            </div>
+            <div class="d-none d-lg-block">
+              <table class="table table-borderless orders-table">
+                <thead>
+                  <tr>
+                    <th>{{ 'customer.orders.shipped_to' | t }}</th>
+                    <th>{{ 'customer.orders.date' | t }}</th>
+                    <th>{{ 'customer.orders.order_number' | t }}</th>
+                    <th>{{ 'customer.orders.status' | t }}</th>
+                    <th>{{ 'customer.orders.amount' | t }}</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for order in customer.orders %}
+                    <tr>
+                      <td>{{ order.customer.name }}</td>
+                      <td>{{ order.created_at | time_tag: format: 'month_day_year_short_form' }}</td>
+                      <td><a href="{{ order.customer_url }}">{{ order.order_number }}</a></td>
+                      <td><a href="{{ order.order_status_url }}">{{ order.fulfillment_status_label }}</a></td>
+                      <td>{{ order.total_price | money }}</td>
+                      <td class="details"><a href="{{ order.order_status_url }}" class="btn btn-link btn-sm">View Details</a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% endif %}
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+{% endpaginate %}

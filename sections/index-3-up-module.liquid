@@ -1,0 +1,71 @@
+{% include 'three-up'
+          t_id: section.id,
+          t_blocks: section.blocks
+%}
+
+
+{% schema %}
+  {
+    "name": "3 Up",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "white_bg",
+        "label": "White Background"
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text",
+        "label": "Light Text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "detail",
+        "name": "Up Block",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_icon",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "block_title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "block_text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_background",
+            "label": "Background"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "3 Up",
+      "category": "Media",
+      "settings": {}
+    }]
+  }
+{% endschema %}

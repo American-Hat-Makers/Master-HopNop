@@ -1,0 +1,160 @@
+<div class="contact-page layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="page-contact">
+  <div class="container-fluid">
+
+    <div class="contact-header text-center">
+      {% if section.settings.eyebrow != blank %}
+        <p class="contact-page__eyebrow eyebrow eyebrow--dotted">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      {% if section.settings.title != blank %}
+        <h1 class="contact-page__title">{{ section.settings.title }}</h1>
+      {% endif %}
+    </div>
+
+
+    {% if section.blocks.size != 0 %}
+      <div class="contact-information row">
+        {% for block in section.blocks %}
+          {% assign title = block.settings.title %}
+          {% assign copy = block.settings.copy %}
+
+          <div class="contact-information-block col-lg-3 text-center">
+            <h5 class="contact-information__title">{{ title }}</h5>
+            {% assign title_downcase = title | downcase %}
+            <div class="contact-information__copy {% if title_downcase == 'telephone' %}contact-information__copy--telephone{% endif %}">{{ copy }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+
+    <div class="contact-form-container row justify-content-center">
+      <div class="contact-form-inner col-lg-6 col-xl-4">
+        {% form 'contact' %}
+
+          {% if form.posted_successfully? %}
+            <div class="alert alert-success">
+              {% if section.settings.success_message != blank %}
+                {{ section.settings.success_message }}
+              {% else %}
+                {{ 'contact.form.post_success' | t }}
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+
+          <div class="form-group">
+            <label for="ContactFormName" class="col-form-label">{{ 'contact.form.name' | t }}</label>
+            <input type="text"
+              name="contact[name]"
+              id="ContactFormName"
+              class="form-control"
+              placeholder="{{ 'contact.form.name' | t }}"
+              value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </div>
+
+          <div class="form-group">
+            <label for="ContactFormEmail" class="col-form-label">{{ 'contact.form.email' | t }}</label>
+              <input type="email"
+                name="contact[email]"
+                id="ContactFormEmail"
+                class="form-control"
+                placeholder="{{ 'contact.form.email' | t }}"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="off">
+          </div>
+
+          <div class="form-group">
+            <label for="ContactFormPhone" class="col-form-label">{{ 'contact.form.phone' | t }}</label>
+            <input type="tel"
+              name="contact[phone]"
+              id="ContactFormPhone"
+              class="form-control"
+              placeholder="{{ 'contact.form.phone' | t }}"
+              value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+              pattern="[0-9\-]*">
+          </div>
+
+          <div class="form-group">
+            <label for="ContactFormMessage" class="col-form-label">{{ 'contact.form.message' | t }}</label>
+            <textarea rows="10"
+              name="contact[body]"
+              id="ContactFormMessage"
+              class="form-control"
+              placeholder="{{ 'contact.form.message' | t }}">
+              {%- if form.body -%}
+                {{ form.body }}
+              {%- endif -%}
+            </textarea>
+          </div>
+
+          <div class="text-center">
+            <input type="submit" class="btn btn-primary" value="{{ 'contact.form.send' | t }}">
+          </div>
+
+        {% endform %}
+      </div>
+
+
+      {% if section.settings.background != blank %}
+        <div class="contact-form-background">
+          {% render 'image_tag'
+                  image: section.settings.background,
+                  object_fit: "cover",
+                  object_position: "bottom"
+          %}
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Contact Page",
+    "max_blocks": 4,
+    "settings": [
+      {
+        "id": "eyebrow",
+        "type": "text",
+        "label": "Eyebrow"
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "background",
+        "type": "image_picker",
+        "label": "Background Image"
+      }
+    ],
+    "blocks":[
+      {
+        "type": "information_column",
+        "name": "Information Column",
+        "settings":[
+          {
+            "id": "title",
+            "type": "text",
+            "label": "Title"
+          },
+          {
+            "id": "copy",
+            "type": "richtext",
+            "label": "Copy"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,39 @@
+{% if blog.all_tags != blank %}
+  <div class="blog-filters">
+    <div class="blog-filters__desktop d-none d-lg-flex">
+      <div class="blog-filters__link">
+        <a href="{{ blog.url }}" class="blog-filters__url {% if current_tags == blank %} is-active{% endif %}"> All </a>
+      </div>
+      {% for tag in blog.all_tags %}
+        {% if tag contains 'category' or tag contains 'Category' %}
+          {% assign category_name = tag | remove: 'category:' | remove: 'Category:' %}
+          {% if current_tags contains tag %}
+            {% assign is_active = true %}
+          {% else %}
+            {% assign is_active = false %}
+          {% endif %}
+          <div class="blog-filters__link">
+            <a href="{{blog.url}}/tagged/{{ tag | handleize }}" class="blog-filters__url {% if is_active %} is-active{% endif %}">{{ category_name }}</a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="blog-filters__mobile d-block d-lg-none">
+      <select id="blog-filters" class="form-control " data-blog-filters>
+        <option value="{{ blog.url }}" {% if current_tags == blank %}selected="true" {% endif %}> All</option>
+        {% for tag in blog.all_tags %}
+          {% if tag contains 'category' or tag contains 'Category' %}
+            {% assign category_name = tag | remove: 'category:' | remove: 'Category:' %}
+            {% if current_tags contains tag %}
+              {% assign is_active = true %}
+            {% else %}
+              {% assign is_active = false %}
+            {% endif %}
+              <option value="{{blog.url}}/tagged/{{ tag | handleize }}" {% if is_active %} selected="true"{% endif %}">{{ category_name }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+{% endif %}

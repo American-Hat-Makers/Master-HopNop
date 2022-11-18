@@ -1,0 +1,73 @@
+{%- comment %}
+
+  Video
+  ------------------------------------------------------------------------------
+  Usage:
+
+  {% include 'video',
+
+              REQUIRED
+              video_module_id: { string } - required. Separates player from other videos.
+              video_id: { string } - required - id for the actual video.
+              video_type: { string } - required ['vimeo', 'youtube']
+
+              OPTIONAL
+              video_custom_class: { String } 
+              video_embed_color: { String } - HEX code for the video embed.
+              video_cover_image: { Image } 
+              video_background: { Boolean } default: false - puts video into background mode (Vimeo only)
+              video_inline: { Boolean } default: true - play video inline on mobile.  Turn false for full screen takeover.
+              video_controls: { Boolean } default: true - enable/disable controls
+              video_cover_container: { Boolean } default: false - video will maintian aspect ratio while filling the entire container, miking object-fit: cover
+  %}
+
+{% endcomment -%}
+
+{% comment %} DEFAULTS {% endcomment %}
+{% if video_controls != false %}
+  {% assign video_controls = true %}
+{% endif %}
+
+{% if video_background != true %}
+  {% assign video_background = false %}
+{% endif %}
+
+{% if video_cover_container != true %}
+  {% assign video_cover_container = false %}
+{% endif %}
+{% comment %} END DEFAULTS {% endcomment %}
+
+
+
+{% if video_module_id != blank and video_id != blank and video_type != blank %}
+  <div id="video-player-{{ video_module_id }}" 
+       class="video-player {{ video_custom_class }} {% if video_cover_container %}video-player--cover-container{% endif %}" 
+       data-video-player
+       data-video-id="{{ video_id }}" 
+       data-video-type="{{ video_type }}" 
+       data-background="{% if video_background %}true{% else %}false{% endif %}" 
+       data-embed-color="{{ video_embed_color | remove: '#' }}"
+       data-inline="{% if video_inline == false and video_background == false -%}false{%- else -%}true{%- endif %}"
+       data-controls="{{ video_controls }}"
+       data-cover-container="{{ video_cover_container }}"
+  >
+    {% comment %} VIDEO COVER {% endcomment %}
+    {% if video_cover_image and video_background == false %}
+      <div class="video-player__cover" data-video-player-cover>
+        <div class="video-player__cover-still" 
+             {% if video_cover_image != blank %}
+               style="background-image: url({% include 'get-img-url', image: video_cover_image, image_resolution: '2000x' %});"
+             {% endif %}
+        ></div>
+
+        <span class="video-player__cover-play">
+          {% include 'icon-play' %}
+        </span>
+      </div>
+    {% endif %}
+
+    {% comment %} VIDEO PLAYER {% endcomment %}
+    <div class="video-player__embed" data-video-player-embed></div>
+
+  </div>
+{% endif %}

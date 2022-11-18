@@ -1,0 +1,43 @@
+{%- comment %}
+
+  Header Dropdown CTA
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'header-dropdown-cta',
+              cta_image: { image } - required
+              cta_link: { url } - optional
+              cta_text: { string } - optional
+              cta_paragraph: { string } - optional
+  %}
+
+{% endcomment -%}
+
+{% assign has_cta_link = false %}
+{% if cta_link != blank %}
+  {% assign has_cta_link = true %}
+{% endif %}
+{% assign cta_alt = cta_image.alt %}
+{% if cta_alt == blank %}
+  {% assign cta_alt = cta_text %}
+{% endif %}
+
+{% if cta_image %}
+  <div class="header-dropdown__cta">
+    {% if has_cta_link %}<a href="{{ cta_link }}">{% endif %}
+      <div class="header-dropdown__cta-image"
+           role="img"
+           aria-label="{{ cta_alt }}"
+           style="background-image: url({{ cta_image | img_url: '600x' }});background-position: top left;"></div>
+      <div class="header-dropdown__cta-text-container">
+        <span class="header-dropdown__cta-text">{{ cta_text }}</span>
+        {% if cta_paragraph != blank %}
+          <div class="header-dropdown__cta-paragraph">
+            {{ cta_paragraph }}
+          </div>
+        {% endif %}
+      </div>
+    {% if has_cta_link %}</a>{% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,28 @@
+<div data-section-id="{{ section_id }}" class="instagram-gallery" data-section-type="instagram-gallery">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="instagram-gallery-inner col-12">
+
+        <div class="instagram-content">
+          {% if eyebrow != blank %}
+            <p class="instagran-gallery__eyebrow p4 {% if light_text == true %}text-white{% endif %}">{{ eyebrow }}</p>
+          {% endif %}
+
+          {% if title != blank %}
+            <h2 class="instagran-gallery__title {% if light_text == true %}text-white{% endif %}">{{ title }}</h2>
+          {% endif %}
+        </div>
+
+        {% if background != blank %}
+          <div class="instagran-gallery__background frame frame--16x9">
+            {% render 'image_tag'
+                      image: background,
+                      object_fit: "cover",
+                      object_position: "top"
+            %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

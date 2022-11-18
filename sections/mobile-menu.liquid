@@ -1,0 +1,341 @@
+<div data-section-id="{{ section.id }}" data-section-type="mobile-menu">
+
+  <div class="drawer drawer--left mobile-menu" data-mobile-menu>
+
+    <div class="drawer__inner">
+      <div class="drawer__header" role="complementary" aria-label="mobile menu header">
+        <a href="#" class="drawer__close" data-drawer-close aria-label="Close Mobile Menu">
+          {% include 'icon-close' %}
+        </a>
+
+        <a href="/" itemprop="url" class="mobile-header__logo">
+           {% assign logo_img = 'logo.png' %}
+           {% assign logo_img_size = '200x' %}
+            <img src="{{ logo_img | asset_img_url: logo_img_size }}"
+                 srcset="{{ logo_img | asset_img_url: logo_img_size }} 1x, {{ logo_img | asset_img_url: logo_img_size, scale: 2 }} 2x"
+                 alt="{{ shop.name }}"
+                 class="header-logo__image"
+                 itemprop="logo">
+        </a>
+
+      </div>
+      <div class="drawer__body">
+        <div class="drawer__body-contents">
+          {% comment %} Menus {% endcomment %}
+          <div class="mobile-menu-block mobile-menu-block--search">
+            {% if section.settings.search_enabled %}
+              <form action="/search" method="get" role="search">
+                <div class="minimal-input-box">
+                  <label for="Search" class="sr-only">
+                    {{ 'general.search.placeholder' | t }}
+                  </label>
+                  <input type="hidden" name="type" value="product,article" />
+                  <input type="search" name="q" aria-label="{{ 'general.search.placeholder' | t }}" placeholder="{{ 'general.search.placeholder' | t }}" class="minimal-input-box__input"/>
+                  <button type="submit" class="minimal-input-box__submit">
+                    {% include 'icon-search' %}
+                    <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+                  </button>
+                </div>
+              </form>
+            {% endif %}
+          </div>
+
+          <div class="mobile-menu-block mobile-menu-block--primary" role="navigation" aria-label="menu links primary">
+            <ul class="mobile-menu__navigation">
+              {% for block in section.blocks %}
+                {% assign title = block.settings.title %}
+                {% assign url = block.settings.url %}
+                {% assign has_submenu = false %}
+                {% for i in (1..4) %}
+                  {% assign linklist_handle = 'linklist_' | append: i %}
+                  {% assign linklist_title_handle = 'linklist_title_' | append: i %}
+                  {% if block.settings[linklist_handle] != blank %}
+                    {% assign has_submenu = true %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if title != blank and url != blank %}
+                  <li class="mobile-menu__item">
+                    <a
+                      href="{{ url }}"
+                      class="mobile-menu__main-link">
+                      {{ title }}
+                      {% if has_submenu == true %}
+                        <button
+                        class="mobile-menu__submenu-toggler"
+                        aria-label="{{ title }} button"
+                        data-submenu-toggler data-toggle-submenu="{{ block.id }}">
+                          {% include 'icon-caret-down' %}
+                        </button>
+                      {% endif %}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+            <ul class="mobile-menu-list">
+              {% if shop.customer_accounts_enabled %}
+                {% if customer %}
+                  <li><a href="/account">My Account</a></li>
+                  <li>{{ 'Log out' | customer_logout_link }}</li>
+                {% else %}
+                  <li><a href="/account/login">Login or Register</a></li>
+                {% endif %}
+              {% endif %}
+              {% for link in linklists[section.settings.secondary_linklist].links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            </ul>
+
+            {% for block in section.blocks %}
+              {% if block.type == "mobile_nav" %}
+                <div class="mobile-menu__navigation mobile-menu__submenu-container" data-submenu data-submenu-id="{{ block.id }}">
+                  <ul class="mobile-menu__navigation">
+                    <li class="mobile-menu__back" data-submenu-toggler data-toggle-submenu="{{ block.id }}">
+                      <a href="#" class="mobile-menu__link">
+                        {% include 'icon-caret-down' %}
+                        {{ block.settings.title }}
+                      </a>
+                    </li>
+                    {% for i in (1..4) %}
+                      {% assign linklist_title_handle = 'linklist_title_' | append: i %}
+                      {% assign linklist_handle = 'linklist_' | append: i %}
+                      {% if block.settings[linklist_title_handle] != blank and block.settings[linklist_handle] != blank %}
+                        <li class="mobile-menu__item">
+                          <a href="#" class="mobile-menu__main-link" data-submenu-toggler data-toggle-submenu="{{ block.id | append: '-' | append: i }}">
+                            {{ block.settings[linklist_title_handle] }}
+                            <button class="mobile-menu__submenu-toggler" aria-label="{{ block.settings[linklist_title_handle] }} button">
+                              {% include 'icon-caret-down' %}
+                            </button>
+                          </a>
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% elsif block.type == "mobile_nav_alt" %}
+                {% if block.settings.title != blank and block.settings.linklist_1 != blank %}
+                  <div class="mobile-menu__navigation mobile-menu__submenu-container" data-submenu data-submenu-id="{{block.id}}">
+                    <ul class="mobile-menu__navigation">
+                      <li class="mobile-menu__back" data-submenu-toggler data-toggle-submenu="{{block.id}}">
+                        <a href="#" class="mobile-menu__link">
+                          {% include 'icon-caret-down' %}
+                          {{ block.settings.title }}
+                        </a>
+                      </li>
+                      {% for link in linklists[block.settings.linklist_1].links %}
+                        <li class="mobile-menu__submenu-item">
+                          <a href="{{ link.url }}" class="mobile-menu__link"> {{ link.title }} </a>
+                        </li>
+                      {% endfor %}
+                      {% if block.settings.linklist_bottom_title_1 != blank and block.settings.linklist_bottom_url_1 != blank %}
+                        <li class="mobile-menu__submenu-item mobile-menu__submenu-item--bottom">
+                          <a href="{{ block.settings.linklist_bottom_url_1 }}" class="mobile-menu__link"> {{ block.settings.linklist_bottom_title_1 }} </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                  {% endif %}
+              {% endif %}
+            {% endfor %}
+
+            {% for block in section.blocks %}
+              {% for i in (1..4) %}
+                {% assign linklist_title_handle = 'linklist_title_' | append: i %}
+                {% assign linklist_handle = 'linklist_' | append: i %}
+                {% assign linklist_bottom_title_handle = 'linklist_bottom_title_' | append: i %}
+                {% assign linklist_bottom_url_handle = 'linklist_bottom_url_' | append: i %}
+                {% if block.settings[linklist_title_handle] != blank and block.settings[linklist_handle] != blank %}
+                  <div class="mobile-menu__navigation mobile-menu__submenu-container" data-submenu data-submenu-id="{{block.id | append: '-' | append: i}}">
+                    <ul class="mobile-menu__navigation">
+                      <li class="mobile-menu__back" data-submenu-toggler data-toggle-submenu="{{block.id | append: '-' | append: i}}">
+                        <a href="#" class="mobile-menu__link">
+                          {% include 'icon-caret-down' %}
+                          {{ block.settings[linklist_title_handle] }}
+                        </a>
+                      </li>
+                      {% for link in linklists[block.settings[linklist_handle]].links %}
+                        <li class="mobile-menu__submenu-item">
+                          <a href="{{ link.url }}" class="mobile-menu__link"> {{ link.title }} </a>
+                        </li>
+                      {% endfor %}
+                      {% if block.settings[linklist_bottom_title_handle] != blank and block.settings[linklist_bottom_url_handle] != blank %}
+                        <li class="mobile-menu__submenu-item mobile-menu__submenu-item--bottom">
+                          <a href="{{ block.settings[linklist_bottom_url_handle] }}" class="mobile-menu__link"> {{ block.settings[linklist_bottom_title_handle] }} </a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+                  {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Mobile Menu",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "search_enabled",
+        "label" : "Show search form",
+        "default": true
+      },
+      {
+        "type": "link_list",
+        "id": "secondary_linklist",
+        "label": "Secondary Menu"
+      }
+    ],
+    "blocks": [
+      {
+        "name": "Mobile Navigation Item",
+        "type": "mobile_nav",
+        "settings": [
+          {
+             "type": "header",
+             "content": "Info",
+             "info": "A title and a link are required for each navigation item.  If a menu is added it will show as a new layer of the navigation"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          },
+          {
+             "type": "header",
+             "content": "Menus",
+             "info": "Each navigation item dropdown supports up to 4 menus."
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_1",
+            "label": "Navigation title 1"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_1",
+            "label": "Menu 1"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_1",
+            "label": "Bottom link title 1"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_1",
+            "label": "Bottom link URL 1"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_2",
+            "label": "Navigation title 2"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_2",
+            "label": "Menu 2"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_2",
+            "label": "Bottom link title 2"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_2",
+            "label": "Bottom link URL 2"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_3",
+            "label": "Navigation title 3"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_3",
+            "label": "Menu 3"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_3",
+            "label": "Bottom link title 3"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_3",
+            "label": "Bottom link URL 3"
+          },
+          {
+            "type": "text",
+            "id": "linklist_title_4",
+            "label": "Navigation title 4"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_4",
+            "label": "Menu 4"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_4",
+            "label": "Bottom link title 4"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_4",
+            "label": "Bottom link URL 4"
+          }
+        ]
+      },
+      {
+        "name": "Mobile Navigation Alt",
+        "type": "mobile_nav_alt",
+        "settings": [
+          {
+             "type": "header",
+             "content": "Info",
+             "info": "Simplified version of the navigation, only allows 1 navigation"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "url",
+            "label": "Link"
+          },
+          {
+            "type": "link_list",
+            "id": "linklist_1",
+            "label": "Menu 1"
+          },
+          {
+            "type": "text",
+            "id": "linklist_bottom_title_1",
+            "label": "Bottom link title 1"
+          },
+          {
+            "type": "url",
+            "id": "linklist_bottom_url_1",
+            "label": "Bottom link URL 1"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

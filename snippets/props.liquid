@@ -1,0 +1,51 @@
+{%- comment %}
+
+  Props
+  ------------------------------------------------------------------------------
+  Add up to 4 text phrases
+
+
+  Usage:
+
+  {% render 'props'
+              props_list: { array } Required
+    %}
+
+{% endcomment -%}
+
+{% assign first_prop = props_list[0] %}
+
+<div class="props">
+    {% if props_list != blank %}
+        {% for prop in props_list %}
+            {% if prop != first_prop %}
+                <div class="props__dot"></div>
+            {% endif %}
+            <p class="p3 props__prop-title">
+              {% if prop.settings.prop_link != blank %} 
+             	 <a href="{{ prop.settings.prop_link }}">{{ prop.settings.props }}</a>
+  			  {% else %}
+             	 {{ prop.settings.props }}
+              {% endif %} 
+  			</p>
+        {% endfor %}
+    {% else %}
+        {% for i in (1..4) %}
+            {% assign text_handle = "text_" | append: i  %}
+ 			{% assign link_handle = "link_" | append: i  %}
+            {% if block.settings[text_handle] != blank %}
+                {% if i != 1 %}
+                    <div class="props__dot"></div>
+                {% endif %}
+  
+  				<p class="p3 props__prop-title">                     
+  					{% if block.settings[link_handle] != blank %} 
+                       <a href="{{ block.settings[link_handle] }}">{{ block.settings[text_handle] }}</a>  					
+                    {% else %}
+                        {{ block.settings[text_handle] }}
+                    {% endif %}
+  				</p>    
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

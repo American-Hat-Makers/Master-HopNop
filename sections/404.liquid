@@ -1,0 +1,66 @@
+{% assign eyebrow_default = 'general.404.eyebrow' | t %}
+{% assign title_default = 'general.404.title' | t %}
+{% assign subtitle_default = 'general.404.subtitle' | t %}
+{% assign cta_text_default = 'general.404.cta_text' | t %}
+
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="fourofour">
+  <div class="four04">
+    {% include 'image_tag', image: section.settings.four04_background_image_desktop,
+                            mobile_image: section.settings.four04_background_image_mobile,
+                            object_fit: cover
+    %}
+    <div class="four04__content-container">
+      <div class="four04__content">
+        <p class="four04__eyebrow eyebrow eyebrow--dotted">{{ section.settings.four04_eyebrow | default : eyebrow_default }}</p>
+        <h1 class="four04__title">{{ section.settings.four04_title | default : title_default }}</h1>
+        <div class="four04__subtitle">{{ section.settings.four04_subtitle | default : subtitle_default }}</div>
+        {% if section.settings.four04_cta_link %}
+          <a href="{{ section.settings.four04_cta_link }}" class="btn btn-primary four04__link">{{ section.settings.four04_cta_text | default : cta_text_default }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "404 Page",
+    "settings": [
+      {
+        "id": "four04_eyebrow",
+        "type": "text",
+        "label": "Eyebrow text"
+      },
+      {
+        "id": "four04_title",
+        "type": "text",
+        "label": "Title"
+      },
+      {
+        "id": "four04_subtitle",
+        "type": "richtext",
+        "label": "Subtitle"
+      },
+      {
+        "type": "image_picker",
+        "id": "four04_background_image_desktop",
+        "label": "Background image desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "four04_background_image_mobile",
+        "label": "Background image mobile"
+      },
+      {
+        "id": "four04_cta_text",
+        "type": "text",
+        "label": "CTA button text"
+      },
+      {
+        "id": "four04_cta_link",
+        "type": "url",
+        "label": "CTA button link"
+      }
+    ]
+  }
+{% endschema %}

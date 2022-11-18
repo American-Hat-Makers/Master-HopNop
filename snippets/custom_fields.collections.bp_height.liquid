@@ -1,0 +1,8 @@
+{% if collection.metafields.custom_fields["bp_height"] != blank %}
+  <div class="custom-field custom-field__bp-height custom-field__type--text-list">
+    <h3 class="custom-field--title">Height</h3>
+    <div class="custom-field--value">  
+      {{ collection.metafields.custom_fields["bp_height"] }}
+    </div>
+  </div>
+{% endif %}

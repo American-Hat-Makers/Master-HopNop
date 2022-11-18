@@ -1,0 +1,534 @@
+{%- comment %}
+
+  Page CMS Section Renderer
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'page-cms-section-renderer',
+              section: section
+  %}
+
+  Renders section content.  This snippet should be used as the single point of entry for rendering CMS section content - see sections/page-cms.liquid
+
+  Renders blocks of the following types:
+    -Banner
+    -Banner Panel
+    -Banner Panel 2 CTA
+    -Two up
+    -Promo
+    -3 up
+    -Product details
+    -Instagram Gallery
+    -Product Grid
+    -Style Grid
+    -Props
+    -Masonry
+    -Rich Text
+    -Image/video
+    -Shopify Page - Raw Text
+
+{% endcomment -%}
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="cms-page">
+    {% capture video_banner %}
+      {% if section.settings.video_url_1 != blank %}
+        <div class="banner">
+          {% include 'banner-panel',
+            bp_id: section.id,
+            bp_height: section.settings.banner_height,
+            bp_content_alignment: block.settings.content_alignment_1,
+            bp_text_alignment: block.settings.content_alignment_1,
+            bp_content_max_width: block.settings.content_max_width_1,
+            bp_light_text: block.settings.light_text_1,
+            bp_overlay: block.settings.overlay_1,
+            bp_eyebrow: block.settings.eyebrow_1,
+            bp_title_semantic_tag: 'h1',
+            bp_title_style_tag: 'h1',
+            bp_title: block.settings.title_1,
+            bp_text: block.settings.text_1,
+            bp_cta_url: block.settings.cta_url_1_1,
+            bp_cta_text: block.settings.cta_text_1_1,
+            bp_cta_url_2: block.settings.cta_url_2_1,
+            bp_cta_text_2: block.settings.cta_text_2_1
+            bp_video: block.settings.video_url_1
+          %}
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% capture banner_slides %}
+      {% assign printed_slides = 0 %}
+      {% for i in (1..3)  %}
+        {% assign bp_id = section.id | append: '_'| append: i  %}
+        {% assign bp_content_alignment = 'content_alignment_' | append: i %}
+        {% assign bp_content_max_width = 'content_max_width_' | append: i %}
+        {% assign bp_background_image = 'background_image_' | append: i %}
+
+        {% assign bp_light_text = 'light_text_' | append: i %}
+        {% assign bp_overlay = 'overlay_' | append: i %}
+        {% assign bp_eyebrow = 'eyebrow_' | append: i %}
+
+        {% assign bp_title = 'title_' | append: i %}
+        {% assign bp_text = 'text_' | append: i %}
+        {% assign bp_cta_url = 'cta_url_1_' | append: i %}
+        {% assign bp_cta_text = 'cta_text_1_' | append: i %}
+        {% assign bp_cta_url_2 = 'cta_url_2_' | append: i %}
+        {% assign bp_cta_text_2 = 'cta_text_2_' | append: i %}
+        {% if section.settings[bp_title] != blank
+           or section.settings[bp_text] != blank
+           or section.settings[bp_eyebrow] != blank %}
+           {% assign printed_slides = printed_slides | plus: 1 %}
+          <div class="slideshow-slide swiper-slide" data-slideshow-slide data-block-id="{{ bp_id }}">
+            <div class="banner">
+              {% include 'banner-panel',
+                bp_id: bp_id,
+                bp_height: section.settings.banner_height,
+                bp_content_alignment: section.settings[bp_content_alignment],
+                bp_content_max_width: section.settings[bp_content_max_width],
+                bp_background_image: section.settings[bp_background_image],
+                bp_light_text: section.settings[bp_light_text],
+                bp_overlay: section.settings[bp_overlay],
+                bp_eyebrow: section.settings[bp_eyebrow],
+                bp_title_semantic_tag: 'h1',
+                bp_title_style_tag: 'h1',
+                bp_title: section.settings[bp_title],
+                bp_text: section.settings[bp_text],
+                bp_cta_url: section.settings[bp_cta_url],
+                bp_cta_text: section.settings[bp_cta_text],
+                bp_cta_url_2: section.settings[bp_cta_url_2],
+                bp_cta_text_2: section.settings[bp_cta_text_2]
+              %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endcapture %}
+
+    <div data-section-id="{{ section.id }}" data-section-type="{% if video_banner != blank %}video-banner{% else %}slideshow{% endif %}">
+      {% if video_banner != blank %}
+        {{ video_banner }}
+      {% elsif banner_slides != blank %}
+          <div class="slideshow swiper-container"
+              id="slideshow-{{ section.id }}"
+              data-autoplay="{{ section.settings.autoplay }}"
+              data-speed="{{ section.settings.autoplay_speed }}"
+              data-dots="{{ section.settings.dots }}"
+              data-animation="{{ section.settings.animation }}"
+              data-slideshow>
+            <div class="swiper-wrapper">{{ banner_slides }}</div>
+            {% if printed_slides > 1 %}
+              <span class="swiper-arrow swiper-arrow--left">
+                <span class="arrow arrow--left"><span class="arrow__icon"></span></span>
+              </span>
+              <span class="swiper-arrow swiper-arrow--right">
+                <span class="arrow arrow--right"><span class="arrow__icon"></span></span>
+              </span>
+              <div class="swiper-pagination swiper-pagination--white"></div>
+            {% endif %}
+          </div>
+      {% endif %}
+    </div>
+
+    {% for block in section.blocks %}
+      <div class="cms-page-block" {{ block.shopify_attributes }}>
+        {% comment %}
+          Stubbed CMS page, if you need any of the previous rendering code just pull it back from either z-theme repository
+          or the history of this file on the current project repository. If more than one developer is working on this, stablish
+          an order so you don't step on your toes, if two are working get one working from top to bottom while the other starts working
+          from bottom to top.
+        {% endcomment %}
+        {% if block.type == "two-up" %}
+          {% comment %} Capture content grid {% endcomment %}
+          {% capture content_grid_html %}
+            {% for i in (1..2) %}
+              {% assign content_grid_card_id = block.id | append: "-" | append: i %}
+                {% assign cc_icon = "cc_icon_" | append: i %}
+                {% assign cc_title = "cc_title_" | append: i %}
+                {% assign cc_text = "cc_text_" | append: i %}
+                {% assign cc_light_text = "cc_light_text_" | append: i %}
+                {% assign cc_cta_text = "cc_cta_text_" | append: i %}
+                {% assign cc_cta_url = "cc_cta_url_" | append: i %}
+                {% assign cc_background_image = "cc_background_image_" | append: i %}
+
+              {% include 'content-card',
+                          cc_id: content_grid_card_id,
+                          cc_icon: block.settings[cc_icon],
+                          cc_title: block.settings[cc_title],
+                          cc_text: block.settings[cc_text],
+                          cc_light_text: block.settings[cc_light_text],
+                          cc_cta_text: block.settings[cc_cta_text],
+                          cc_cta_url: block.settings[cc_cta_url],
+                          cc_cta_block_style: false
+                          cc_background_image: block.settings[cc_background_image],
+                          cc_custom_class: 'col-lg-6'
+              %}
+            {% endfor %}
+          {% endcapture %}
+
+          {% if content_grid_html != blank %}
+            <div class="container-fluid"  data-section-id="{{ block.id }}"  data-section-type="2-up-content-grid">
+              <div class="row justify-content-center">
+                {{ content_grid_html }}
+              </div>
+            </div>
+          {% endif %}
+        {% elsif block.type == "promo" %}
+
+            {% comment %} PROMO {% endcomment %}
+            {% include 'promo'
+              p_id: block.id,
+              p_layout: block.settings.p_layout,
+              p_type: 3,
+              p_background_color: block.settings.p_background_color,
+              p_content_max_width: block.settings.p_content_max_width,
+              p_content_alignment: block.settings.p_content_alignment,
+              p_image: block.settings.p_image,
+              p_eyebrow: block.settings.p_eyebrow,
+              p_title: block.settings.p_title,
+              p_text: block.settings.p_text,
+              p_cta_url: block.settings.p_cta_url,
+              p_cta_text: block.settings.p_cta_text,
+			  p_cta_image_url: block.settings.p_cta_image_url,
+            %}
+            {% comment %} END PROMO {% endcomment %}
+		{% elsif block.type == "hero-men-header-banner" %}
+
+            {% comment %} PROMO {% endcomment %}
+            {% include 'promo'
+              p_id: block.id,
+              p_layout: block.settings.m_hp_layout,
+              p_type: 3,
+              p_background_color: block.settings.m_hp_background_color,
+              p_content_max_width: block.settings.m_hp_content_max_width,
+              p_content_alignment: block.settings.m_hp_content_alignment,
+              p_image: block.settings.m_hp_image,
+              p_eyebrow: block.settings.m_hp_eyebrow,
+              p_title: block.settings.m_hp_title,
+              p_text: block.settings.m_hp_text,
+              p_cta_url: block.settings.m_hp_cta_url,
+              p_cta_text: block.settings.m_hp_cta_text
+            %}
+            {% comment %} END PROMO {% endcomment %}
+		{% elsif block.type == "hero-women-header-banner" %}
+
+            {% comment %} PROMO {% endcomment %}
+            {% include 'promo'
+              p_id: block.id,
+              p_layout: block.settings.w_hp_layout,
+              p_type: 3,
+              p_background_color: block.settings.w_hp_background_color,
+              p_content_max_width: block.settings.w_hp_content_max_width,
+              p_content_alignment: block.settings.w_hp_content_alignment,
+              p_image: block.settings.w_hp_image,
+              p_eyebrow: block.settings.w_hp_eyebrow,
+              p_title: block.settings.w_hp_title,
+              p_text: block.settings.w_hp_text,
+              p_cta_url: block.settings.w_hp_cta_url,
+              p_cta_text: block.settings.w_hp_cta_text
+            %}
+            {% comment %} END PROMO {% endcomment %}
+        {% elsif block.type == "3-up" %}
+          {% include 'three-up'
+                    t_id: block.id
+          %}
+        {% elsif block.type == "product-details" %}
+
+          {% assign eyebrow = block.settings.eyebrow %}
+          {% assign title = block.settings.title %}
+          {% assign product_image = block.settings.image %}
+          {% assign block_counter = 0 %}
+          {% assign left_blocks = '' %}
+          {% assign right_blocks = '' %}
+
+          {% for i in (1..6) %}
+            {% assign index_detail_title = 'detail_title_' | append: i %}
+            {% assign index_detail_text = 'detail_text_' | append: i %}
+            {% assign counter_title = block.settings[index_detail_title] %}
+            {% assign counter_text = block.settings[index_detail_text] %}
+
+            {% if counter_title != blank and counter_text != blank%}
+              {% assign block_counter = block_counter | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+
+          {% assign blocks_divider = block_counter | divided_by: 2 | ceil %}
+
+          {% if block_counter > 0 %}
+            <div data-section-id="{{ block.id }}" class="product-details-banner" data-section-type="product-details">
+              {% if blocks_divider > 0 %}
+                {% capture left_blocks %}
+                  {% for i in (1..6) %}
+                    {% assign index_detail_title = 'detail_title_' | append: i %}
+                    {% assign index_detail_text = 'detail_text_' | append: i %}
+                    {% assign detail_title = block.settings[index_detail_title] %}
+                    {% assign detail_text = block.settings[index_detail_text] %}
+
+                    <div class="single-detail">
+                      <h5 class="single-detail__title">{{ detail_title }}</h5>
+                      <p class="single-detail__copy p3">{{ detail_text }}</p>
+                    </div>
+
+                    {% if forloop.index == blocks_divider %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                {% endcapture %}
+
+                {% capture right_blocks %}
+                  {% for i in (1..6) %}
+                    {% if forloop.index > blocks_divider %}
+                      {% assign index_detail_title = 'detail_title_' | append: i %}
+                      {% assign index_detail_text = 'detail_text_' | append: i %}
+                      {% assign detail_title = block.settings[index_detail_title] %}
+                      {% assign detail_text = block.settings[index_detail_text] %}
+
+                      <div class="single-detail">
+                        <h5 class="single-detail__title">{{ detail_title }}</h5>
+                        <p class="single-detail__copy p3">{{ detail_text }}</p>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                {% endcapture %}
+              {% endif %}
+
+              <div class="container-fluid container--product-details">
+                <div class="row justify-content-center">
+
+                  {% if title != blank or eyebrow != blank %}
+                    <div class="top-details col-lg-12">
+                      <p class="product-details__eyebrow p4">{{ eyebrow }}</p>
+                      <h2 class="product-details__title ">{{ title }}</h2>
+                    </div>
+                  {% endif %}
+
+                  {% if left_blocks != blank %}
+                    <div class="left-details col-lg-3">{{ left_blocks }}</div>
+                  {% endif %}
+
+                  {% if title != blank and product_image != blank %}
+                    <div class="center-details col-lg-6">
+                      <div class="product-details__image frame frame--4x3">
+                        {% render 'image_tag'
+                                  image: product_image,
+                                  object_fit: "contain"
+                        %}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% if right_blocks != blank %}
+                    <div class="right-details col-lg-3">{{ right_blocks }}</div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+        {% elsif block.type == "instagram-gallery" %}
+          {% assign section_id = block.id %}
+          {% assign eyebrow = block.settings.eyebrow %}
+          {% assign title = block.settings.title %}
+          {% assign background = block.settings.background %}
+          {% assign gallery = block.settings.gallery %}
+          {% assign light_text = block.settings.light_text %}
+
+          {% include 'instagram-gallery',
+                      section_id: section_id,
+                      eyebrow: eyebrow,
+                      title: title,
+                      background: background,
+                      gallery: gallery,
+                      light_text: light_text
+          %}
+        {% elsif block.type == "product-grid" %}
+
+          {% comment %} Variables {% endcomment %}
+          {% assign category_1_cta_text = block.settings.category_1_cta_text %}
+          {% assign category_1_cta_link = block.settings.category_1_cta_link %}
+          {% assign category_2_cta_text = block.settings.category_2_cta_text %}
+          {% assign category_2_cta_link = block.settings.category_2_cta_link %}
+
+          {% comment %} Category 1 HTML {% endcomment %}
+          {% capture category_1_html %}
+            {% assign category_1_count = 0 %}
+            {% for i in (1..4) %}
+              {% capture product_setting_handle %}category_1_product_{{ i }}{% endcapture %}
+              {% assign product_handle = block.settings[product_setting_handle] %}
+              {% assign product = all_products[product_handle] %}
+              {% if product != blank %}
+                <div class="col-6 col-lg-3" {{ block.shopify_attributes }}>
+                  {% include 'product-card',
+                              product: product
+                  %}
+                </div>
+                {% assign category_1_count = category_1_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+
+            <div class="col-12">
+              {% if category_1_cta_text != blank and category_1_cta_link != blank %}
+                <a href="{{ category_1_cta_link }}" class="btn btn-primary">{{ category_1_cta_text }}</a>
+              {% endif %}
+            </div>
+          {% endcapture %}
+
+          {% comment %} Category 2 HTML {% endcomment %}
+          {% capture category_2_html %}
+            {% assign category_2_count = 0 %}
+            {% for i in (1..4) %}
+              {% capture product_setting_handle %}category_2_product_{{ i }}{% endcapture %}
+              {% assign product_handle = block.settings[product_setting_handle] %}
+              {% assign product = all_products[product_handle] %}
+              {% if product != blank %}
+                <div class="col-6 col-lg-3" {{ block.shopify_attributes }}>
+                  {% include 'product-card',
+                              product: product
+                  %}
+                </div>
+                {% assign category_2_count = category_2_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+
+            <div class="col-12">
+              {% if category_2_cta_text != blank and category_2_cta_link != blank %}
+                <a href="{{ category_2_cta_link }}" class="btn btn-primary">{{ category_2_cta_text }}</a>
+              {% endif %}
+            </div>
+          {% endcapture %}
+
+          {% comment %} Only display if there are products present {% endcomment %}
+          {% if category_1_count > 0 or category_2_count > 0 %}
+            <div data-section-id="{{ block.id }}" data-section-type="product-grid">
+              <div class="product-grid">
+                <div class="container-fluid-max">
+
+                  <h2 class="mb-0">{{ block.settings.title }}</h2>
+
+                  <div class="product-grid__nav">
+                    {% comment %} Hide tabs, if one of the categories does not have any products {% endcomment %}
+                    {% unless category_1_count == 0 or category_2_count == 0 %}
+
+                      {% comment %} Show tabs only if both the titles are present {% endcomment %}
+                      {% if block.settings.category_1_title != blank and block.settings.category_2_title != blank %}
+                        <a href="javascript:;" data-category-link="category-primary" class="product-grid__nav-link is-active">{{ block.settings.category_1_title }}</a>
+                        <a href="javascript:;" data-category-link="category-secondary" class="product-grid__nav-link">{{ block.settings.category_2_title }}</a>
+                      {% endif %}
+                    {% endunless %}
+                  </div>
+
+                  {% if category_1_count > 0 %}
+                    <div class="row" data-category="category-primary">
+                      {{ category_1_html }}
+                    </div>
+                  {% endif %}
+
+                  {% if category_2_count > 0 %}
+                    <div class="row {% if category_1_count > 0 %} hide {% endif %}" data-category="category-secondary">
+                      {{ category_2_html }}
+                    </div>
+                  {% endif %}
+
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% elsif block.type == "style-grid" %}
+          <div class="style-grid">
+            {% include 'style-grid'
+                        sg_id: block.id,
+                        sg_eyebrow: block.settings.eyebrow,
+                        sg_title: block.settings.title,
+                        sg_text: block.settings.text,
+                        sg_background_image: block.settings.background_image,
+                        block: block
+            %}
+          </div>
+        {% elsif block.type == "props" %}
+          {% include 'props' %}
+        {% elsif block.type == "masonry" %}
+          {% include 'masonry'
+                      m_id: block.id,
+                      m_eyebrow: block.settings.eyebrow,
+                      m_title: block.settings.title,
+                      m_text: block.settings.text,
+                      m_content_alignment: block.settings.content_alignment,
+                      m_content_max_width: block.settings.content_max_width,
+                      m_background_color: block.settings.background_color,
+          %}
+        {% elsif block.type == "rich-text" %}
+          {% include 'richtext-block'
+                     rt_id: block.id,
+                     rt_eyebrow: block.settings.eyebrow,
+                     rt_title: block.settings.title,
+        			 rt_read_more: block.settings.read_more,
+                     rt_text: block.settings.text,
+                     rt_cta_title: block.settings.cta_title,
+                     rt_cta_url: block.settings.cta_url,
+                     rt_content_alignment: block.settings.content_alignment,
+                     rt_content_max_width: block.settings.content_max_width,
+                     rt_background_color: block.settings.background_color
+          %}
+        {% elsif block.type == "banner-panel" %}
+          {% include 'banner-panel-alt',
+                      bp_id: block.id,
+                      bp_content_alignment: block.settings.content_alignment,
+                      bp_content_max_width: block.settings.content_max_width,
+                      bp_background_image: block.settings.background_base,
+                      bp_background_image_vertical_alignment: block.settings.background_image_vertical_alignment,
+                      bp_background_image_small_vertical_alignment: block.settings.background_small_vertical_alignment,
+                      bp_light_text: block.settings.light_text,
+                      bp_icon: block.settings.icon,
+                      bp_eyebrow: nil,
+                      bp_title: block.settings.title,
+                      bp_text: block.settings.text,
+                      bp_font_size: block.settings.font_size,
+                      bp_cta_url: block.settings.cta_url,
+                      bp_cta_text: block.settings.cta_text
+          %}
+        {% elsif block.type == "banner-panel-cta2" %}
+       	 {% include 'banner-panel-alt-cta2',
+                      bp_id: block.id,
+                      bp_content_alignment: block.settings.content_alignment,
+                      bp_content_max_width: block.settings.content_max_width,
+                      bp_background_image: block.settings.background_base,
+                      bp_background_image_vertical_alignment: block.settings.background_image_vertical_alignment,
+                      bp_background_image_small_vertical_alignment: block.settings.background_small_vertical_alignment,
+                      bp_light_text: block.settings.light_text,
+                      bp_icon: block.settings.icon,
+                      bp_eyebrow: nil,
+                      bp_title: block.settings.title,
+                      bp_text: block.settings.text,
+                      bp_font_size: block.settings.font_size,
+                      bp_cta_url1: block.settings.cta_url1,
+                      bp_cta_text1: block.settings.cta_text1,
+                      bp_cta_url2: block.settings.cta_url2,
+                      bp_cta_text2: block.settings.cta_text2
+          %}
+        {% elsif block.type == 'video' %}
+          {% include 'video-module'
+              v_id: block.id,
+              v_image_desktop: block.settings.image_desktop,
+              v_video: block.settings.video
+              v_background: block.settings.background
+          %}
+        {% elsif block.type == 'html' %} 
+          {% include 'html-section'
+              v_id: block.id,
+              html_section : block.settings.section_html
+          %}
+        {% elsif block.type == 'shopify_page_content' %}
+          <div class="container">
+            <div class="row justify-content-center">
+              <div class="col-xl-8 col-lg-8 page-text-only__content">
+                <div class="page-text-only__content-container">
+                  {{ page.content }}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+</div>

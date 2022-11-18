@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html id="checkout-data" lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+
+    {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+    {%- endif -%}
+
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="https://use.typekit.net/hqm3cnr.css">
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {% render 'hs-minify-css' with filename: 'checkout.css' %}
+
+    {{ checkout_scripts }}
+
+    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.min.js' | asset_url }}" type="hyperscript/defer-load"></script><!--<![endif]-->
+    <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}" type="hyperscript/defer-load"></script><![endif]-->
+
+    <!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'checkout.min.js' | asset_url }}"></script><!--<![endif]-->
+    <!--[if lt IE 9]><script src="{{ 'checkout.min.js' | asset_url }}"></script><![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </script>
+
+    <!-- useitbetter.com tag -->
+    <script type="text/javascript">
+      (function() {
+        var head = document.querySelector("head"), ur = document.createElement("script"), ud = document.createElement("script"), err = function(){document.documentElement.setAttribute('uib-triggers','failed');};      
+        ur.type = "text/javascript"; ur.async = true; ur.src = "https://uibcdn.com/sdk/13714/uResponses.min.js";
+        ud.type = "text/javascript"; ud.async = true; ud.src = "https://uibcdn.com/sdk/13714/udash.min.js";
+        ud.onload = function(){
+            uDash.init({ uProjectName: 'AHM_2185',uProjectApiPass: 'a44e603df83fc019f92698358db8d0bd',uPort: 13714 });
+        }
+        ud.onerror = err;
+        ur.onerror = err;
+        head.appendChild(ur);
+        head.appendChild(ud);
+      })();
+    </script>
+    <!-- end of useitbetter.com tag -->
+  
+  {% render 'shogun-head' %}
+    <style>
+      .reward-points {
+        padding: 10px;
+        border-bottom: 1px sold gray;
+        border-top: 1px solid gray;
+      }
+      .sign-in-link {
+        border-bottom: none;
+      }
+      .sign-in-button {
+        height: 40px;
+        border: 1px solid black;
+        background-color: #362e24;
+        color: white;
+        border-radius: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .sign-in-button:hover {
+        background-color: black;
+      }
+      .section.section--reductions.hidden-on-desktop .section__header {
+        display: none !important;
+      }
+      #checkout-data{
+        font-family: Lato,sans-serif!important;
+      }
+      .checkout-content .section__title, .h1, .h2, .h3, .h4, .h5, .h6, .main form .radio-wrapper label.radio__label span.radio__label__primary, .order-summary__sections .product__description__name.order-summary__emphasis, .order-summary__sections .total-line-table__footer .payment-due-label__total, .order-summary__sections .total-line.total-line--shipping, .order-summary__sections .total-line.total-line--subtotal, .step-payment-method .section .content-box .review-block__label, .step-shipping-method .section .content-box .review-block__label, a, em, h1, h2, h3, h4, h5, h6, i, label, li, p, select, span, strong, sup, address, .review-block__content{
+      	font-family: Lato,sans-serif !important;
+      }
+      .main form .field--show-floating-label input.field__input, .main form input.field__input, .main form select.field__input.field__input--select{
+        font-family: Lato,sans-serif !important;
+        font-size: 14px;
+      }
+      input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        font-family: Lato,sans-serif !important;
+        font-size: 14px;
+      }
+      input::-moz-placeholder { /* Firefox 19+ */
+        font-family: Lato,sans-serif !important;
+        font-size: 14px;
+      }
+      input:-ms-input-placeholder { /* IE 10+ */
+        font-family: Lato,sans-serif !important;
+        font-size: 14px;
+      }
+      input:-moz-placeholder { /* Firefox 18- */
+        font-family: Lato,sans-serif !important;
+        font-size: 14px;
+      }
+      .h6, .main form .radio-wrapper label.radio__label span.radio__label__primary, .order-summary__sections .product__description__name.order-summary__emphasis, .order-summary__sections .total-line.total-line--shipping, .order-summary__sections .total-line.total-line--subtotal, .step-payment-method .section .content-box .review-block__label, .step-shipping-method .section .content-box .review-block__label, h6{
+        font-size: 14px;
+      }
+      .h5, .order-summary__sections .total-line-table__footer .payment-due-label__total, h5{
+        font-size: 1rem;
+      }
+      .order-summary__sections .total-line.total-line--shipping .total-line__price, .order-summary__sections .total-line.total-line--subtotal .total-line__price{
+        font-size: 16px;
+      }
+      .order-summary__sections .total-line-table__footer .payment-due__price {
+        font-size: 20px;
+      }
+      .step__footer button.step__footer__continue-btn, span.step__footer__previous-link-content, .main__header .breadcrumb li, .mobile-breadcrumb .breadcrumb li, .review-block__link span{
+        font-size: 14px;
+      }
+      .main form .field--show-floating-label input.field__input, .main form input.field__input, .main form select.field__input.field__input--select{
+        font-size: 14px;
+      }
+      .review-block__label{
+        -webkit-flex: 0 1 7em;
+        -ms-flex: 0 1 7em;
+        flex: 0 1 7em;
+      }
+      .review-block__content {
+        font-size: 16px !important;
+      }
+      .p1, p{
+        font-size: 1.2rem;
+      }
+      .order-summary__sections .product__description__variant.order-summary__small-text{
+        font-size: 16px;
+      }
+      @media screen and (max-width: 767px){
+        .step__footer button.step__footer__continue-btn, 
+        span.step__footer__previous-link-content, 
+        .main__header .breadcrumb li, 
+        .mobile-breadcrumb .breadcrumb li, .review-block__link span{
+          font-size: 13px;
+        }
+        .checkout-content .section__title, .h3, h3{
+          font-size: 1.3rem !important;	
+        }
+        .main form .field__input-wrapper label.field__label{
+          font-size: 16px !important;
+        }
+      }
+      @media screen and (min-width: 576px){
+        .checkout-content .section__title, .h3, h3{
+          font-size: 1.70rem !important;
+        }
+        .checkout-content .layout-flex.layout-flex--tight-vertical.layout-flex--loose-horizontal.layout-flex--wrap p, .order-summary-toggle .order-summary-toggle__text, .order-summary-toggle .total-recap__final-price, .p2{
+          font-size: 1rem;
+        }
+        .main form .field__input-wrapper label.field__label{
+          font-size: 16px;
+        }
+      }
+    </style>
+</head>
+  <body>
+
+    {{ skip_to_content_link }}
+
+    <div class="banner" data-header>
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </div>
+
+    <div class="mobile-breadcrumb">{{ breadcrumb }}</div>
+
+    {{ order_summary_toggle }}
+
+    <div class="content checkout-content" data-content>
+      <div class="wrap">
+        <div class="main" role="main">
+          <div class="main__header">
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </div>
+          <div class="main__content">
+            {{ content_for_layout }}
+          </div>
+          <div class="main__footer">
+            {{ content_for_footer }}
+          </div>
+        </div>
+        <div class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+    
+        <!-- Checkout Module -->
+    
+  </body>
+</html>
+
+<div class="data" style="display:none">
+
+  {% for line_item in checkout.line_items %}
+          <div class="lineItem {{line_item.variant.id}}">
+          <span class="quantity">{{ line_item.quantity }}</span>
+          <span class="originalPrice">{{ line_item.variant.compare_at_price | times: line_item.quantity | money_without_currency | remove: ',' }}</span>
+          <span class="salePrice">{{ line_item.price | times: line_item.quantity | money_without_currency | remove: ',' }}</span>
+          <span class="totalPrice">{{ line_item.price | times: line_item.quantity | money_without_currency | remove: ',' }}</span>
+
+        </div>
+         
+  {% endfor %}
+</div>
+
+<script type="text/javascript">
+	jQuery(document).on('page:load', function() {     
+    jQuery('.product-table tr.product').each(function(index){         
+      var variantId = jQuery(this).attr('data-variant-id');  
+      jQuery(this).find('.product__price').append("<div class='discountDiv'><s class='orgItemPrice" + index + "'></s></div>");
+    });
+
+    jQuery('.data .lineItem').each(function(i) {
+      var storePrice = jQuery(this).find('.originalPrice').text();
+      var salePrice = jQuery(this).find('.salePrice').text();
+      var discountPrice = parseFloat(storePrice - salePrice) ;
+      
+      /* Append Original Price Div */
+      jQuery('.orgItemPrice'+ i).text(storePrice); 
+      jQuery('.orgItemPrice'+ i).after('<span Class="savePrice">you saved $'+ discountPrice +'</span>');
+      
+      /* Hide if not Sale */
+      if(jQuery('.orgItemPrice'+ i).text() == 0.00){ 
+        jQuery('.orgItemPrice'+ i).parent('.discountDiv').remove();
+      }
+    });
+    if((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) || $(window).width() < 1000) {
+      var thisOrderSummary = document.getElementById("order-summary");
+      thisOrderSummary.classList.remove("order-summary--is-collapsed");
+      thisOrderSummary.classList.add("order-summary--is-expanded");
+    }
+    
+    // Opening phone number input field on page load
+    var phoneField = document.getElementsByClassName("sms-marketing-fieldset")[0];
+    var phoneCheckBox = document.getElementById("checkout_buyer_accepts_sms");
+    phoneField.classList.remove("hidden");
+    phoneField.setAttribute("aria-hidden",false);
+    phoneCheckBox.setAttribute("checked","checked");
+  });
+</script>
+
+<style>
+
+.order-summary-toggle__total-recap {
+  display: none !important;
+}
+
+.total-line--subtotal {
+  display: none;
+}
+
+[data-sms-marketing="true"] > .field {
+  margin-top: 20px;
+}
+
+.flag-selector {
+  height: 44.19px;
+  top: 71% !important;
+}
+
+#remember_me_mobile_phone_number_tooltip {
+  bottom: 0px !important;
+  top: auto;
+  height: 44.19px;
+}
+
+.sms-marketing-fieldset {
+  padding-left: 0px !important;
+}
+
+.field__label[for="checkout_sms_marketing_phone"] {
+  padding-left: 0px !important;
+}
+
+.findify-widget-4 > .findify-components--text__title {
+  margin-top: 0px;
+}
+
+[data-modal="policy-shipping-policy"] {
+  border-bottom: none;
+}
+
+.field__label[for="checkout_reduction_code"] {
+  display: none;
+}
+
+@media screen and (min-width: 750px) {
+  .fieldset--inline > .btn[name="button"] {
+    height: 44.19px;
+    align-self: flex-end;
+    margin: 0px;
+  }
+}
+
+.banner {
+  padding: 0px !important;
+}
+
+#main-header {
+  display: none !important;
+}
+
+#checkout_buyer_accepts_marketing {
+  box-shadow: inset 0 0 0 10px #796a5b !important;
+}
+
+#checkout_buyer_accepts_marketing::after {
+  background-color: #796a5b !important;
+}
+
+.product__description__name {
+  font-weight: 600;
+  margin-bottom: 0px !important;
+}
+
+@media screen and (max-width: 767px) {
+  #checkout_submit {
+    width: 50% !important;
+    min-width: 0px !important;
+  }
+}
+
+.payment-due__currency {
+  font-size: 20px !important;
+  margin-top: 0px !important;
+}
+
+#phone_tooltip {
+  margin-top: 12px;
+}
+
+#checkout_reduction_code {
+  font-family: Lato,sans-serif !important;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  #checkout_reduction_code {
+    width: 200px;
+  }
+}
+
+label.field__label, label.field__label--visible {
+  font-family: Lato,sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  color: rgb(52, 52, 51) !important;
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1250px) {
+  .sidebar {
+    width: 40% !important;
+  }
+  #checkout_reduction_code {
+    width: 180px;
+  }
+  #checkout_submit {
+    margin-left: -60px !important;
+  }
+}
+
+.order-summary .order-summary__sections .order-summary__emphasis {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.product__description__variant {
+  margin-bottom: 19px;
+}
+
+.order-summary .product__price {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+  
+.order-summary .discountDiv s {
+    padding-left: 5px;
+} 
+  
+.order-summary .product__description {
+    width: 280px;
+}
+  
+.order-summary .savePrice {
+    position: absolute;
+    bottom: -20px;
+    left: 15px;
+}
+  #checkout-data .sidebar {
+    width: 100%;
+}
+  
+  
+</style>

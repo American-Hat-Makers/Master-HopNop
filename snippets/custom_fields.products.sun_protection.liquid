@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["sun_protection"] != blank %}
+  <div class="custom-field custom-field__sun-protection custom-field__type--text">
+    <h3 class="custom-field--title">sun protection</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["sun_protection"] }}
+    </div>
+  </div>
+{% endif %}

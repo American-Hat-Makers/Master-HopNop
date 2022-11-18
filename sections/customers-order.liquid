@@ -1,0 +1,217 @@
+{% capture sidebar_html %}
+  {% include 'account-sidebar' %}
+{% endcapture %}
+
+{% assign created_at = order.created_at | time_tag: format: 'month_day_year' %}
+
+<div class="layout-content-wrapper customers-order-details" data-section-id="{{ section.id }}" data-section-type="customers-order">
+  <div class="container">
+
+    <div class="row">
+
+      {{ sidebar_html }}
+      
+      <div class="account-content{% if sidebar_html != blank %} account-content--has-sidebar{% endif %} col-lg-8 offset-lg-1">
+
+        <div data-order="{{ order.id }}">
+          {% if order.cancelled %}
+            {% assign cancelled_at = order.cancelled_at | date: format: 'month_day_year_time' %}
+            <div class="alert alert-danger text-center">
+              <p class="p2">{{ 'customer.order.cancelled' | t: date: cancelled_at }}.  {{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason }}</p>
+            </div>
+          {% endif %}
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="account-block">
+                <div class="account-block__content">
+                  <h4 class="orders-details-title">{{ 'customer.orders.order_number' | t }}{{ order.order_number}}</h4>
+                  <p class="order-details-date p2">{{ order.created_at | time_tag: format: 'month_day_year_short_form' }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3">
+              <div class="account-block">
+                <h6 class="account-block__title">{{ 'customer.order.billing_address' | t }}</h6>
+                <div class="account-block__content">
+                  {{ order.billing_address | format_address | replace: '<p>', '<address>' | replace: '</p>', '</address>' }}
+                  <p class="p3">{{ 'customer.orders.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-3 offset-lg-1">
+              <div class="account-block">
+                <h6 class="account-block__title">{{ 'customer.order.shipping_address' | t }}</h6>
+                <div class="account-block__content">
+                  {{ order.shipping_address | format_address | replace: '<p>', '<address>' | replace: '</p>', '</address>' }}
+                  <p class="p3">{{ 'customer.orders.payment_status' | t }}: {{ order.financial_status_label }}</p>
+                </div>
+              </div>              
+            </div>
+              
+            <div class="col-lg-12 form-container">
+              <div class="d-block d-lg-none mobile-order-list">
+                {% for line_item in order.line_items %}
+                  <div class="account-block">          
+                    <div class="row">
+                      <div class="col-12">
+                        <img alt="{{ line_item.title | escape }}" class="img-fluid lazyload hs-lazyload hs-id-40b6b0a4" data-src="{{ line_item.image | img_url: '250x' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                      </div>
+                      <div class="col-12">
+                        <div class="item-details">
+                          <strong>{{ 'customer.order.item' | t }}</strong><br />
+                          <span class="p3">{{ line_item.product.title }} {% if line_item.variant.title != "Default Title" %}
+                          - {{ line_item.variant.title }}
+                        {% endif %}</span>
+                          {% comment %} Only show this line if there is non-default content {% endcomment %}
+                        </div>
+                        
+                        {% unless line_item.properties == empty %}
+                          {% for property in line_item.properties %}
+                            {% unless property.last == blank %}
+                              <div class="item-details">{{ property.last }}</div>
+                            {% endunless %}
+                          {% endfor %}
+                        {% endunless %}
+
+                        <div class="item-details"><strong>{{ 'customer.order.price' | t }}</strong><span class="p3">{{ line_item.price | money }}</span></div>
+                        <div class="item-details"><strong>{{ 'customer.order.quantity' | t }}</strong><span class="p3">{{ line_item.quantity }}</span></div>
+                        <div class="item-details"><strong>{{ 'customer.order.total' | t }}</strong><span class="p3">{{ line_item.line_price | money }}</span></div>
+                      </div>
+                    </div>
+                    {% if line_item.filfillment %}
+                      <div class="text-center bg-gray-100 font-size-xs" style="padding: 8px 10px; margin: 4px 0">
+                        {{ 'customer.order.fulfilled' | t }} {{ line_item.fulfillment.created_at | date: format: 'month_day_year' }}
+                        {% if line_item.fulfillment.tracking_number %}
+                          <strong>{{ fulfillment.tracking_company }} {{ line_item.fulfillment.tracking_number }}</strong>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+
+              <div class="d-none d-lg-block">
+                <table class="table table-borderless table-sm orders-table">
+                  <thead>
+                    <th>{{ 'customer.order.items' | t }}</th>
+                    <th>{{ 'customer.order.sku' | t }}</th>
+                    <th>{{ 'customer.order.price' | t }}</th>
+                    <th>{{ 'customer.order.quantity' | t }}</th>
+                    <th class="text-right">{{ 'customer.order.total' | t }}</th>
+                  </thead>
+                  <tbody>
+                    {% for line_item in order.line_items %}                  
+                      <tr>
+                        <td>
+                          <div style="width: 140px; float: left"><img alt="{{ line_item.title | escape }}" class="img-fluid lazyload hs-lazyload hs-id-3c539906" data-src="{{ line_item.image | img_url: '250x' }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></div>
+                          <div style="padding-left: 160px">
+                            <h6>{{ line_item.product.title }}</h6>
+                            {% comment %} Only show this line if there is non-default content {% endcomment %}
+                            {% if line_item.variant.title != "Default Title" %}
+                              <p class="p3">{{ line_item.variant.title }}</p>
+                            {% endif %}
+                            {% unless line_item.properties == empty %}
+                              {% for property in line_item.properties %}
+                                {% unless property.last == blank %}                      
+                                  <div>{{ property.last }}</div>
+                                {% endunless %}
+                              {% endfor %}
+                            {% endunless %}                            
+                          </div>                    
+                        </td>
+                        <td>{{ line_item.sku }}</td>
+                        <td>{{ line_item.price | money }}</td>
+                        <td>{{ line_item.quantity }}</td>
+                        <td class="text-right">{{ line_item.line_price | money }}</td>
+                      </tr>
+                      {% if line_item.filfillment %}
+                        <tr>
+                          <td colspan="5">
+                            <div style="padding: 4px 0 22px">
+                              {{ 'customer.order.fulfilled' | t }}: {{ line_item.fulfillment.created_at | date: format: 'month_day_year' }}
+                              {% if line_item.fulfillment.tracking_number %}
+                                <strong>{{ fulfillment.tracking_company }} {{ line_item.fulfillment.tracking_number }}</strong>
+                              {% endif %}
+                            </div>
+                          </td>
+                        </tr>
+                      {% endif %}
+                    {% endfor %}
+                  </tbody>
+
+                  <tfoot>
+                    <tr>
+                      <td colspan="5" class="p3">
+                        {{ order.fulfillment_status_label }} 
+                        {{ order.created_at | time_tag: format: 'month_day_year_short_form' }}
+                        {{ order.shipping_method.handle }}{{ order.fulfillment.tracking_number }}
+                      </td>
+                    </tr>
+                  </tfoot> 
+                </table>
+              </div>
+
+              {% comment %} This totals table is displayed on all screen sizes {% endcomment %}
+              <table class="table table-borderless table-sm order-detail-totals">
+                <tbody class="text-right">
+                  <tr>
+                    <td colspan="4">
+                      <strong class="float-left">{{ 'customer.order.subtotal' | t }}</strong>
+                      <span class="money p3">{{ order.subtotal_price | money }}</span>
+                    </td>
+                  </tr>
+
+                  {% for discount in order.discounts %}
+                    <tr>
+                      <td colspan="4">
+                        <strong class="float-left">{{ discount.code }} {{ 'customer.order.discount' | t }}</strong>
+                        <span class="money p3">{{ discount.savings | money }}</span>
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+
+                    <tr>
+                      <td colspan="4">
+                        <strong class="float-left">{{ 'customer.order.shipping' | t }}<br><span class="p3 shipping">(shipping method)</span></strong>
+                        <span class="money p3">$0000</span>
+                      </td>
+                    </tr>
+
+                  {% for shipping_method in order.shipping_methods %}
+                    <tr>
+                      <td colspan="4">
+                        <strong class="float-left">{{ 'customer.order.shipping' | t }}<span class="p3 shipping">({{ shipping_method.title }})</span></strong>
+                        <span class="money p3">{{ shipping_method.price | money }}</span>
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  <tr class="taxes">
+                    <td colspan="4">
+                      <strong class="float-left">{{ 'customer.order.taxes' | t }}</strong>
+                      <span class="money p3">{{ order.tax_price | money }}</span>
+                    </td>
+                  </tr>
+
+                  <tr class="total">
+                    <td colspan="4">
+                      <strong class="float-left">{{ 'customer.order.total' | t }}</strong>
+                      <span class="money p3">{{ order.total_price | money }}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

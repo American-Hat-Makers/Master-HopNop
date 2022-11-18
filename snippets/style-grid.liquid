@@ -1,0 +1,68 @@
+{% assign BLOCKS_LIMIT = 20 %}
+
+{% assign use_blocks = false %}
+{% if sg_blocks %}
+  {% assign use_blocks = true  %}
+{% endif %}
+
+<div class="style-grid__inner" {{ block.shopify_attributes }}>
+  {% if sg_background_image != blank %}
+    <div class="style-grid__image-container">
+      {% include 'image_tag'
+        image: sg_background_image,
+        object_fit: cover,
+        object_position: center;
+      %}
+    </div>
+  {% endif %}
+  <div class="style-grid__header">
+    {% if sg_eyebrow != blank %}
+      <div class="style-grid__eyebrow">
+        {{ sg_eyebrow}}
+      </div>
+    {% endif %}
+    {% if sg_title != blank %}
+      <div class="style-grid__title h2">
+        {{ sg_title }}
+      </div>
+    {% endif %}
+    {% if sg_text != blank %}
+      <div class="style-grid__text-container">
+        {{ sg_text }}
+      </div>
+    {% endif %}
+
+  </div>
+  <div class="style-grid__list-container">
+
+    {% assign style_grid_decoration = 'style_grid_decoration.png' | asset_img_url: '300x' | prepend: 'https:' %}
+    <div class="style-grid__list-image">
+      {% include 'image_tag',
+         image: style_grid_decoration
+      %}
+    </div>
+    <div class="style-grid__list-inner">
+      {% if use_blocks == true %}
+        {% for block in sg_blocks %}
+          {% assign s = block.settings %}
+          {% if s.style != blank %}
+            <div class="style-grid__list-item">
+              {{ s.style }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% comment %}Assumes the module is being called from a CMS block{% endcomment %}
+        {% assign s = block.settings %}
+        {% for i in (1..BLOCKS_LIMIT) %}
+          {% assign text_handle = 'style_' | append: i %}
+          {% if s[text_handle] != blank %}
+            <div class="style-grid__list-item">
+              {{ s[text_handle] }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="container-fluid" data-section-type="video" data-section-id="v_id" {{ block.shopify_attributes }}>
+  <div class="row">
+    {% if v_video != blank %}
+      <div id="video-player-{{ v_id }}" class="video-player" data-video-player data-video-id="{{ v_video.id }}" data-video-type="{{ v_video.type }}" data-background="{% if v_background %}true{% else %}false{% endif %}" data-embed-color="#fff">
+        {% if v_image_desktop != blank and v_background == false %}
+          <div class="video-player__cover" data-video-player-cover>
+            <div class="video-player__cover-still">
+              {% include 'image_tag'
+                         image: v_image_desktop,
+                         object_fit: cover,
+                         object_position: center
+              %}
+            </div>
+            <span class="video-player__cover-play">
+              {% include 'icon-play-full-color' %}
+            </span>
+          </div>
+        {% endif %}
+        <div class="video-player__embed" data-video-player-embed></div>
+      </div>
+    {% else %}
+      <div class="video-player__image-only">
+        {% include 'image_tag'
+                   image: v_image_desktop,
+                   object_fit: cover,
+                   object_position: center
+          %}
+      </div>
+    {% endif %}
+  </div>
+</div>

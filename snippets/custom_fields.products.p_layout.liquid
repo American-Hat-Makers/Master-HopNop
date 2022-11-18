@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["p_layout"] != blank %}
+  <div class="custom-field custom-field__p-layout custom-field__type--text-list">
+    <h3 class="custom-field--title">Image Position</h3>
+    <div class="custom-field--value">  
+      {{ product.metafields.custom_fields["p_layout"] }}
+    </div>
+  </div>
+{% endif %}

@@ -1,0 +1,8 @@
+{% if collection.metafields.custom_fields["bp_background_image"] != blank %}
+  <div class="custom-field custom-field__bp-background-image custom-field__type--image">
+    <h3 class="custom-field--title">Background Image</h3>
+    <div class="custom-field--value">  
+      {% render 'cf-image' with image: collection.metafields.custom_fields["bp_background_image"], print: 'url' %}
+    </div>
+  </div>
+{% endif %}

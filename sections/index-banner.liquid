@@ -1,0 +1,122 @@
+<div data-section-id="{{ section.id }}" data-section-type="banner" {{section.shopify_attributes}}>
+  <div class="banner">
+    {% include 'banner-panel-alt',
+                bp_id: section.id,
+                bp_content_alignment: section.settings.content_alignment,
+                bp_content_max_width: section.settings.content_max_width,
+                bp_background_image: section.settings.background_base,
+                bp_background_image_vertical_alignment: section.settings.background_image_vertical_alignment,
+                bp_background_image_small: section.settings.background_small,
+                bp_background_image_small_vertical_alignment: section.settings.background_small_vertical_alignment,
+                bp_light_text: section.settings.light_text,
+                bp_icon: section.settings.icon,
+                bp_title: section.settings.title,
+                bp_text: section.settings.text,
+                bp_font_size: section.settings.font_size,
+                bp_cta_url: section.settings.cta_url,
+                bp_cta_text: section.settings.cta_text
+    %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Banner",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "text",
+        "label": "Text"
+      },
+      {
+        "type": "select",
+        "id": "font_size",
+        "label": "Font Size",
+        "options": [
+          {"label": "small", "value": "banner__panel--text-small"},
+          {"label": "large", "value": "banner__panel--text-large"}
+        ],
+        "default": "banner__panel--text-large"
+      },
+      {
+        "type": "text",
+        "id": "cta_text",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cta_url",
+        "label": "CTA Link"
+      },
+      {
+        "type": "header",
+        "content": "Design"
+      },
+      {
+        "type": "checkbox",
+        "id" : "light_text",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type":      "select",
+        "id":        "content_alignment",
+        "label":     "Content Alignment",
+        "options": [
+          { "value": "left", "label": "Left" },
+          { "value": "center", "label": "Center" },
+          { "value": "right", "label": "Right" }
+        ],
+        "default":   "center"
+      },
+      {
+        "type": "range",
+        "id":   "content_max_width",
+        "min":  300,
+        "max":  950,
+        "step": 25,
+        "unit": "px",
+        "label": "Max Content Width",
+        "default": 450
+      },
+      {
+        "type": "header",
+        "content": "Icon",
+        "info": "Displays an icon on top of the module title"
+      },
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "Icon"
+      },
+      {
+        "type": "header",
+        "content": "Background - Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_base",
+        "label": "Main Image"
+      }
+    ],
+    "presets": [{
+      "name": "Banner",
+      "category": "Media",
+      "settings":
+        {
+          "title": "Banner Text Here",
+          "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+        }
+      }
+    ]
+  }
+{% endschema %}

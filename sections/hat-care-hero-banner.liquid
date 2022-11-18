@@ -1,0 +1,371 @@
+{% comment %} Capture Video Block First {% endcomment %}
+
+{% capture video_banner %}
+  {% for block in section.blocks %}
+    {% if block.type == 'banner_video' %}
+      <div class="banner">
+        {% include 'banner-panel',
+          bp_id: block.id,
+          bp_height: section.settings.banner_height,
+          bp_content_alignment: block.settings.content_alignment,
+          bp_text_alignment: block.settings.content_alignment,
+          bp_content_max_width: block.settings.content_max_width,
+          bp_light_text: block.settings.light_text,
+          bp_overlay: block.settings.overlay,
+          bp_eyebrow: block.settings.eyebrow,
+          bp_title_semantic_tag: 'h1',
+          bp_title_style_tag: 'h1',
+          bp_title: block.settings.title,
+          bp_text: block.settings.text,
+          bp_cta_url: block.settings.cta_url_1,
+          bp_cta_text: block.settings.cta_text_1,
+          bp_cta_url_2: block.settings.cta_url_2,
+          bp_cta_text_2: block.settings.cta_text_2
+          bp_video: block.settings.video_url
+        %}
+      </div>
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endcapture %}
+
+<div data-section-id="{{ section.id }}" data-section-type="{% if video_banner != blank %}video-banner{% else %}slideshow{% endif %}">
+  {% if section.blocks.size > 0 %}
+    {% if video_banner != blank %}
+      {{ video_banner }}
+    {% else %}
+      <div class="slideshow swiper-container"
+          id="slideshow-{{ section.id }}"
+          data-autoplay="{{ section.settings.autoplay }}"
+          data-speed="{{ section.settings.autoplay_speed }}"
+          data-dots="{{ section.settings.dots }}"
+          data-animation="{{ section.settings.animation }}"
+          data-slideshow>
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="slideshow-slide swiper-slide" {{ block.shopify_attributes }} data-slideshow-slide data-block-id="{{ block.id }}">
+              <div class="banner">
+                {% include 'banner-panel',
+                  bp_id: block.id,
+                  bp_height: section.settings.banner_height,
+                  bp_content_alignment: block.settings.content_alignment,
+                  bp_text_alignment: block.settings.content_alignment,
+                  bp_content_max_width: block.settings.content_max_width,
+                  bp_background_image: block.settings.background_base,
+                  bp_background_image_small: block.settings.background_small,
+                  bp_light_text: block.settings.light_text,
+                  bp_overlay: block.settings.overlay,
+                  bp_eyebrow: block.settings.eyebrow,
+                  bp_title_semantic_tag: 'h1',
+                  bp_title_style_tag: 'h1',
+                  bp_title: block.settings.title,
+                  bp_text: block.settings.text,
+                  bp_cta_url: block.settings.cta_url_1,
+                  bp_cta_text: block.settings.cta_text_1,
+                  bp_cta_url_2: block.settings.cta_url_2,
+                  bp_cta_text_2: block.settings.cta_text_2
+                %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% if section.blocks.size > 1 %}
+          <span class="swiper-arrow swiper-arrow--left">
+            <span class="arrow arrow--left"><span class="arrow__icon"></span></span>
+          </span>
+          <span class="swiper-arrow swiper-arrow--right">
+            <span class="arrow arrow--right"><span class="arrow__icon"></span></span>
+          </span>
+          <div class="swiper-pagination swiper-pagination--white"></div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Hat Care Banner Slideshow",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "header",
+        "content": "Banner Settings",
+        "info": "Banner can be configured as a slideshow or video banner. To create a video banner add Banner Video block. If Banner Video block is added slideshow will be disabled."
+      },
+      {
+        "type":      "select",
+        "id":        "banner_height",
+        "label":     "Banner Height",
+        "options": [
+          { "value": "small", "label": "Small" },
+          { "value": "large", "label": "Large" }
+        ],
+        "default":   "large"
+      },
+      {
+        "type": "header",
+        "content": "Slideshow Settings"
+      },
+      {
+        "type": "checkbox",
+        "id": "dots",
+        "label": "Pagination Dots",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-play Slideshow",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "animation",
+        "label": "Animation",
+        "options": [
+          { "value": "slide", "label": "Slide" },
+          { "value": "fade", "label": "Fade" }
+        ],
+        "default": "slide"
+      },
+      {
+        "type": "select",
+        "id": "autoplay_speed",
+        "label": "Auto-play Speed",
+        "options": [
+          { "value": "5000", "label": "5 seconds" },
+          { "value": "6000", "label": "6 seconds" },
+          { "value": "7000", "label": "7 seconds" },
+          { "value": "8000", "label": "8 seconds" },
+          { "value": "9000", "label": "9 seconds" },
+          { "value": "10000", "label": "10 seconds" }
+        ],
+        "default": "7000"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "banner_panel",
+        "name": "Banner Slide",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow Text"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Header Text"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "header",
+            "content": "CTA Buttons"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_1",
+            "label": "CTA Text 1"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_1",
+            "label": "CTA Link 1"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_2",
+            "label": "CTA Text 2"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_2",
+            "label": "CTA Link 2"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id" : "overlay",
+            "label": "Slide Image - Overlay",
+            "options": [
+              {"label": "None", "value": ""},
+              {"label": "Light", "value": "light"},
+              {"label": "Dark", "value": "dark"}
+            ],
+            "default":  ""
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "header",
+            "content": "Background - Desktop",
+            "info": "Main image will always be used. Mobile image will be displayed if set."
+          },
+          {
+            "type": "image_picker",
+            "id": "background_base",
+            "label": "Background Main Image"
+          },
+          {
+            "type": "header",
+            "content": "Background - Mobile"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_small",
+            "label": "Background Mobile Image"
+          }
+        ]
+      },
+      {
+        "type": "banner_video",
+        "name": "Banner Video",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow Text"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Header Text"
+          },
+          {
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "header",
+            "content": "CTA Buttons"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_1",
+            "label": "CTA Text 1"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_1",
+            "label": "CTA Link 1"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_2",
+            "label": "CTA Text 2"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_2",
+            "label": "CTA Link 2"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "select",
+            "id" : "overlay",
+            "label": "Video Banner - Overlay",
+            "options": [
+              {"label": "None", "value": ""},
+              {"label": "Light", "value": "light"},
+              {"label": "Dark", "value": "dark"}
+            ],
+            "default":  ""
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "header",
+            "content": "Media content",
+            "info": "Provide Vimeo video URL. If video is provided, slideshow will be disabled."
+          },
+          {
+            "id": "video_url",
+            "type": "video_url",
+            "label": "Vimeo Video URL",
+            "accept": ["vimeo"]
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Banner Slideshow",
+      "category": "Media",
+      "settings": {
+        "autoplay": true,
+        "autoplay_speed": "5000"
+      },
+      "blocks": []
+    }]
+  }
+{% endschema %}

@@ -1,0 +1,1688 @@
+{% include 'page-cms-section-renderer', section: section %}
+
+{% schema %}
+  {
+    "name": "Women Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page Hero - Slideshow",
+        "info": "Banner can be configured as a slideshow or video banner. To create a video banner add video link to the first slide. If video is added slideshow will be disabled."
+      },
+      {
+        "type": "checkbox",
+        "id": "dots",
+        "label": "Pagination Dots",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-play Slideshow",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "animation",
+        "label": "Animation",
+        "options": [
+          {
+            "value": "slide",
+            "label": "Slide"
+          },
+          {
+            "value": "fade",
+            "label": "Fade"
+          }
+        ],
+        "default": "slide"
+      },
+      {
+        "type": "select",
+        "id": "autoplay_speed",
+        "label": "Auto-play Speed",
+        "options": [
+          {
+            "value": "5000",
+            "label": "5 seconds"
+          },
+          {
+            "value": "6000",
+            "label": "6 seconds"
+          },
+          {
+            "value": "7000",
+            "label": "7 seconds"
+          },
+          {
+            "value": "8000",
+            "label": "8 seconds"
+          },
+          {
+            "value": "9000",
+            "label": "9 seconds"
+          },
+          {
+            "value": "10000",
+            "label": "10 seconds"
+          }
+        ],
+        "default": "7000"
+      },
+      {
+        "type": "select",
+        "id": "banner_height",
+        "label": "Banner Height",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ],
+        "default": "large"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 1 Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow_1",
+        "label": "Slide 1 Eyebrow Text"
+      },
+      {
+        "type": "text",
+        "id": "title_1",
+        "label": "Slide 1 Header Text"
+      },
+      {
+        "type": "text",
+        "id": "text_1",
+        "label": "Slide 1 Text"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1_1",
+        "label": "Slide 1 CTA Text 1"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1_1",
+        "label": "Slide 1 CTA Link 1"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2_1",
+        "label": "Slide 1 CTA Text 2"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2_1",
+        "label": "Slide 1 CTA Link 2"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 1 Design"
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text_1",
+        "label": "Slide 1 Light Text",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "overlay_1",
+        "label": "Slide 1 Image Overlay",
+        "options": [
+          {
+            "label": "None",
+            "value": ""
+          },
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "content_alignment_1",
+        "label": "Slide 1 Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "range",
+        "id": "content_max_width_1",
+        "min": 300,
+        "max": 850,
+        "step": 25,
+        "unit": "px",
+        "label": "Slide 1 Max Content Width",
+        "default": 450
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 1 Media"
+      },
+      {
+        "id": "video_url_1",
+        "type": "video_url",
+        "info": "Provide Vimeo video URL. If video is provided, slideshow will be disabled.",
+        "label": "Vimeo Video URL",
+        "accept": [
+          "vimeo"
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 1 Background - Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image_1",
+        "label": "Slide 1 Background Desktop"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 2 Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow_2",
+        "label": "Slide 2 Eyebrow Text"
+      },
+      {
+        "type": "text",
+        "id": "title_2",
+        "label": "Slide 2 Header Text"
+      },
+      {
+        "type": "text",
+        "id": "text_2",
+        "label": "Slide 2 Text"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1_2",
+        "label": "Slide 2 CTA Text 1"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1_2",
+        "label": "Slide 2 CTA Link 1"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2_2",
+        "label": "Slide 2 CTA Text 2"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2_2",
+        "label": "Slide 2 CTA Link 2"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 2 Design"
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text_2",
+        "label": "Slide 2 Light Text",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "overlay_2",
+        "label": "Slide 2 Image Overlay",
+        "options": [
+          {
+            "label": "None",
+            "value": ""
+          },
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "content_alignment_2",
+        "label": "Slide 2 Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "range",
+        "id": "content_max_width_2",
+        "min": 300,
+        "max": 850,
+        "step": 25,
+        "unit": "px",
+        "label": "Slide 2 Max Content Width",
+        "default": 450
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 2 Media"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 2 Background - Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image_2",
+        "label": "Slide 2 Background Desktop"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 3 Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow_3",
+        "label": "Slide 3 Eyebrow Text"
+      },
+      {
+        "type": "text",
+        "id": "title_3",
+        "label": "Slide 3 Header Text"
+      },
+      {
+        "type": "text",
+        "id": "text_3",
+        "label": "Slide 3 Text"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_1_3",
+        "label": "Slide 3 CTA Text 1"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_1_3",
+        "label": "Slide 3 CTA Link 1"
+      },
+      {
+        "type": "text",
+        "id": "cta_text_2_3",
+        "label": "Slide 3 CTA Text 2"
+      },
+      {
+        "type": "url",
+        "id": "cta_url_2_3",
+        "label": "Slide 3 CTA Link 2"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 3 Design"
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text_3",
+        "label": "Slide 3 Light Text",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "overlay_3",
+        "label": "Slide 3 Image Overlay",
+        "options": [
+          {
+            "label": "None",
+            "value": ""
+          },
+          {
+            "label": "Light",
+            "value": "light"
+          },
+          {
+            "label": "Dark",
+            "value": "dark"
+          }
+        ],
+        "default": ""
+      },
+      {
+        "type": "select",
+        "id": "content_alignment_3",
+        "label": "Slide 3 Content Alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "center"
+      },
+      {
+        "type": "range",
+        "id": "content_max_width_3",
+        "min": 300,
+        "max": 850,
+        "step": 25,
+        "unit": "px",
+        "label": "Slide 3 Max Content Width",
+        "default": 450
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 3 Media"
+      },
+      {
+        "type": "header",
+        "content": "Page Hero - Slide 3 Background - Desktop"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image_3",
+        "label": "Slide 3 Background Desktop"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "two-up",
+        "name": "2 Up Content Grid",
+        "settings": [
+          {
+            "type": "header",
+            "content": "2 Up Content Grid - Column 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "cc_icon_1",
+            "label": "Icon"
+          },
+          {
+            "type": "checkbox",
+            "id": "cc_light_text_1",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "cc_title_1",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "cc_text_1",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cc_cta_text_1",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cc_cta_url_1",
+            "label": "CTA Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cc_background_image_1",
+            "label": "Background Image"
+          },
+          {
+            "type": "header",
+            "content": "2 Up Content Grid - Column 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "cc_icon_2",
+            "label": "Icon"
+          },
+          {
+            "type": "checkbox",
+            "id": "cc_light_text_2",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "cc_title_2",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "cc_text_2",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cc_cta_text_2",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cc_cta_url_2",
+            "label": "CTA Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "cc_background_image_2",
+            "label": "Background Image"
+          }
+        ]
+      },
+      {
+        "type": "promo",
+        "name": "Promo",
+        "settings": [
+          {
+            "type": "select",
+            "id": "p_layout",
+            "label": "Layout",
+            "options": [
+              {
+                "value": "left",
+                "label": "Image Left"
+              },
+              {
+                "value": "right",
+                "label": "Image Right"
+              }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "p_background_color",
+            "label": "Background Color",
+            "options": [
+              {
+                "value": "#fffcf4",
+                "label": "Cream"
+              },
+              {
+                "value": "#ffffff",
+                "label": "White"
+              }
+            ],
+            "default": "#fffcf4"
+          },
+          {
+            "type": "range",
+            "id": "p_content_max_width",
+            "min": 300,
+            "max": 850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 550
+          },
+          {
+            "type": "select",
+            "id": "p_content_alignment",
+            "label": "Content Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "text",
+            "id": "p_eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "p_title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "p_text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "p_cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "p_cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "p_image",
+            "label": "Image"
+          },
+		  {
+            "type": "url",
+            "id": "p_cta_image_url",
+            "label": "CTA Image Link"
+          }
+        ]
+      },
+	  {
+        "type": "hero-women-header-banner",
+        "name": "Hero-Women-Header-Banner",
+        "settings": [
+          {
+            "type": "select",
+            "id": "w_hp_layout",
+            "label": "Layout",
+            "options": [
+              {
+                "value": "left",
+                "label": "Image Left"
+              },
+              {
+                "value": "right",
+                "label": "Image Right"
+              }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "select",
+            "id": "w_hp_background_color",
+            "label": "Background Color",
+            "options": [
+              {
+                "value": "#fffcf4",
+                "label": "Cream"
+              },
+              {
+                "value": "#ffffff",
+                "label": "White"
+              }
+            ],
+            "default": "#fffcf4"
+          },
+          {
+            "type": "range",
+            "id": "w_hp_content_max_width",
+            "min": 300,
+            "max": 850,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 550
+          },
+          {
+            "type": "select",
+            "id": "w_hp_content_alignment",
+            "label": "Content Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "center",
+                "label": "Center"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "center"
+          },
+          {
+            "type": "text",
+            "id": "w_hp_eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "w_hp_title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "w_hp_text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "m_hp_cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "w_hp_cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "image_picker",
+            "id": "w_hp_image",
+            "label": "Image"
+          }
+        ]
+      },
+      {
+        "type": "3-up",
+        "name": "3 UP",
+        "settings": [
+          {
+            "type": "header",
+            "content": "General Settings"
+          },
+          {
+            "type": "checkbox",
+            "id": "white_bg",
+            "label": "White Background"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text"
+          },
+          {
+            "type": "header",
+            "content": "Content - Block 1"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_icon_1",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "block_title_1",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "block_text_1",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_1",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_1",
+            "label": "CTA URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_background_1",
+            "label": "Background"
+          },
+          {
+            "type": "header",
+            "content": "Content - Block 2"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_icon_2",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "block_title_2",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "block_text_2",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_2",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_2",
+            "label": "CTA URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_background_2",
+            "label": "Background"
+          },
+          {
+            "type": "header",
+            "content": "Content - Block 3"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_icon_3",
+            "label": "Icon"
+          },
+          {
+            "type": "text",
+            "id": "block_title_3",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "block_text_3",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_text_3",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url_3",
+            "label": "CTA URL"
+          },
+          {
+            "type": "image_picker",
+            "id": "block_background_3",
+            "label": "Background"
+          }
+        ]
+      },
+      {
+        "type": "product-details",
+        "name": "Product Details",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Section Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Section Image"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 1"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_1",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_1",
+            "label": "Detail Text"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 2"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_2",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_2",
+            "label": "Detail Text"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 3"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_3",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_3",
+            "label": "Detail Text"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 4"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_4",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_4",
+            "label": "Detail Text"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 5"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_5",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_5",
+            "label": "Detail Text"
+          },
+          {
+            "type": "header",
+            "content": "Product Detail - 6"
+          },
+          {
+            "type": "text",
+            "id": "detail_title_6",
+            "label": "Detail Title"
+          },
+          {
+            "type": "textarea",
+            "id": "detail_text_6",
+            "label": "Detail Text"
+          }
+        ]
+      },
+      {
+        "type": "instagram-gallery",
+        "name": "Instagram Gallery",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Section Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Section Title"
+          },
+          {
+            "type": "text",
+            "id": "gallery",
+            "label": "Gallery ID"
+          },
+          {
+            "type": "image_picker",
+            "id": "background",
+            "label": "Backgroud Image"
+          },
+          {
+            "type": "checkbox",
+            "id": "light_text",
+            "label": "Light Text"
+          }
+        ]
+      },
+      {
+        "type": "product-grid",
+        "name": "Product Grid",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "header",
+            "content": "Category 1"
+          },
+          {
+            "type": "text",
+            "id": "category_1_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "category_1_cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "category_1_cta_link",
+            "label": "CTA Link"
+          },
+          {
+            "type": "product",
+            "id": "category_1_product_1",
+            "label": "Product 1"
+          },
+          {
+            "type": "product",
+            "id": "category_1_product_2",
+            "label": "Product 2"
+          },
+          {
+            "type": "product",
+            "id": "category_1_product_3",
+            "label": "Product 3"
+          },
+          {
+            "type": "product",
+            "id": "category_1_product_4",
+            "label": "Product 4"
+          },
+          {
+            "type": "header",
+            "content": "Category 2"
+          },
+          {
+            "type": "text",
+            "id": "category_2_title",
+            "label": "Title"
+          },
+          {
+            "type": "text",
+            "id": "category_2_cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "category_2_cta_link",
+            "label": "CTA Link"
+          },
+          {
+            "type": "product",
+            "id": "category_2_product_1",
+            "label": "Product 1"
+          },
+          {
+            "type": "product",
+            "id": "category_2_product_2",
+            "label": "Product 2"
+          },
+          {
+            "type": "product",
+            "id": "category_2_product_3",
+            "label": "Product 3"
+          },
+          {
+            "type": "product",
+            "id": "category_2_product_4",
+            "label": "Product 4"
+          }
+        ]
+      },
+      {
+        "type": "style-grid",
+        "name": "Style Grid",
+        "settings": [
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_image",
+            "label": "Background Image"
+          },
+          {
+            "type": "header",
+            "content": "Style grid items"
+          },
+          {
+            "type": "text",
+            "id": "style_1",
+            "label": "Style 1",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_2",
+            "label": "Style 2",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_3",
+            "label": "Style 3",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_4",
+            "label": "Style 4",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_5",
+            "label": "Style 5",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_6",
+            "label": "Style 6",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_7",
+            "label": "Style 7",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_8",
+            "label": "Style 8",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_9",
+            "label": "Style 9",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_10",
+            "label": "Style 10",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_11",
+            "label": "Style 11",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_12",
+            "label": "Style 12",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_13",
+            "label": "Style 13",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_14",
+            "label": "Style 14",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_15",
+            "label": "Style 15",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_16",
+            "label": "Style 16",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_17",
+            "label": "Style 17",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_18",
+            "label": "Style 18",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_19",
+            "label": "Style 19",
+            "default": "style"
+          },
+          {
+            "type": "text",
+            "id": "style_20",
+            "label": "Style 20",
+            "default": "style"
+          }
+        ]
+      },
+      {
+        "type": "props",
+        "name": "Props",
+        "settings": [
+          {
+            "id": "text_1",
+            "type": "text",
+            "label": "Prop 1"
+          },
+          {
+            "id": "link_1",
+            "type": "url",
+            "label": "Link 1"
+          },
+          {
+            "id": "text_2",
+            "type": "text",
+            "label": "Prop 2"
+          },
+ 		  {
+            "id": "link_2",
+            "type": "url",
+            "label": "Link 2"
+          },
+          {
+            "id": "text_3",
+            "type": "text",
+            "label": "Prop 3"
+          },
+ 		  {
+            "id": "link_3",
+            "type": "url",
+            "label": "Link 3"
+          },
+          {
+            "id": "text_4",
+            "type": "text",
+            "label": "Prop 4"
+          },
+ 		  {
+            "id": "link_4",
+            "type": "url",
+            "label": "Link 4"
+          }
+        ]
+      },
+      {
+        "type": "masonry",
+        "name": "Masonry",
+        "settings": [
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  950,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 700
+          },
+          {
+            "type":      "select",
+            "id":        "background_color",
+            "label":     "Background Color",
+            "options": [
+              { "value": "bg-white", "label": "White" },
+              { "value": "bg-pearl", "label": "Pearl" }
+            ],
+            "default":   "bg-white"
+          },
+          {
+            "type": "header",
+            "content": "Image blocks"
+          },
+          {
+            "type": "image_picker",
+            "id": "m_image_desktop_1",
+            "label": "Block image - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "m_title_1",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "m_url_1",
+            "label": "url"
+          },
+          {
+            "type": "image_picker",
+            "id": "m_image_desktop_2",
+            "label": "Block image - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "m_title_2",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "m_url_2",
+            "label": "url"
+          },
+          {
+            "type": "image_picker",
+            "id": "m_image_desktop_3",
+            "label": "Block image - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "m_title_3",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "m_url_3",
+            "label": "url"
+          },
+          {
+            "type": "image_picker",
+            "id": "m_image_desktop_4",
+            "label": "Block image - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "m_title_4",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "m_url_4",
+            "label": "url"
+          },
+          {
+            "type": "image_picker",
+            "id": "m_image_desktop_5",
+            "label": "Block image - Desktop"
+          },
+          {
+            "type": "text",
+            "id": "m_title_5",
+            "label": "Title"
+          },
+          {
+            "type": "url",
+            "id": "m_url_5",
+            "label": "url"
+          }
+        ]
+      },{
+        "type": "rich-text",
+        "name": "Rich text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "eyebrow",
+            "label": "Eyebrow"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+ 		  {
+            "type": "checkbox",
+            "id": "read_more",
+            "label": "Enable read more",
+            "default": false
+          },
+          {
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "text",
+            "id": "cta_title",
+            "label": "CTA title"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Url"
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  950,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 700
+          },
+          {
+            "type":      "select",
+            "id":        "background_color",
+            "label":     "Background Color",
+            "options": [
+              { "value": "bg-white", "label": "White" },
+              { "value": "bg-pearl", "label": "Pearl" }
+            ],
+            "default":   "bg-white"
+          }
+        ]
+      },
+      {
+        "type": "banner-panel",
+        "name": "Banner",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "select",
+            "id": "font_size",
+            "label": "Font Size",
+            "options": [
+              {"label": "small", "value": "banner__panel--text-small"},
+              {"label": "large", "value": "banner__panel--text-large"}
+            ],
+            "default": "banner__panel--text-large"
+          },
+          {
+            "type": "text",
+            "id": "cta_text",
+            "label": "CTA Text"
+          },
+          {
+            "type": "url",
+            "id": "cta_url",
+            "label": "CTA Link"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  950,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "header",
+            "content": "Icon",
+            "info": "Displays an icon on top of the module title"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "header",
+            "content": "Background - Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_base",
+            "label": "Main Image"
+          }
+        ]
+      },
+ {
+        "type": "banner-panel-cta2",
+        "name": "Banner 2 CTA",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+          },
+          {
+            "type": "select",
+            "id": "font_size",
+            "label": "Font Size",
+            "options": [
+              {"label": "small", "value": "banner__panel--text-small"},
+              {"label": "large", "value": "banner__panel--text-large"}
+            ],
+            "default": "banner__panel--text-large"
+          },
+          {
+            "type": "text",
+            "id": "cta_text1",
+            "label": "CTA Text-1"
+          },
+          {
+            "type": "url",
+            "id": "cta_url1",
+            "label": "CTA Link-1"
+          },
+          {
+            "type": "text",
+            "id": "cta_text2",
+            "label": "CTA Text-2"
+          },
+          {
+            "type": "url",
+            "id": "cta_url2",
+            "label": "CTA Link-2"
+          },
+          {
+            "type": "header",
+            "content": "Design"
+          },
+          {
+            "type": "checkbox",
+            "id" : "light_text",
+            "label": "Light Text",
+            "default": false
+          },
+          {
+            "type":      "select",
+            "id":        "content_alignment",
+            "label":     "Content Alignment",
+            "options": [
+              { "value": "left", "label": "Left" },
+              { "value": "center", "label": "Center" },
+              { "value": "right", "label": "Right" }
+            ],
+            "default":   "center"
+          },
+          {
+            "type": "range",
+            "id":   "content_max_width",
+            "min":  300,
+            "max":  950,
+            "step": 25,
+            "unit": "px",
+            "label": "Max Content Width",
+            "default": 450
+          },
+          {
+            "type": "header",
+            "content": "Icon",
+            "info": "Displays an icon on top of the module title"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon"
+          },
+          {
+            "type": "header",
+            "content": "Background - Desktop"
+          },
+          {
+            "type": "image_picker",
+            "id": "background_base",
+            "label": "Main Image"
+          }
+        ]
+      },
+      {
+        "type": "video",
+        "name": "Video/Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image_desktop",
+            "label": "Image",
+            "info": "If video is set this will work as the overlay image when the video is paused."
+          },
+          {
+            "type": "video_url",
+            "id": "video",
+            "label": "Video Url",
+            "accept": ["vimeo"]
+          },
+          {
+            "type": "checkbox",
+            "id" : "background",
+            "label": "Background Video",
+            "info": "Enabling this will remove video controls, cover image and autoplay the video.  [See Vimeo Help Page for info](https://help.vimeo.com/hc/en-us/articles/115011183028-Embedding-background-videos)",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

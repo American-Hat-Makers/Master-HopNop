@@ -1,0 +1,57 @@
+{% assign section_id = section.id %}
+{% assign eyebrow = section.settings.eyebrow %}
+{% assign title = section.settings.title %}
+{% assign background = section.settings.background %}
+{% assign gallery = section.settings.gallery %}
+{% assign light_text = section.settings.light_text %}
+
+{% include 'instagram-gallery',
+            section_id: section_id,
+            eyebrow: eyebrow,
+            title: title,
+            background: background,
+            gallery: gallery,
+            light_text: light_text           
+%}
+
+{% schema %}
+  {
+    "name": "Instagram Gallery",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Section Eyebrow"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title"
+      },
+      {
+        "type": "text",
+        "id": "gallery",
+        "label": "Gallery ID"
+      },
+      {
+        "type": "image_picker",
+        "id": "background",
+        "label": "Backgroud Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "light_text",
+        "label": "Light Text"
+      }
+    ],
+    "presets": [{
+      "name": "Instagram Gallery",
+      "category": "Media",
+      "settings": {}
+    }]
+  }
+{% endschema %}

@@ -1,0 +1,416 @@
+<style>
+  #celeb-title {
+    border-top: 1px solid #e9e9e9;
+    padding-top: 30px;
+    text-align: center;
+    width: 100%;
+  }
+  .celeb-row {
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0px;
+  }
+  .celeb-col {
+    width: fit-content !important;
+    border: none !important;
+    margin-left: 0.5% !important;
+    margin-right: 0.5% !important;
+    padding: 0px !important;
+  }
+  .celeb-img {
+    border-radius: 50%;
+  }
+  .celeb-p {
+    text-align: center;
+    margin-bottom: 0px !important;
+  }
+  #product-detail-section {
+    margin-bottom: 0px;
+  }
+  .findify-widget-4 > .findify-components--text__primary-lowercase {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: left;
+    border-top: 1px solid #e9e9e9;
+    line-height: 25px;
+  }
+
+  .findify-widget-4 {
+    padding: 0 0px 0 20px;
+  }
+
+  .findify-components--cards--product {
+    padding-left: 0px;
+    padding-right: 24px;
+  }
+  @media screen and (min-width: 768px) {
+    .headerColumn {
+      width: max-content !important;
+      border: none !important;
+    }
+    .guaranteeColumn {
+      width: max-content !important;
+      border: none !important;
+    }
+    .guaranteeH2,.guaranteeP {
+      text-align: center;
+    }
+    .guaranteeP {
+      padding-left: 15%;
+      padding-right: 15%;
+    }
+  }
+  .headerRow,.guaranteeRow {
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+    flex-wrap: nowrap;
+    background-color: #F2F2F2;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .guaranteeRow {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1240px) {
+    .headerRow {
+      left: calc((-100vw + 100%)/4);
+    }
+    .sidebar {
+      width: auto !important;
+    }
+    .guaranteeRow {
+      left: calc((-100vw + 100%)/4);
+    }
+    .guaranteeH2,.guaranteeP {
+      padding-left: 15px;
+      padding-right: 5px;
+      text-align: left;
+    }
+    .guaranteeColumn {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+      margin: 0px !important;
+      border-right: none !important;
+      border-left: none !important;
+    }
+    .findify-product_card-badge {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    #product-findify-rec-7 {
+      display: none;
+    }
+    .findify-product_card-badge {
+      display: none;
+    }
+    .headerRow {
+      flex-wrap: wrap;
+      left: calc((-100vw + 100%)/4);
+    }
+    .guaranteeRow {
+      left: calc((-100vw + 100%)/4);
+      flex-wrap: wrap;
+      padding-top: 0px;
+      padding-bottom: 0px;
+    }
+    .headerColumn {
+      width: 50%;
+      border: 1px solid #e9e9e9;
+    }
+    #headerColumn1 {
+      border-top: none;
+      border-left: none;
+      border-right: 1px solid #e9e9e9;
+      border-bottom: none;
+      margin-bottom: 0px;
+    }
+    #headerColumn2 {
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px solid #e9e9e9;
+      border-right: none;
+      margin-bottom: 0px;
+      margin-left: 0px;
+    }
+    #headerColumn3 {
+      display: none;
+    }
+    #headerColumn4 {
+      display: none;
+    }
+    #header-icon-1 {
+      display: none;
+    }
+    #header-icon-2 {
+      display: none;
+    }
+    .findify-product-recomendation-2 {
+      display: block;
+    }
+    .findify-product-recomendation-1 {
+      display: none;
+    }
+    .sidebar {
+      width: auto !important;
+    }
+    .guaranteeColumn {
+      width: auto !important;
+      padding-top: 25px !important;
+      padding-bottom: 25px !important;
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+      margin: 0px !important;
+      border-right: none !important;
+      border-left: none !important;
+    }
+    #guaranteeColumn1 {
+      border-bottom: 1px solid #e9e9e9;
+      border-top: none;
+    }
+    #guaranteeColumn2 {
+      border-top: 1px solid #e9e9e9;
+      border-bottom: none;
+    }
+    .guaranteeH2,.guaranteeP {
+      padding-left: 30px;
+      padding-right: 5px;
+      text-align: left;
+    }
+  }
+  .videoTitle {
+    text-align: center;
+    padding-bottom: 25px;
+  }
+  .according-section {
+    margin-top: 25px !important;
+  }
+</style>
+
+{% assign hs_product_description = product.description | replace: ' src="', ' loading="lazy" class="lazyload" data-src="' %}
+{%- comment %}
+
+  Product Detail Snippet
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'product-detail',
+              product: { product } - required
+              current_variant: { variant} - optional
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if current_variant == blank %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+{% endif %}
+{% assign cf = product.metafields.custom_fields %}
+{% comment %} End Defaults {% endcomment %}
+
+<div id="product-detail-section" data-product-detail>
+  <div class="container-fluid-max">
+    <div class="row headerRow">
+      <div id="headerColumn1" class="column headerColumn">
+        <img id="header-icon-1" src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-hat-icon.png?v=1664831909">
+        <p style="display:inline">1 Million Hats made since 1972</p>
+      </div>
+      <div id="headerColumn2" class="column headerColumn">
+        <img id="header-icon-2" src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-family-icon.png?v=1664831907">
+        <p style="display:inline">50 Years Family Owned</p>
+      </div>
+      <div id="headerColumn3" class="column headerColumn">
+        <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-shipping-icon.png?v=1664831907">
+        <p style="display:inline">Ships in 1 Business Day</p>
+      </div>
+      <div id="headerColumn4" class="column headerColumn">
+        <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/pdp-reviews-icon.png?v=1664831907">
+        <p style="display:inline">13,000+ 5-Star Reviews</p>
+      </div>
+    </div>
+
+    <div class="row" data-sidebar-container>
+      <div class="col-md-6 col-lg-7">
+        <div class="mobile-title-container" data-mobile-title-container></div>
+        
+        {% include 'product-detail-galleries',
+                    product: product,
+                    current_variant: current_variant
+        %}
+
+        {% comment %}Findify recomendations module{% endcomment %}
+        <div class="findify-element" id="product-findify-rec-7"></div>
+
+        {% comment %}
+        	{% include 'product-images' %}
+        {% endcomment %}
+      </div>
+      <div class="col-md-5 offset-lg-1 col-lg-4" style="margin-left: 3% !important;">
+        {% include 'product-detail-form',
+                    product: product,
+                    current_variant: current_variant
+        %}
+      </div>
+      
+    </div>
+    {% if product.tags contains 'tab-description' %}
+      <div class="product-tab-space">
+       {% include 'product-description-tab-new' %}
+      </div>
+    {% else %}
+      <div class="product__description" data-description>
+        <h4 class="product__description-title">Description</h4>
+        {% assign short_description = hs_product_description | strip_html | truncate:200 %}
+        {% if short_description.size > 200 %}
+          <div class="rte" data-short-text>
+            <p>
+              {{ short_description | newline_to_br | replace: '<br />', '<br /> <br />'}}
+            </p>
+          </div>
+          <div class="rte" data-full-text>
+            {{ hs_product_description }}
+          </div>
+        {% else %}
+          {{ hs_product_description }}
+        {% endif %}
+        {% if short_description.size > 200 %}
+          <div class="description-toggler" data-description-toggler>
+            <span class="btn btn-link toggle-short">
+              Read More
+            </span>
+            <span class="btn btn-link toggle-large">
+              Read Less
+            </span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}   
+    {% if cf['product_video'] != blank %}
+      <div class="modal fade" id="product-video-modal" tabindex="-1" role="dialog" aria-labelledby="product-video-modal-title" data-product-video-modal>
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                {% include 'icon-close' %}
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="product-video"
+                  class="video-player {{ video_custom_class }} {% if video_cover_container %}video-player--cover-container{% endif %}"
+                  data-video-player
+                  data-video-url="{{ cf['product_video']}} "
+                  data-video-type="vimeo"
+                  data-background="false"
+                  data-embed-color="000000"
+                  data-inline="false"
+                  data-controls="true"
+              >
+                {% comment %} VIDEO PLAYER {% endcomment %}
+                <div class="video-player__embed" data-video-player-embed></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    <!-- As Seen On Section -->
+    <h2 id="celeb-title">Our Hats Have Been Seen On</h2>
+    <div class="row celeb-row">
+      <div class="column celeb-col">
+        <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Jason-Momoa-AHM.jpg?v=1666643157">
+        <p class="p celeb-p">Jason Momoa</p>
+      </div>
+      <div class="column celeb-col">
+        <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Steven-Tyler-AHM.jpg?v=1666115563">
+        <p class="p celeb-p">Steven Tyler</p>
+      </div>
+      <div class="column celeb-col">
+        <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Viola-Davis-AHM.jpg?v=1666115562">
+        <p class="p celeb-p">Viola Davis</p>
+      </div>
+      <div class="column celeb-col">
+        <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Jamie-Foxx-AHM.jpg?v=1666117136">
+        <p class="p celeb-p">Jamie Foxx</p>
+      </div>
+    </div>
+
+    <!-- Two Up warranry modal -->
+    <div class="row guaranteeRow">
+      <div id="guaranteeColumn1" class="column guaranteeColumn">
+        <h2 class="h2 guaranteeH2">Lifetime Warranty</h2>
+        <p class="p guaranteeP">All our hats come with a lifetime warranty. What this means is that even if you bought a hat over 50 years ago and it starts unraveling, we'll fix it or replace it, free of charge</p>
+      </div>
+      <div id="guaranteeColumn2" class="column guaranteeColumn">
+        <h2 class="h2 guaranteeH2">Handcrafted Since 1972</h2>
+        <p class="p guaranteeP">We are working hard every day to continue to be the best hat makers in America. Though we are steeped in tradition, we embrace modern practices to deliver hats of the highers quality.</p>
+      </div>
+    </div>
+    <!-- How to measure Vimeo Video -->
+    <h3 class="h3 videoTitle">How to Measure</h3>
+    <div style="padding:52.73% 0 0 0;position:relative;">
+      <iframe src="https://player.vimeo.com/video/431963427?h=40da9ad468&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Measuring your head before you order."></iframe>
+    </div>
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <!-- Product drop down section -->
+    <div class="according-section">
+      <div class="accordian-box">
+        <ul class="accordion">
+
+          {% assign description_parts_product = hs_product_description | split: '<!--Drop Down Start-->' | last %}
+          {% assign description_parts = description_parts_product | split: '<h5>' %}
+          
+          {% for part in description_parts %}
+          {% unless part == blank %}
+          <li>
+            {% assign part_parts = part | split: '</h5>' %}
+            {% assign heading_handle = part_parts.first | handle %}
+            <h5 class="tab-header">
+              <a class="toggle" href="javascript:;" data-accordian-action>{{ part_parts.first }} <img class="close-minus-icon lazyload hs-lazyload hs-id-bf324667" data-src="{{ 'plus.png' | asset_url }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/><img class="open-minus-icon lazyload hs-lazyload hs-id-01293808" data-src="{{ 'minus.png' | asset_url }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></a>
+              {% comment  %}
+              <a class="toggle" href="#{{ heading_handle }}" data-accordian-action>{{ part_parts.first }} <img class="lazyload hs-lazyload hs-id-c3603c7d" data-src="{{ 'minus.png' | asset_url }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/></a>
+              {% endcomment %}
+            </h5>
+            <div class="inner" id="{{ heading_handle }}" data-accordian-target  {% if heading_handle == 'b-description-b' or heading_handle == 'description' %}  {% endif %}>{{ part_parts.last  }}</div>
+          </li>
+          {% endunless %}
+
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.accordion').find('li').each(function(){
+    var current = $(this);
+    $(this).find('h5.tab-header > a.toggle').each(function(){
+      var currentData = $(this).text();
+      if (!$(this).text() || $(this).text() == ' '){
+        current.hide();
+      }
+    });
+  });
+    
+  $(".accordion > li > h5").click(function() {
+    //     $(this).toggleClass("active-tab").next('.inner').slideToggle(400).closest('li').siblings().find('h5').removeClass('active-tab').next('div').slideUp(350);
+    $(this).toggleClass("active-tab").next('.inner').slideToggle(250).closest('li').siblings().find('h5');
+    // $(this).find('.icon').toggleClass('icon-plus');
+    //  $(this).find('.icon').toggleClass('icon-minus');
+  });
+
+  $('b,strong').each(function(){
+    $(this).attr('style','font-weight:bold !important');
+  });
+</script>

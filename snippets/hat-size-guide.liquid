@@ -1,0 +1,319 @@
+<style>
+  /******** size-guide-css *******/
+  .size-guide .container{
+    padding: 0;
+  }
+  body#hat-sizing-guide-for-american-hat-makers .layout-content-wrapper .row.justify-content-center {
+    display: none;
+  }
+  .size-title h2 {
+    font-size: 3.5rem;
+    letter-spacing: 0;
+    line-height: 1.0625;
+    text-align: center;
+  }
+  .size-guide-table table{
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 15px;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+  .size-guide-table table thead tr th {
+    background-color: #B1193C;
+    border-radius: 50px;
+    padding: 10px;
+    min-width: 200px;
+    text-align: center;
+    color: #fff;
+  }
+  .size-guide-table table thead tr th span {
+    width: 100%;
+    display: inline-block;
+  }
+  .size-guide-table table tbody tr {
+    background-color: #F6EFEF;
+  }
+  .size-guide-table table tbody tr td{
+    text-align: center;
+    padding: 5px;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+  .size-guide-table table tbody tr:nth-child(even) {
+    background-color: #F2E0DD;
+  }
+  .size-note p {
+    font-size: 16px;
+    color: #000;
+  }
+  .size-guide .size-note {
+    padding: 0 15px;
+  }
+  .size-title{
+    padding-top: 40px;
+  }
+  @media screen and (min-width: 1200px){
+    .modal-content-chart{
+      width: 80%;
+    }
+    .size-guide-table table thead tr th{
+       min-width: 150px;
+    }
+  }
+  @media screen and (max-width: 1200px){
+    .size-guide-table {
+      overflow-x: scroll;
+    }
+    .size-guide-table table thead tr th{
+       min-width: 100px;
+    }
+  }
+  @media screen and (max-width: 991px){
+    .size-title h2{
+      font-size: 28px;
+    }
+  }
+  @media screen and (max-width: 767px){
+    .size-guide-table table{
+      border-spacing: 4px !important;
+    }
+    .size-guide-table table thead tr th{
+      border-radius: 11px;
+      padding: 10px 1px;
+      min-width: 50px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+    .size-guide-table table tbody tr td{
+      padding: 8px;
+      font-size: 14px;
+    }
+  }
+  @media screen and (max-width: 575px){
+    .size-guide-table table thead tr th{
+      font-size: 12px;
+    }
+    .size-guide-table table tbody tr td{
+      font-size: 12px;
+    }
+  }
+  /********   model-popup-css *******/
+  .show-overlay:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+  }
+  /* The Modal (background) */
+  .modal-chart {
+    display: none;
+    position: fixed;
+    z-index: 99999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  /* Modal Content */
+  .modal-content-chart {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    width: 60%;
+    position: relative;
+  }
+  @media screen and (max-width: 1024px) {
+    .modal-content-chart {
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .modal-content-chart .modal-body-chart h3 {
+    text-align: center;
+    text-align: -webkit-center;
+  }
+  .modal-content-chart .modal-footer-chart .close-chart-image,
+  .modal-content-chart .modal-footer-chart .close-chart {
+    background-color: #000;
+    display: flex;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px;
+    width: 100px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .close-modal {
+    position: absolute;
+    top: 7.5px;
+    right: 7.5px;
+    display: block;
+    width: 30px;
+    border: none;
+    height: 30px;
+    text-indent: -9999px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
+  }
+  @media screen and (max-width: 768px) {
+    .modal-body-chart {
+      margin-bottom: 30px;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    .left-popup-part img {
+      width: 50%;
+      display: flex;
+      margin: 0 auto;
+    }
+    .left-popup-part {
+      grid-row: 2;
+    }
+    .Rte.popup-table table {
+      font-size: 13px;
+    }
+    .modal-content-chart {
+      padding: 10px;
+    }
+    .modal-body-chart {
+      grid-template-columns: 1fr;
+      grid-gap: 1%;
+      margin-bottom: 30px;
+    }
+  }
+  @media screen and (max-width: 321px) { 
+    .left-popup-part {
+      width: 90%;
+    }
+    .Rte.popup-table table {
+      font-size: 10px;
+    }
+  }
+  /* The Close Button */
+  .close-chart {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close-chart:hover,
+  .close-chart:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>
+<div id="myModal-chart-image" class="modal-chart">
+  <!-- Modal content -->
+  <div class="modal-content-chart">
+    <div class="modal-body-chart">
+      <section class="size-guide">
+        <div class="container">
+          <div class="size-title">
+            <h2>American Hat Maker<br>Sizing Chart</h2>
+          </div>
+          <div class="size-guide-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>HNH-AHM <span>Hat Size</span></th>
+                  <th>U.S.A <span>Hat Size</span></th>
+                  <th>Head Measurement (IN)</th>
+                  <th>Head Measurement (CM)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>XXS</td>
+                  <td>6<sup>1</sup>&frasl;<sub>4</sub></td>
+                  <td>19- 19<sup>5</sup>&frasl;<sub>8</sub></td>
+                  <td>50-51</td>
+                </tr>
+                <tr>
+                  <td>XS</td>
+                  <td>6 <sup>1</sup>&frasl;<sub>2</sub></td>
+                  <td>20-20<sup>7</sup>&frasl;<sub>8</sub></td>
+                  <td>52-53</td>
+                </tr>
+                <tr>
+                  <td>SM</td>
+                  <td>6 <sup>7</sup>&frasl;<sub>8</sub></td>
+                  <td>21-21<sup>7</sup>&frasl;<sub>8</sub></td>
+                  <td>54-55</td>
+                </tr>
+                <tr>
+                  <td>MD</td>
+                  <td>7 <sup>1</sup>&frasl;<sub>8</sub></td>
+                  <td>22-22 <sup>3</sup>&frasl;<sub>4</sub></td>
+                  <td>56-57</td>
+                </tr>
+                <tr>
+                  <td>LG</td>
+                  <td>7 <sup>3</sup>&frasl;<sub>8</sub></td>
+                  <td>22 <sup>7</sup>&frasl;<sub>8</sub> - 23 <sup>1</sup>&frasl;<sub>2</sub></td>
+                  <td>58-59</td>
+                </tr>
+                <tr>
+                  <td>XL</td>
+                  <td>7 <sup>5</sup>&frasl;<sub>8</sub></td>
+                  <td>23 <sup>5</sup>&frasl;<sub>8</sub> - 24 <sup>1</sup>&frasl;<sub>4</sub></td>
+                  <td>60-61</td>
+                </tr>
+                <tr>
+                  <td>2X</td>
+                  <td>7 <sup>7</sup>&frasl;<sub>8</sub></td>
+                  <td>24 <sup>3</sup>&frasl;<sub>8</sub>-24 <sup>7</sup>&frasl;<sub>8</sub></td>
+                  <td>62-63</td>
+                </tr>
+                <tr>
+                  <td>3X</td>
+                  <td>8 <sup>1</sup>&frasl;<sub>8</sub></td>
+                  <td>25-25 <sup>5</sup>&frasl;<sub>8</sub></td>
+                  <td>64-65</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="size-note">
+            <p>Sizes are approximate and will vary with hat style and material. If unsure about which size to choose, it's best to choose a larger size, as our sizing system can adjust the hat down to one full size smaller.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <a href="#close-modal" rel="modal:close" class="close-chart close-modal">Close</a>
+  </div>
+</div>
+
+<script>
+  $(".chart-division-image").click(function () {
+    $("div#myModal-chart-image").css('display', 'flex');
+    $("body").addClass("show-overlay");
+    $('body').css({"overflow":"hidden"});
+  });
+  $(".close-chart-image,.close-chart, .show-overlay").click(function () {
+    $("div#myModal-chart-image").hide();
+    $("body").removeClass("show-overlay");
+    $('body').css({"overflow":"auto"});
+  });
+
+  var modal = document.getElementById("myModal-chart-image");
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+      $("body").removeClass("show-overlay");
+      $('body').css({"overflow":"auto"});
+    }
+  }
+</script>

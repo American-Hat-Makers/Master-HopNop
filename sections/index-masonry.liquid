@@ -1,0 +1,99 @@
+{% include 'masonry'
+            m_id: section.id,
+            m_eyebrow: section.settings.eyebrow,
+            m_title: section.settings.title,
+            m_text: section.settings.text,
+            m_content_alignment: section.settings.content_alignment,
+            m_content_max_width: section.settings.content_max_width,
+            m_background_color: section.settings.background_color,
+            m_blocks: section.blocks
+%}
+
+{% schema %}
+{
+  "name": "Masonry Module",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type":      "select",
+      "id":        "content_alignment",
+      "label":     "Content Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default":   "center"
+    },
+    {
+      "type": "range",
+      "id":   "content_max_width",
+      "min":  300,
+      "max":  950,
+      "step": 25,
+      "unit": "px",
+      "label": "Max Content Width",
+      "default": 700
+    },
+    {
+      "type":      "select",
+      "id":        "background_color",
+      "label":     "Background Color",
+      "options": [
+        { "value": "bg-white", "label": "White" },
+        { "value": "bg-pearl", "label": "Pearl" }
+      ],
+      "default":   "bg-white"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image-block",
+      "name": "Image block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Block image - Desktop"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Masonry",
+      "category": "Media",
+      "settings": {
+        "eyebrow": "Masonry eyebrow",
+        "title": "Masonry module title",
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur officiis unde consequatur, officia cumque nisi doloremque exercitationem, dolorum tenetur, cupiditate laborum obcaecati. Unde sapiente animi dolore praesentium vero ea nisi.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+{% if article.metafields["custom_fields"]["blog_author_info"] != blank %}
+<div class="cf-widget-blog-author-info cf-widget__image-next-to-text">
+  <div class="cf-widget-items-wrapper">
+    {% for item in article.metafields["custom_fields"]["blog_author_info"] %}
+    <div class="cf-widget-item cf-right-aligned--{{ item.right_aligned }}">
+      <div class="inner">
+        <div class="cf-column">
+          {% if item.image != blank %}
+          {% render "cf-image" with image: item.image, crop: "center", size: "380x380" %}
+          {% endif %}
+        </div>
+        <div class="cf-column">
+          <div class="cf-column-inner">
+            
+              {% if item.title != blank %}
+              <div class="cf-widget-field cf-widget-field__title cf-widget-field--text">
+                {{ item.title }}
+              </div>
+              {% endif %}
+            
+              {% if item.body != blank %}
+              <div class="cf-widget-field cf-widget-field__body cf-widget-field--html">
+                {{ item.body }}
+              </div>
+              {% endif %}
+                        
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}

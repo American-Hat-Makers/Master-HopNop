@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["bp_font_size"] != blank %}
+  <div class="custom-field custom-field__bp-font-size custom-field__type--text-list">
+    <h3 class="custom-field--title">Font Size</h3>
+    <div class="custom-field--value">  
+      {{ product.metafields.custom_fields["bp_font_size"] }}
+    </div>
+  </div>
+{% endif %}

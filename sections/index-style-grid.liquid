@@ -1,0 +1,86 @@
+{% include 'style-grid'
+           sg_id: section.id,
+           sg_eyebrow: section.settings.eyebrow,
+           sg_title: section.settings.title,
+           sg_text: section.settings.text,
+           sg_background_image: section.settings.background_image,
+           sg_blocks: section.blocks
+ %}
+
+{% schema %}
+{
+  "name": "Style Grid",
+  "class": "style-grid",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "grid-item",
+      "name": "Style",
+      "settings": [
+        {
+          "type": "text",
+          "id": "style",
+          "label": "Style",
+          "default": "style"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Style Grid",
+      "category": "Misc",
+      "settings": {
+        "eyebrow": "Style grid eyebrow",
+        "title": "Style grid title",
+        "text": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum reiciendis asperiores distinctio sequi repellat nostrum tempore molestiae totam quia. Asperiores eligendi aspernatur ut numquam earum ratione consectetur libero in iste.</p>"
+      },
+      "blocks": [
+        {
+          "type": "grid-item",
+          "settings": {
+            "style": "Grid item 1"
+          }
+        },{
+          "type": "grid-item",
+          "settings": {
+            "style": "Grid item 2"
+          }
+        },{
+          "type": "grid-item",
+          "settings": {
+            "style": "Grid item 3"
+          }
+        },{
+          "type": "grid-item",
+          "settings": {
+            "style": "Grid item 4"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

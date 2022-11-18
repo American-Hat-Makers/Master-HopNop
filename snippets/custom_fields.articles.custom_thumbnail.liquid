@@ -1,0 +1,8 @@
+{% if article.metafields.custom_fields["custom_thumbnail"] != blank %}
+  <div class="custom-field custom-field__custom-thumbnail custom-field__type--image">
+    <h3 class="custom-field--title">Custom Thumbnail Image</h3>
+    <div class="custom-field--value">  
+      {% render 'cf-image' with image: article.metafields.custom_fields["custom_thumbnail"], print: 'url' %}
+    </div>
+  </div>
+{% endif %}

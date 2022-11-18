@@ -1,0 +1,134 @@
+{%- comment %}
+
+  Content Card
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'content-card',
+              cc_id: { string } - required with cc_background_image
+              cc_icon: { image } - optional
+              cc_eyebrow: { string } - optional
+              cc_title: { string } - optional
+              cc_subtitle: { string } - optional
+              cc_text: { string } - optional
+              cc_light_text: { boolean } - optional, defaults to false
+              cc_cta_text: { string } - optional
+              cc_cta_url: { url } - optional
+              cc_cta_block_style: { boolean } - optional, defaults to true
+              cc_background_image: { image } - optional
+              cc_custom_class: { string } - optional, class set by higher level module
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% assign light_text = cc_light_text | default: false %}
+
+{% assign cta_block = true %}
+{% if cc_cta_block_style == false %}
+  {% assign cta_block = false %}
+{% endif %}
+
+{% if cc_icon contains 'http' or cc_icon contains 'cdn' %}
+  {% assign icon_url = cc_icon %}
+{% else %}
+  {% assign icon_url = cc_icon | img_url: '300x' %}
+{% endif %}
+
+{% if cc_background_image != blank %}
+  {% if cc_background_image contains 'http' or cc_background_image contains 'cdn' %}
+    {% assign background_image = cc_background_image %}
+  {% else %}
+    {% assign background_image = cc_background_image | img_url: '2400x' %}
+  {% endif %}
+{% endif %}
+
+{% assign cc_background_image_alt = cc_background_image.alt %}
+{% if cc_background_image_alt == blank %}
+  {% assign cc_background_image_alt = cc_title %}
+{% endif %}
+{% comment %} End Defaults {% endcomment %}
+
+{% capture content_card %}
+  {% comment %} Content Card Icon {% endcomment %}
+  {% if background_image != blank %}
+    <div class="content-card__bg-container">
+      <div class="content-card__bg-image lazyload" role="img" aria-label="{{ cc_background_image_alt }}" data-background="{{ background_image }}" >
+      </div>
+    </div>
+  {% endif %}
+
+  {% if cc_eyebrow != blank or cc_title != blank or cc_cta_text != blank or cc_cta_url != blank and cc_cta_text != blank %}
+    <div class="content-card__content-container">
+      {% comment %} Content Card Icon {% endcomment %}
+      {% if cc_icon != blank %}
+        {% assign icon_alt = "Content Card Icon" %}
+        {% if cc_icon.alt != blank %}
+          {% assign icon_alt = cc_icon.alt %}
+        {% elsif cc_title != blank %}
+          {% assign icon_alt = cc_title | append: " Icon" %}
+        {% endif %}
+        <div class="content-card__icon">
+          <img class="content-card__icon-img" alt="{{ icon_alt }}" src="{{ icon_url }}" />
+        </div>
+      {% endif %}
+
+      {% comment %} Content Card Content {% endcomment %}
+      {% if cc_eyebrow != blank or cc_title != blank or cc_subtitle != blank or cc_text != blank %}
+        <div class="content-card__content">
+          {% comment %} Content Card Eyebrow {% endcomment %}
+          {% if eyebrow != blank %}
+            <div class="content-card__eyebrow eyebrow eyebrow--dotted">
+              {{ cc_eyebrow }}
+            </div>
+          {% endif %}
+
+          {% comment %} Content Card Title {% endcomment %}
+          {% if cc_title != blank %}
+            <h3 class="content-card__title">{{ cc_title }}</h5>
+          {% endif %}
+
+          {% comment %} Content Card Subtitle {% endcomment %}
+          {% if cc_subtitle != blank %}
+            <h5 class="content-card__subtitle">{{ cc_subtitle }}</h5>
+          {% endif %}
+
+          {% comment %} Content Card Body {% endcomment %}
+          {% if cc_text != blank %}
+            <div class="content-card__body text-center">{{ cc_text }}</div>
+          {% endif %}
+
+        </div>
+      {% endif %}
+
+      {% comment %} Content Card CTA {% endcomment %}
+      {% if cc_cta_text != blank and cc_cta_url != blank %}
+        <div class="content-card__cta-container text-center">
+          <a href="{{ cc_cta_url }}" class="content-card__cta btn btn-subtle{% if cta_block %} btn-block{% endif %}">{{ cc_cta_text }}</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% comment %} Build Class String {% endcomment %}
+{% assign cc_class_string = "content-card" %}
+{% if cc_custom_class != blank  %}
+  {% assign cc_class_string = cc_class_string | append: " " | append : cc_custom_class %}
+{% endif %}
+
+{% if background_image != blank %}
+  {% assign cc_class_string = cc_class_string | append: " content-card--stretch-within" %}
+{% endif %}
+
+{% if light_text %}
+  {% assign cc_class_string = cc_class_string | append: " content-card--light-text" %}
+{% endif %}
+
+{% comment %} Render Content Card {% endcomment %}
+{% if content_card != blank %}
+  <div class="{{ cc_class_string }}" {% if cc_id != blank %}id="content-card-{{ cc_id }}"{% endif %}>
+    {{ content_card }}
+  </div>
+{% endif %}

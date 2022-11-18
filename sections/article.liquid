@@ -1,0 +1,156 @@
+{% assign has_image = false %}
+{% if article.image %}
+  {% assign has_image = true %}
+{% endif %}
+
+{% capture subtitle %}{{ 'blogs.article.author_on_date_html' | t: author: article.author, date: article_date }}{% endcapture %}
+
+<div class="layout-content-wrapper flush-top blog-details" data-section-id="{{ section.id }}" data-section-type="article">
+
+  <div class="article-content-wrapper" data-article-content-wrapper>
+    <article role="article" itemscope itemtype="http://schema.org/Article">
+      <!-- Schema -->
+      <meta itemprop="name" content="{{ article.title }}">
+      <meta itemprop="headline" content="{{ article.title }}">
+      <meta itemprop="articleBody" content="{{ article.content | strip_html }}">
+      <meta itemprop="image" content="{{ article.image }}">
+      <meta itemprop="author" content="{{ article.author }}">
+      <meta style="display:none" itemprop="datePublished" content="{{ article.published_at }}">
+
+      {% for tag in article.tags %}
+        {% if tag contains 'category' %}
+          {% assign article_tag = tag | remove: 'category:' | replace: '-', ' ' %}
+          <meta itemprop="keywords" content="{{ article_tag }}">
+        {% else %}
+            <meta itemprop="keywords" content="{{ tag }}">
+        {%- endif -%}
+      {% endfor %}
+      <!-- End Schema -->
+
+      <div class="container-fluid-max">
+        <div class="row justify-content-center">
+          <div class="col-lg-12 article-content">
+			<h1 class="blog-title">{{ article.title }}</h1>
+            <div class="blog-header text-center">
+              <div class="blog-header__image frame frame--16x9">
+				
+                {% render 'image_tag',
+                        image: article.image,
+                        object_fit: "cover",
+                        object_position: "top"
+                %}
+              </div>  
+            </div>
+            
+            {% for tag in article.tags %}
+              {% if tag contains 'category' %}
+                {% assign article_tag = tag | remove: 'category:' | replace: '-', ' ' %}
+              {% endif %}
+            {% endfor %}
+
+<!--             {% if article_tag != blank %}
+              <p class="blog-category text-center">{{ article_tag }}</p>
+            {% endif %} -->
+            
+            
+            <!-- If Custom Author Info Added --> 
+            {% if article.metafields.custom_fields["blog_author_info"] != blank %}
+              <div class="blogAuthor">
+                {% for item in article.metafields.custom_fields["blog_author_info"] %}
+
+                  <figure class="authorIcon">
+                    {% if item.image != blank %}
+                    {% render "cf-image" with image: item.image, crop: "center", size: "380x380" %}
+                    {% endif %}
+                  </figure>
+                  <div class="blogAuthInfo">
+                    {% if item.title != blank %}
+                      <h5 class="authorName">
+                        {{ item.title }}
+                      </h5>
+                    {% endif %}
+
+                    {% if item.body != blank %}
+                      <div class="cf-widget-field cf-widget-field__body cf-widget-field--html">
+                        {{ item.body }}
+                      </div>
+                    {% endif %}
+
+                    <h6 class="postDate">{{ article.published_at | time_tag: format: 'article_date' }}</h6>
+                  </div>
+
+                {% endfor %}
+              </div>
+            
+            {% else %}
+            
+            <div class="blogAuthor">
+              <figure class="authorIcon">
+				{% if article.user.image %}
+              		<img alt="author Image" class="lazyload hs-lazyload hs-id-306dd431" data-src="{{ article.user.image | img_url }}" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+              	{%else%}
+					<img alt="author Image" class="lazyload hs-lazyload hs-id-2042cdf6" data-src="https://cdn.shopify.com/s/files/1/2624/7744/files/californiahatCo-panama-white-fedora.jpg?v=1614120310" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+				{%endif%}
+			  </figure>	
+              <div class="blogAuthInfo">
+                <h5 class="authorName">{{ article.author }}</h5>
+                <h6 class="postDate">{{ article.published_at | time_tag: format: 'article_date' }}</h6>
+              </div>
+            </div>
+            
+            {% endif %}
+            
+            
+<!--             {% if settings.social_sharing_blog %}
+              {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+            {% endif %} -->
+            
+            <div class="rte articleBodyContent" data-article-content>
+              {{ article.content }}
+            </div>
+
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="article-grid">
+              <h2 class="article-grid__title text-center">More stories</h2>
+              <div class="article-grid__container content-grid">
+                {% assign article_count = 0 %}
+
+                {% for related_article in blog.articles%}
+                  {% if related_article.title != article.title and article_count < 3%}
+                    <div class="content-grid__item">
+                      {% include 'article-card',
+                                  article: related_article %}
+                    </div>
+                    {% assign article_count = article_count | plus: 1 %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+</div>
+
+<script>
+  var klavio_element_desktop = document.createElement("div");
+  var klavio_element_mobile = document.createElement("div");
+  klavio_element_desktop.className = 'klaviyo-form-MdJjxS';
+  klavio_element_mobile.className = 'klaviyo-form-W2e5ze';
+  var third_h2 = document.getElementsByClassName('articleBodyContent')[0].getElementsByTagName('h2')[2];
+  third_h2.insertAdjacentElement('beforebegin',klavio_element_desktop);
+  third_h2.insertAdjacentElement('beforebegin',klavio_element_mobile);
+</script>
+
+{% schema %}
+  {
+    "name": "Article",
+    "settings": []
+  }
+{% endschema %}

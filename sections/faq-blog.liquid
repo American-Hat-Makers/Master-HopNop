@@ -1,0 +1,267 @@
+{% assign faq_blog = blogs[section.settings.blog] %}
+
+{% assign has_articles = false %}
+{% if faq_blog != blank and faq_blog.articles_count > 0 %}
+  {% assign has_articles = true %}
+{% endif %}
+
+{% assign has_tags = false %}
+{% if faq_blog.all_tags.size > 0 %}
+  {% assign has_tags = true %}
+{% endif %}
+
+{% comment %} FAQs {% endcomment %}
+<div class="layout-content-wrapper" data-section-id="{{ section.id }}" data-section-type="faq-blog" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="faq--module">
+    <div class="faq__container">
+      <div class="container-fluid-max">
+
+        {% if section.settings.title != blank or section.settings.eyebrow != blank %}
+          <div class="faq__header">
+            {% if section.settings.eyebrow != blank %}
+              <div class="banner__eyebrow banner__eyebrow--dotted mb-2">{{ section.settings.eyebrow }}</div>
+            {% endif %}
+            <h1 class="mb-0">{{ section.settings.title }}</h1>
+          </div>
+        {% endif %}
+
+        <div class="faq__tabs-container tabs-container" data-tab-container>
+          <div class="row">
+
+            {% comment %} If categories exist {% endcomment %}
+            {% if has_tags %}
+            {% comment %} Tab / Select navigation {% endcomment %}
+              <div class="col-12 col-lg-2">
+                {% comment %}
+                  <select> element to serve as mobile tab controls.
+                  `value` should match ID of associated tab.
+                {% endcomment %}
+                <div class="faq__select-wrap d-block d-lg-none">
+                  <select class="faq__form-control form-control js-tab-select-mobile" role="tablist">
+
+                    {% comment %} Generate category select options {% endcomment %}
+                    {% for tag in faq_blog.all_tags %}
+                      <option value="tab-{{ forloop.index }}" role="tab" aria-controls="tab-panel-{{ forloop.index }}">{{ tag }}</option>
+                    {% endfor %}
+
+                  </select>
+                </div>
+                {% comment %} All tab controls {% endcomment %}
+                <div class="faq__tab-wrap d-none d-lg-block">
+                  <div class="tabs-list-wrapper">
+                    <ul class="tabs-list">
+
+                      {% comment %} Generate category tabs {% endcomment %}
+                      {% for tag in faq_blog.all_tags %}
+                        <li><a href="#tab-panel-{{ forloop.index }}" class="tab" id="tab-{{ forloop.index }}" role="tab" aria-controls="tab-panel-{{ forloop.index }}">{{ tag }}</a></li>
+                      {% endfor %}
+
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            {% comment %} If questions exist {% endcomment %}
+            {% if has_articles %}
+              {% comment %} Questions list {% endcomment %}
+              <div class="col-12 col-lg-6 offset-lg-1">
+                <div class="faq__questions-wrap">
+                  {% comment %} All tab panels {% endcomment %}
+                  <div class="tabs-panels-wrapper has-expandable-content">
+
+                    {% comment %} Create a tab panel per category {% endcomment %}
+                    {% for tag in faq_blog.all_tags %}
+                      {% comment %} Single category tab panel {% endcomment %}
+                      <div class="tab-panel tab-panel-{{ forloop.index }}" role="tabpanel" aria-labelledby="tab-panel-{{ forloop.index }}" id="tab-panel-{{ forloop.index }}">
+
+                        {% assign this_category_index = forloop.index %}
+
+                        <div class="accordion" id="accordion-{{ this_category_index }}">
+
+                          {% for article in faq_blog.articles limit: 200 %}
+
+                            {% if article.tags contains tag %}
+                              {% comment %} Single question accordion {% endcomment %}
+                              <div class="card" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                                <div id="question-heading-{{forloop.index}}">
+                                  <h5 class="mb-0">
+                                    <a href="#collapse-{{ tag | handle }}-{{forloop.index}}" class="question-title collapsed" data-toggle="collapse" aria-expanded="false" aria-controls="collapse-{{ tag | handle }}-{{forloop.index}}">
+                                      <span itemprop="name">{{ article.title }}</span>
+                                      <span class="card-header__title-icon"><span class="card-header__title-icon-trigger"></span></span>
+                                    </a>
+                                  </h5>
+                                </div>
+                                <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" id="collapse-{{ tag | handle }}-{{forloop.index}}" class="collapse" aria-labelledby="question-heading-{{forloop.index}}" data-parent="#accordion-{{ this_category_index }}">
+                                  <div itemprop="text" class="question-body">{{ article.content }}</div>
+                                </div>
+                              </div>
+                            {% endif %}
+
+                          {% endfor %}
+
+                        </div>
+                      </div>
+                    {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} 2 Up Content Grid {% endcomment %}
+{% comment %} Capture content grid {% endcomment %}
+{% capture content_grid_html %}
+  {% for i in (1..2) %}
+    {% assign content_grid_card_id = section.id | append: "-" | append: i %}
+      {% assign cc_icon = "cc_icon_" | append: i %}
+      {% assign cc_title = "cc_title_" | append: i %}
+      {% assign cc_text = "cc_text_" | append: i %}
+      {% assign cc_light_text = "cc_light_text_" | append: i %}
+      {% assign cc_cta_text = "cc_cta_text_" | append: i %}
+      {% assign cc_cta_url = "cc_cta_url_" | append: i %}
+      {% assign cc_background_image = "cc_background_image_" | append: i %}
+
+    {% include 'content-card',
+                cc_id: content_grid_card_id,
+                cc_icon: section.settings[cc_icon],
+                cc_title: section.settings[cc_title],
+                cc_text: section.settings[cc_text],
+                cc_light_text: section.settings[cc_light_text],
+                cc_cta_text: section.settings[cc_cta_text],
+                cc_cta_url: section.settings[cc_cta_url],
+                cc_cta_section_style: false
+                cc_background_image: section.settings[cc_background_image],
+                cc_custom_class: 'col-lg-6'
+    %}
+  {% endfor %}
+{% endcapture %}
+
+{% if content_grid_html != blank %}
+  <div class="container-fluid-max"  data-section-id="{{ section.id }}"  data-section-type="2-up-content-grid">
+    <div class="row justify-content-center">
+      {{ content_grid_html }}
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "FAQ Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "FAQ",
+        "info": "This section is powered by a separate Shopify blog that you specify.  Posts from this blog will be displayed as FAQs with the post title as the question and post content as the answer."
+      },
+      {
+        "type": "blog",
+        "id": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "text",
+        "id": "eyebrow",
+        "label": "Eyebrow Text",
+        "default": "FAQ"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "We got answers"
+      },
+      {
+        "type": "header",
+        "content": "2 Up Content Grid - Column 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "cc_icon_1",
+        "label": "Icon"
+      },
+      {
+        "type": "checkbox",
+        "id": "cc_light_text_1",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "cc_title_1",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "cc_text_1",
+        "label": "Text"
+      },
+      {
+        "type": "text",
+        "id": "cc_cta_text_1",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cc_cta_url_1",
+        "label": "CTA Link"
+      },
+      {
+        "type": "image_picker",
+        "id": "cc_background_image_1",
+        "label": "Background Image"
+      },
+      {
+        "type": "header",
+        "content": "2 Up Content Grid - Column 2"
+      },
+      {
+        "type": "image_picker",
+        "id": "cc_icon_2",
+        "label": "Icon"
+      },
+      {
+        "type": "checkbox",
+        "id": "cc_light_text_2",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "cc_title_2",
+        "label": "Title"
+      },
+      {
+        "type": "textarea",
+        "id": "cc_text_2",
+        "label": "Text"
+      },
+      {
+        "type": "text",
+        "id": "cc_cta_text_2",
+        "label": "CTA Text"
+      },
+      {
+        "type": "url",
+        "id": "cc_cta_url_2",
+        "label": "CTA Link"
+      },
+      {
+        "type": "image_picker",
+        "id": "cc_background_image_2",
+        "label": "Background Image"
+      }
+    ]
+  }
+{% endschema %}

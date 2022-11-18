@@ -1,0 +1,150 @@
+{% comment %}
+
+3u Up
+-----------------------------------
+
+Usage:
+
+  {% include 'three-up'
+            t_id: 'section.id',
+            t_blocks: { section.blocks object } - Optional
+  %}
+
+{% endcomment %}
+
+{% if t_blocks != blank %}
+  {% assign white_bg = section.settings.white_bg %}
+  {% assign light_text = section.settings.light_text %}
+  {% assign alt_spacing = false %}
+
+  {% for block in section.blocks %}
+    {% assign background = block.settings.block_background %}
+
+    {% if background != blank %}
+      {% assign alt_spacing = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+  {% assign white_bg = block.settings.white_bg %}
+  {% assign light_text = block.settings.light_text %}
+  {% assign alt_spacing = false %}
+
+  {% for i in (1..3) %}
+    {% assign index_bg = 'block_background_' | append: i %}
+    {% assign background = block.settings[index_bg] %}
+
+    {% if background != blank %}
+      {% assign alt_spacing = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<div data-section-id="{{ t_id }}" class="three-up{% if white_bg == true %} three-up--light-bg{% endif %} {% if light_text == true %}three-up--light-text{% endif %}" data-section-type="three-up">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      {% if t_blocks != blank %}
+
+        {% for block in section.blocks %}
+          {% assign icon = block.settings.block_icon %}
+          {% assign title = block.settings.block_title %}
+          {% assign text = block.settings.block_text %}
+          {% assign cta_url = block.settings.cta_url %}
+          {% assign cta_text = block.settings.cta_text %}
+          {% assign background = block.settings.block_background %}
+
+          {% if title != blank or text != blank %}
+            <div class="up-block col-lg-4{% if alt_spacing == true %} up-block--large{% endif %}">
+              {% if icon != blank %}
+                <div class="up-block__icon frame frame--1x1">
+                  {% render 'image_tag'
+                            image: icon,
+                            object_fit: "contain"
+                  %}
+                </div>
+              {% endif %}
+
+              <div class="up-block-inner-container">
+                {% if title != blank %}
+                  <h3 class="up-block__title">{{ title }}</h3>
+                {% endif %}
+
+                {% if text != blank %}
+                  <p class="up-block__text">{{ text }}</p>
+                {% endif %}
+
+                {% if cta_url != blank and cta_text != blank %}
+                  <a href="{{ cta_url }}" class="up-block__cta btn btn-subtle">{{ cta_text }}</a>
+                {% endif %}
+              </div>
+
+              {% if background != blank %}
+                <div class="up-block__background">
+                  {% render 'image_tag'
+                            image: background,
+                            object_fit: "cover"
+                  %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+
+      {% else %}
+
+        {% for i in (1..3) %}
+          {% assign index_icon = 'block_icon_' | append: i %}
+          {% assign index_title = 'block_title_' | append: i %}
+          {% assign index_text = 'block_text_' | append: i %}
+          {% assign index_cta_url = 'cta_url_' | append: i %}
+          {% assign index_cta_text = 'cta_text_' | append: i %}
+          {% assign index_background = 'block_background_' | append: i %}
+
+          {% assign icon = block.settings[index_icon] %}
+          {% assign title = block.settings[index_title] %}
+          {% assign text = block.settings[index_text] %}
+          {% assign cta_url = block.settings[index_cta_url] %}
+          {% assign cta_text = block.settings[index_cta_text] %}
+          {% assign background = block.settings[index_background] %}
+
+          {% if title != blank or text != blank %}
+            <div class="up-block col-lg-4{% if alt_spacing == true %} up-block--large{% endif %}">
+              {% if icon != blank %}
+                <div class="up-block__icon frame frame--1x1">
+                  {% render 'image_tag'
+                            image: icon,
+                            object_fit: "contain"
+                  %}
+                </div>
+              {% endif %}
+
+              <div class="up-block-inner-container">
+                {% if title != blank %}
+                  <h3 class="up-block__title">{{ title }}</h3>
+                {% endif %}
+
+                {% if text != blank %}
+                  <p class="up-block__text">{{ text }}</p>
+                {% endif %}
+
+                {% if cta_url != blank and cta_text != blank %}
+                  <a href="{{ cta_url }}" class="up-block__cta btn btn-subtle">{{ cta_text }}</a>
+                {% endif %}
+              </div>
+
+              {% if background != blank %}
+                <div class="up-block__background">
+                  {% render 'image_tag'
+                            image: background,
+                            object_fit: "cover"
+                  %}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>

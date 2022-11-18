@@ -1,0 +1,126 @@
+{%- comment %}
+
+  Banner Panel
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'banner-panel-alt',
+              bp_id: { string } - required
+              bp_content_alignment: { string } - optional
+              bp_vertical_padding: { number } - optional
+              bp_content_max_width: { number } - optional
+              bp_background_image: { image } - optional
+              bp_background_image_vertical_alignment: { string } - optional - defaults to "center"
+              bp_background_image_small: { image } - optional
+              bp_background_image_small_vertical_alignment: { string } - optional - defaults to "center",
+              bp_overlay: { string } - optional - accepted values are "light" and "dark"
+              bp_light_text: { boolean }
+              bp_title: { string }
+              bp_text: { string }
+              bp_text_alignment: { string } - optional - defaults to "center"
+              bp_cta_url: { url }
+              bp_cta_text { string }
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if bp_background_image_vertical_alignment == blank %}
+  {% assign bp_background_image_vertical_alignment = 'center' %}
+{% endif %}
+
+{% if bp_background_image_small_vertical_alignment == blank %}
+  {% assign bp_background_image_small_vertical_alignment = 'center' %}
+{% endif %}
+
+{% if bp_content_alignment == blank %}
+  {% assign bp_content_alignment = 'center' %}
+{% endif %}
+
+{% comment %} Check for missing arguments {% endcomment %}
+{% assign has_eyebrow = false %}
+{% if bp_eyebrow != blank %}
+  {% assign has_eyebrow = true %}
+{% endif %}
+
+{% assign has_title = false %}
+{% if bp_title != blank %}
+  {% assign has_title = true %}
+{% endif %}
+
+{% assign has_text = false %}
+{% if bp_text != blank %}
+  {% assign has_text = true %}
+{% endif %}
+
+{% assign has_cta = false %}
+{% if bp_cta_url != blank and bp_cta_text != blank %}
+  {% assign has_cta = true %}
+{% endif %}
+
+{% assign has_icon = false %}
+{% if bp_icon != blank %}
+  {% assign has_icon = true %}
+{% endif %}
+
+{% comment %} Only show the banner panel if there is text or a cta or a background image {% endcomment %}
+{% if has_title or has_text or has_cta or bp_background_image %}
+
+  <div id="banner__panel-{{ bp_id }}" class="banner__panel banner__panel--alt{% if bp_light_text %} banner__panel--light{% endif %} {{bp_font_size}}{% if bp_height != blank %} banner__panel--height-{{bp_height}}{% endif %}">
+
+    <style>
+      #banner__panel-{{bp_id}} .banner__content-container {
+        max-width: {{bp_content_max_width | append: 'px' }};
+      }
+    </style>
+
+    {% if bp_background_image != blank %}
+      <div class="banner__bg-container" aria-label="{{ bp_background_image.alt }}">
+        {% include 'image_tag'
+          image: bp_background_image,
+          object_fit: cover,
+          object_position: center
+        %}
+      </div>
+    {% endif %}
+
+    {% if bp_overlay == "light" or bp_overlay == "dark" %}
+      <div class="banner__overlay banner__overlay--{{ bp_overlay }}"></div>
+    {% endif %}
+
+    <div class="container-fluid-max banner__panel-text-{{bp_content_alignment}}">
+      <div class="banner__content-container">
+        {% if has_icon %}
+          <div class="banner__icon">
+            {% include 'image_tag'
+              image: bp_icon,
+              object_fit: contain
+            %}
+          </div>
+        {% endif %}
+        {% if has_eyebrow %}
+          <div class="banner__eyebrow">
+            {{ bp_eyebrow }}
+          </div>
+        {% endif %}
+        {% if has_title %}
+          <h1 class="banner__title alsm">{{ bp_title }}</h1>
+        {% endif %}
+        {% if has_text %}
+          <div class="banner__text">{{ bp_text }}</div>
+        {% endif %}
+
+        {% capture cta_html %}
+          {% if has_cta %}
+            <a href="{{ bp_cta_url }}" class="btn btn-primary">{{ bp_cta_text }}</a>
+          {% endif %}
+        {% endcapture %}
+
+        {% if cta_html != blank %}
+          <div class="cta-group">{{ cta_html }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

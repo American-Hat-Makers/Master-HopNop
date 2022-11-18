@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["p_cta_url"] != blank %}
+  <div class="custom-field custom-field__p-cta-url custom-field__type--url">
+    <h3 class="custom-field--title">CTA Url</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["p_cta_url"] }}
+    </div>
+  </div>
+{% endif %}

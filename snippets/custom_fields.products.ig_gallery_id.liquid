@@ -1,0 +1,8 @@
+{% if product.metafields.custom_fields["ig_gallery_id"] != blank %}
+  <div class="custom-field custom-field__ig-gallery-id custom-field__type--text">
+    <h3 class="custom-field--title">Gallery ID</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["ig_gallery_id"] }}
+    </div>
+  </div>
+{% endif %}

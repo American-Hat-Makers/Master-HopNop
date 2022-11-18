@@ -1,0 +1,8 @@
+{% if collection.metafields.custom_fields["rt_eyebrow"] != blank %}
+  <div class="custom-field custom-field__rt-eyebrow custom-field__type--text">
+    <h3 class="custom-field--title">Eyebrow</h3>
+    <div class="custom-field--value">
+      {{ collection.metafields.custom_fields["rt_eyebrow"] }}
+    </div>
+  </div>
+{% endif %}

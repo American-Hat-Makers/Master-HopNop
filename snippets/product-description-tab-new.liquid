@@ -1,0 +1,310 @@
+{% assign hs_product_description = product.description | replace: ' src="', ' loading="lazy" class="lazyload" data-src="' %}
+<style type="text/css">
+/*   h5.active-tab a img {
+    -moz-transform: rotate(180deg) !important;
+    -webkit-transform: rotate(180deg) !important;
+    -o-transform: rotate(180deg) !important;
+    -ms-transform: rotate(180deg) !important;
+    transform: rotate(180deg) !important;
+  } */
+  .according-section {
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+  }
+  @media screen and (min-width: 768px) {
+    .according-section {
+      margin: 0.5rem 0px 0rem 0px;
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .according-section {
+      padding: 0;
+    }
+  }
+  .according-section .accordion {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+  }
+  .according-section .accordion > li {
+    display: inline-block;
+    width: 100%;
+    vertical-align: top;
+    margin: 0;
+    padding: 7px 0;
+  }
+  .according-section .accordion > li h5 {
+    margin: 0;
+    line-height: normal;
+  }
+  .according-section .accordion > li .toggle {
+    font-weight: bold;
+    color: #fff;
+    background-color: #9f2739;
+    padding: 10px 0 10px 20px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    position: relative;
+    font-size: 16px !important;
+    border-radius: 5px;
+  }
+  .product-tab-space {
+    margin-top: 35px;
+  }
+/*   @media screen and (min-width: 992px) {
+    .product-tab-space {
+      padding: 0 76px;
+    }
+  } */
+  @media screen and (max-width: 768px) {
+    .according-section .accordion > li .toggle {
+      font-size: 1.5rem;
+      padding: 10px;
+    }
+  }
+  h5.tab-header.active-tab img.close-minus-icon {
+    display: none;
+  }
+  .according-section .accordion > li .toggle img {
+    position: absolute;
+    right: 14px;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    -ms-transition: all 0.4s ease-in-out 0s;
+    -o-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    top: calc(50% - 10px);
+    width: 18px;
+  }
+  .according-section .accordion > li p {
+    font-size: 19px;
+    padding: 15px 22px;
+    margin: 0;
+  }
+  @media screen and (max-width: 767px) {
+    .according-section .accordion > li p {
+      font-size: 18px;
+    }
+  }
+  .according-section .accordion > li .inner {
+    overflow: hidden;
+    display: none;
+    padding: 0px 0 0px 22px;
+    margin: 30px 0 15px 0;
+    /*     max-height: 500px; */
+    overflow: auto;
+  }
+  .according-section .accordion > li .inner p {
+    padding: 0px;
+    margin: 0;
+  }
+  @media screen and (max-width: 767px) {
+    .according-section .accordion > li .inner {
+      font-size: 18px;
+    }
+  }
+  .according-section .accordion > li .inner h5 {
+    margin: 15px 0px;
+  }
+  .according-section .accordion > li .inner ul li {
+    list-style: disc;
+    margin-left: 2rem;
+    margin-top: 10px;
+  }
+  .according-section .accordion > li .inner ol li {
+    margin-left: 2rem;
+    margin-top: 10px;
+  }
+
+  /*   video-popup-code-css-starting */
+  .size-popup{
+    display: inline-block;
+  }
+  .split-popup.modal-visible{
+    opacity: 1;
+    overflow-y: auto;
+    visibility: visible;
+  }
+  .split-popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    z-index: 1002;
+    visibility: hidden;
+    -webkit-transition: all 0.35s ease 0s;
+    -moz-transition: all 0.35s ease 0s;
+    -ms-transition: all 0.35s ease 0s;
+    -o-transition: all 0.35s ease 0s;
+    transition: all 0.35s ease 0s;
+  }
+  .split-popup .modal-wrap .modal-body {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .split-popup .modal-wrap {
+    display: table;
+    height: 100%;
+    width: 100%;
+  }
+  .split-popup .modal-wrap .modal-body .modal-content {
+    width: 100%;
+    max-width: 600px;
+    padding: 10px 10px 0px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 3px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .split-overlay.modal-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  .split-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
+    opacity: 0;
+    background: rgba(0,0,0,0.7);
+    visibility: hidden;
+    -webkit-transition: all 0.35s ease 0s;
+    -moz-transition: all 0.35s ease 0s;
+    -ms-transition: all 0.35s ease 0s;
+    -o-transition: all 0.35s ease 0s;
+    transition: all 0.35s ease 0s;
+  }
+  .split-popup .popup-description a.btn {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    padding: 5px 20px 20px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    margin: 0 0 20px;
+    border-radius: 4px;
+    background: #FF722D;
+    text-align: center;
+    max-width: 420px;
+    position: relative;
+    z-index: 9;
+    vertical-align: top;
+    line-height: 1;
+  }
+  .split-popup .popup-description a.btn img {
+    position: relative;
+    top: 10px;
+  }
+  .split-popup .modal-wrap .modal-body .modal-content .modal-close {
+    float: right;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 20px;
+    height: 30px;
+    text-align: right;
+    color: #000;
+    border: none;
+    width: 100%;
+    margin: -15px -15px 0 0;
+  }
+  .split-popup .popup-product-box .popup-product-detail .product-title h2 {
+    color: #464847;
+    font-size: 28px;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+  }
+  @media screen and (max-width: 991px){
+    .split-popup.modal-visible{
+      padding: 0 15px;
+    }
+  }
+  /*   video-popup-code-css-ending */
+</style>
+
+<!-- please enter this code in product page -->
+
+{% comment %}
+<div class="product-tab-space">
+  <div class="product-small-description">
+    {{ hs_product_description | split: '<!-- split -->' | first }}
+  </div>
+  {% include 'product-description-tab-new' %}
+</div>
+{% endcomment %}
+
+<!-- video-popup-code-starting -->
+<div class="split-popup">
+  <div class="modal-wrap">
+    <div class="modal-body">
+      <div class="modal-content">
+        <a href="javascript:;" class="modal-close">&#10006;</a>
+        <div class="popup-product-box">
+          <iframe allow="accelerometer;  clipboard-write; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="315" id="video-popup" src="https://player.vimeo.com/video/431963427" title="video player" width="100%">
+</iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="split-overlay"></div>
+<!-- video-popup-code-ending -->
+
+<script>
+  //  video-popup-code-script-starting
+  $(document).ready(function () {
+    $('.size-popup').on('click', function (){
+      $("#video-popup")[0].src +=  "?autoplay=1";
+      $(".split-popup").addClass('modal-visible');
+      $(".split-overlay").addClass('modal-visible');
+      $('body').css({"overflow":"hidden"});
+    });
+    $('.modal-close').on('click', function (){
+      $("iframe").each(function() { 
+        var src = $("#video-popup")[0].src.replace("?autoplay=1", "");
+        $(this).attr('src',src);  
+      });
+      $(".split-overlay").removeClass('modal-visible');
+      $(".split-popup").removeClass('modal-visible');
+      $('body').css({"overflow":"auto"});
+
+    });
+  });
+
+  // Close popup by click outside
+  $(document).click(function(event) {
+    if($(event.target).attr('class') == "modal-body"){
+      $("iframe").each(function() { 
+        var src = $("#video-popup")[0].src.replace("?autoplay=1", "");
+        $(this).attr('src',src);  
+      });
+      $(".split-popup").removeClass('modal-visible');
+      $(".split-overlay").removeClass('modal-visible');
+      $('body').css({"overflow":"auto"});
+    }
+  });
+  //  video-popup-code-script-ending
+
+</script>

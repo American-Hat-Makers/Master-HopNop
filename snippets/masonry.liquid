@@ -1,0 +1,168 @@
+{% comment %}
+
+Masonry
+-----------------------------------
+
+Usage:
+
+  {% include 'masonry'
+            m_id: 'section.id',
+            m_eyebrow: {string} - optional,
+            m_title: {string} - optional,
+            m_text: { string } - optional
+            m_content_max_width: { number } - optional
+            m_content_alignment: { string } - optional - defaults to "center"
+            m_background_color: { string } - optional - defaults to "white"
+            m_blocks: { section.blocks object } - Optional
+%}
+
+{% endcomment %}
+
+{% if m_blocks != blank %}
+  {% assign use_blocks = true %}
+{% endif %}
+
+{% assign items_count = 0 %}
+{% if use_blocks %}
+  {% for block in m_blocks offset: 1 %}
+    {% if block.settings.image_desktop != blank %}
+      {% assign items_count = items_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% else %}
+{% for i in (2..5) %}
+    {% assign image_handle = 'm_image_desktop_' | append: i %}
+    {% if block.settings[image_handle] != blank %}
+      {% assign items_count = items_count | plus: 1 %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<div class="masonry" {{block.shopiy_attributes}}>
+
+  {% include 'richtext-block'
+             rt_id: m_id,
+             rt_eyebrow: m_eyebrow,
+             rt_title: m_title,
+             rt_text: m_text,
+             rt_content_alignment: m_content_alignment,
+             rt_content_max_width: m_content_max_width,
+             rt_background_color: m_background_color,
+             rt_alt_spacing: true
+  %}
+
+  <div class="masonry__layout-container">
+    <div class="masonry__column masonry__column--first">
+      {% if use_blocks == true %}
+        {% assign s = m_blocks[0].settings %}
+        {% if s.image_desktop != blank %}
+          <div class="masonry__item">
+            {% if s.url != blank %}
+              <a href="{{ s.url }}">
+            {% endif %}
+              <div class="masonry__item-image">
+                {% include 'image_tag'
+                  image: s.image_desktop,
+                  object_fit: 'cover',
+                  object_position: 'center'
+                %}
+              </div>
+              {% if s.title != blank %}
+                <div class="masonry__title">
+                  {{ s.title }}
+                </div>
+              {% endif %}
+            {% if s.url != blank %}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% else %}
+        {% assign s = block.settings %}
+        {% if s.m_image_desktop_1 != blank %}
+          <div class="masonry__item">
+            {% if s.m_url_1 != blank %}
+              <a href="{{ s.m_url_1 }}">
+            {% endif %}
+              <div class="masonry__item-image">
+                {% include 'image_tag'
+                  image: s.m_image_desktop_1,
+                  object_fit: 'cover',
+                  object_position: 'center'
+                %}
+              </div>
+              {% if s.m_title_1 != blank %}
+                <div class="masonry__title">
+                  {{ s.m_title_1 }}
+                </div>
+              {% endif %}
+            {% if s.m_url_1 != blank %}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="masonry__column masonry__column--last masonry--{{items_count}}-items">
+      {% if use_blocks == true %}
+        {% for block in m_blocks offset: 1 %}
+          {% assign s = block.settings %}
+          {% if s.image_desktop != blank %}
+            <div class="masonry__item">
+              {% if s.url != blank %}
+                <a href="{{ s.url }}">
+              {% endif %}
+                <div class="masonry__item-image">
+                  {% include 'image_tag'
+                    image: s.image_desktop,
+                    object_fit: 'cover',
+                    object_position: 'center',
+                    fallback_layout: true
+                  %}
+                </div>
+                {% if s.title != blank %}
+                  <div class="masonry__title">
+                    {{ s.title }}
+                  </div>
+                {% endif %}
+              {% if s.url != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% assign s = block.settings %}
+        {% for i in (2..5) %}
+          {% comment %}Set settings labels{% endcomment %}
+          {% assign image_desktop_handle = 'm_image_desktop_' | append: i %}
+          {% assign title_handle = 'm_title_' | append: i %}
+          {% assign url_handle = 'm_url_' | append: i %}
+          {% if s[image_desktop_handle] != blank %}
+            <div class="masonry__item">
+              {% if s[url_handle] != blank %}
+                <a href="{{ s[url_handle] }}">
+              {% endif %}
+                <div class="masonry__item-image">
+                  {% include 'image_tag'
+                    image: s[image_desktop_handle],
+                    object_fit: 'cover',
+                    object_position: 'center',
+                    fallback_layout: true,
+                  %}
+                </div>
+                {% if s[title_handle] != blank %}
+                  <div class="masonry__title">
+                    {{ s[title_handle] }}
+                  </div>
+                {% endif %}
+              {% if s[url_handle] != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>

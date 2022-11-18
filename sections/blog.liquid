@@ -1,0 +1,241 @@
+{% comment %} assign defaults {% endcomment %}
+{% assign hero_title = blog.title %}
+{% assign hero_light_text = section.settings.content_light_text %}
+{% assign hero_background_image = section.settings.hero_background_image %}
+
+{% if section.settings.title != blank %}
+  {% assign hero_title = section.settings.title %}
+{% endif %}
+
+{% assign content_alignment = 'center' %}
+
+{% comment %} Override the defaults if a block specific to the current blog is found {% endcomment %}
+{% for block in section.blocks %}
+  {% if block.settings.blog == blog.handle and block.settings.article != blank %}
+    {% assign article = articles[block.settings.article] %}
+    {% assign blog_handle = article.url | replace: 'blogs/', '' | replace: '/', ' ' | split: ' ' | first %}  {% comment %} Shopify doesn't have a way to access article.blog directly so we have to parse out the url {% endcomment %}
+    {% assign hero_background_image = article.image %}
+    {% assign hero_light_text = block.settings.content_light_text %}
+    {% assign hero_title = article.title %}
+    {% assign hero_title_link = article.url %}
+    {% assign content_alignment = 'left' %}
+    {% capture hero_toptitle %}
+      {% if article.tags.size > 0 %}
+        {% for tag in article.tags %}
+          <a href="/blogs/{{ blog_handle }}/tagged/{{ tag | handleize }}">{{ tag | remove: 'category: '}}</a>
+          {% unless forloop.last %}&middot;{% endunless %}
+        {% endfor %}
+      {% endif %}
+    {% endcapture %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+
+
+<div class="layout-content-wrapper flush-top" data-section-id="{{ section.id }}" data-section-type="blog">
+  {% paginate blog.articles by 7 %}
+
+<!--    {% include 'banner-panel-alt',
+               bp_id: section.id,
+               bp_background_image: hero_background_image,
+               bp_eyebrow: hero_toptitle,
+               bp_title: hero_title,
+               bp_light_text: hero_light_text,
+               bp_cta_url: hero_title_link,
+               bp_cta_text: 'Read more',
+               bp_content_alignment: content_alignment,
+			   blog_homepage_title:section.settings.blog_homepage_title
+     %} -->
+{% include 'blog-homepage-latest-blog-section', 
+				bp_id: section.id,
+               bp_background_image: hero_background_image,
+               bp_eyebrow: hero_toptitle,
+               bp_title: hero_title,
+               bp_light_text: hero_light_text,
+               bp_cta_url: hero_title_link,
+               bp_cta_text: 'Read more',
+               bp_content_alignment: content_alignment,
+			   blog_homepage_title:section.settings.blog_homepage_title %}
+    <div class="container-fluid-max">
+
+      {% include 'blog-filters' %}
+
+      {% comment %}
+
+      Article Previews
+      ====================
+      {% endcomment %}
+
+      <div class="content-grid">
+        {% for article in blog.articles offset: 0 %}
+          <div class="content-grid__item">
+            {% include 'article-card',
+            article: article %}
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- pagination-->
+       <div class="numberPaginate">        
+        {% if paginate.pages > 1 %}
+        <meta name="robots" content="noindex, follow" />
+          <nav role="navigation">
+            <ol class="pagination">
+              {%- if paginate.previous-%}
+                <li>
+                  <a rel="prev" href="{{ paginate.previous.url }}">
+                    <span aria-hidden="true">&laquo;</span>
+                    Previous <span class="visuallyhidden">page</span>
+                  </a> 
+                </li>
+               {%- else -%}
+                <li class="disabled">
+                  <span aria-hidden="true">&laquo;</span>
+                  Previous <span class="visuallyhidden">page</span>
+                </li>
+              {%- endif -%}
+
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <li>
+                    <a href="{{ part.url }}">
+                      <span class="visuallyhidden">page</span> {{ part.title }}
+                    </a>
+                  </li>
+                {%- else -%}
+                  {%- if part.title == paginate.current_page -%}
+                    <li class="active" aria-current="page">
+                      <span class="visuallyhidden">page</span> {{ part.title }}
+                    </li>
+                  {%- else -%}
+                    <li>
+                      <span class="visuallyhidden">page</span> {{ part.title }}
+                    </li>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if paginate.next -%}
+                <li>
+                  <a rel="next" href="{{ paginate.next.url }}">
+                    Next <span class="visuallyhidden">page</span>
+                    <span aria-hidden="true">&raquo;</span>
+                  </a> 
+                </li>
+              {%- else -%}
+                <li class="disabled">
+                  Next <span class="visuallyhidden">page</span>
+                  <span aria-hidden="true">&raquo;</span>
+                </li>
+              {%- endif -%}
+            </ol>
+          </nav>
+    {% endif %}
+      </div>
+	
+      {% comment %}
+      {% if paginate.next.is_link %}
+        {% comment %} See _scripts/sections/blog.js {% endcomment %}
+        <div class="load-more">
+          <div class="text-center load-more__container" data-pagination>
+            <a href="{{ paginate.next.url }}" class="load-more__link" data-next-page>Load More</a>
+          </div>
+        </div>
+      {% endif %}
+      {% endcomment %}
+      
+      
+    </div>
+
+  {% endpaginate %}
+</div>
+
+{% schema %}
+  {
+    "name": "Blog",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Page Hero",
+        "info": "Used as the fallback hero if a blog-specific one is not selected.  See 'Add blog hero' below."
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "info": "Title of the selected blog will be used if blank"
+      },
+      {
+        "type": "checkbox",
+        "id" : "content_light_text",
+        "label": "Light Text",
+        "default": false
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_background_image",
+        "label": "Image"
+      },{
+        "type": "text",
+        "id": "blog_homepage_title",
+        "label": "Blog Home Page Title",
+        "info": "to set home page title",
+		"default": "American Hat Maker Blogs"
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "blog_hero",
+        "name": "Blog Hero",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Page Hero",
+            "info": "These settings will affect the page hero for the selected blog home page."
+          },
+          {
+            "type": "blog",
+            "id": "blog",
+            "label": "Blog"
+          },
+          {
+             "type": "article",
+             "id": "article",
+             "label": "Article",
+             "info" : "The featured image for this article will be used as the background image"
+          },
+          {
+            "type": "checkbox",
+            "id" : "content_light_text",
+            "label": "Light Text",
+            "default": false
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+  
+.pagination li {
+  display: inline; 
+  margin: 0 5px;
+}
+</style>
+
+<script>
+$('div.content-grid > .content-grid__item:nth-child(3n)').after('<hr class="lineWrap">');
+</script>

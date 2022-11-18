@@ -1,0 +1,240 @@
+{%- comment %}
+
+  Banner Panel
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'banner-panel',
+              bp_id: { string } - required
+              bp_height: { string}  [ 'large' | 'small' ] - optional
+                       size - min-height mobile, min-height desktop - use
+                      'small' - 375px, 500px - Slightly smaller, content banners
+                      'large' - 375px, 650px - Large, normal heroes
+
+              bp_content_alignment: { string } - optional
+              bp_vertical_padding: { number } - optional
+              bp_vertical_padding_mobile: { number } - optional
+              bp_content_max_width: { number } - optional
+              bp_background_image: { image } - optional
+              bp_background_image_vertical_alignment: { string } - optional - defaults to "center"
+              bp_background_image_medium: { image } - optional
+              bp_background_image_medium_vertical_alignment: { string } - optional - defaults to "center"
+              bp_background_image_small: { image } - optional
+              bp_background_image_small_vertical_alignment: { string } - optional - defaults to "center",
+              bp_overlay: { string } - optional - accepted values are "light" and "dark"
+              bp_light_text: { boolean }
+              bp_eyebrow: { string } - optional
+              bp_title: { string } - optional,
+              bp_title_semantic_tag: { string } - [ 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | '' ] - optional
+              bp_title_style_tag: { string } -[ 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | '' ] - optional
+              bp_text: { string } - optional
+              bp_text_alignment: { string } - optional - defaults to "center"
+              bp_cta_url: { url } - optional
+              bp_cta_text { string } - optional
+              bp_cta_url_2: { url } - optional
+              bp_cta_text_2 { string } - optional
+              bp_video: { video } - optional,  Turns the banner into a video banner.  Clicking on it will cause the text to disappear + the video to start.
+  %}
+
+{% endcomment -%}
+
+{% comment %} Defaults {% endcomment %}
+{% if bp_background_image_vertical_alignment == blank %}
+  {% assign bp_background_image_vertical_alignment = 'center' %}
+{% endif %}
+
+{% if bp_background_image_medium_vertical_alignment == blank %}
+  {% assign bp_background_image_medium_vertical_alignment = 'center' %}
+{% endif %}
+
+{% if bp_background_image_small_vertical_alignment == blank %}
+  {% assign bp_background_image_small_vertical_alignment = 'center' %}
+{% endif %}
+
+{% if bp_text_alignment == blank %}
+  {% assign bp_text_alignment = 'center' %}
+{% endif %}
+
+{% assign title_semantic_tag = bp_title_semantic_tag | default: 'h3' %}
+{% if title_semantic_tag == 'h1' and forloop.first != true %}
+  {% assign title_semantic_tag = 'h2' %}
+{% endif %}
+
+{% assign bp_title_style_tag = bp_title_style_tag | default: 'h3' %}
+
+{% comment %} Check for missing arguments {% endcomment %}
+{% assign has_eyebrow = false %}
+{% if bp_eyebrow != blank %}
+  {% assign has_eyebrow = true %}
+{% endif %}
+
+{% assign has_title = false %}
+{% if bp_title != blank %}
+  {% assign has_title = true %}
+{% endif %}
+
+{% assign has_text = false %}
+{% if bp_text != blank %}
+  {% assign has_text = true %}
+{% endif %}
+
+{% assign has_cta = false %}
+{% if bp_cta_url != blank and bp_cta_text != blank %}
+  {% assign has_cta = true %}
+{% endif %}
+
+{% assign has_cta_2 = false %}
+{% if bp_cta_url_2 != blank and bp_cta_text_2 != blank %}
+  {% assign has_cta_2 = true %}
+{% endif %}
+
+{% assign has_background_image = false %}
+{% if bp_background_image or bp_background_image_medium or bp_background_image_small %}
+  {% assign has_background_image = true %}
+{% endif %}
+
+{% assign has_bg_video = false %}
+{% if bp_video != blank and bp_video.id and bp_video.type %}
+  {% assign has_bg_video = true %}
+{% endif %}
+
+{% comment %} Only show the banner panel if there is text or a cta or a background image {% endcomment %}
+{% if has_title or has_text or has_cta or has_background_image or has_bg_video %}
+
+  <div id="banner__panel-{{ bp_id }}"
+    class="banner__panel{% if bp_light_text %} banner__panel--light{% endif %}{% if bp_height != blank %} banner__panel--height-{{bp_height}}{% endif %}">
+
+    <style type="text/css">
+      {% if bp_vertical_padding != blank %}
+      #banner__panel-{{ bp_id }} {
+        padding-top: {{ bp_vertical_padding | append: 'px' }};
+        padding-bottom: {{ bp_vertical_padding | append: 'px' }};
+      }
+      {% endif %}
+      #banner__panel-{{ bp_id }} .banner__content-container {
+        {% if bp_content_max_width != blank %}
+          max-width: {{ bp_content_max_width | append: 'px' }};
+        {% endif %}
+      }
+      {% if bp_background_image %}
+      #banner__panel-{{ bp_id }} .banner__bg-image {
+        background-image: url({{ bp_background_image | img_url: '1800x' }});
+        background-position: center {{ bp_background_image_vertical_alignment }};
+      }
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        #banner__panel-{{ bp_id }} .banner__bg-image {
+          background-image: url({{ bp_background_image | img_url: '2400x' }});
+        }
+      }
+      {% endif %}
+
+      @media (max-width: 991px) {
+        #banner__panel-{{ bp_id }} .banner__bg-image {
+          background-position: center {{ bp_background_image_medium_vertical_alignment }};
+          {% if bp_background_image_medium %}
+            background-image: url({{ bp_background_image_medium | img_url: '1000x' }});
+          {% elsif bp_background_image %}
+            background-image: url({{ bp_background_image | img_url: '1000x' }});
+          {% endif %}
+        }
+      }
+      @media (-webkit-min-device-pixel-ratio: 2) and (max-width: 991px),
+              (min-resolution: 192dpi)           and (max-width: 991px) {
+        #banner__panel-{{ bp_id }} .banner__bg-image {
+          {% if bp_background_image_medium %}
+            background-image: url({{ bp_background_image_medium | img_url: '1500x' }});
+          {% elsif bp_background_image %}
+            background-image: url({{ bp_background_image | img_url: '1500x' }});
+          {% endif %}
+        }
+      }
+
+      @media (max-width: 767px) {
+        {% if bp_vertical_padding_mobile != blank %}
+        #banner__panel-{{ bp_id }} {
+          padding-top: {{ bp_vertical_padding_mobile | append: 'px' }};
+          padding-bottom: {{ bp_vertical_padding_mobile | append: 'px' }};
+        }
+        {% endif %}
+        #banner__panel-{{ bp_id }} .banner__bg-image {
+          background-position: center {{ bp_background_image_small_vertical_alignment }};
+          {% if bp_background_image_small %}
+            background-image: url({{ bp_background_image_small | img_url: '800x' }});
+          {% elsif bp_background_image %}
+            background-image: url({{ bp_background_image | img_url: '800x' }});
+          {% endif %}
+        }
+      }
+      @media (-webkit-min-device-pixel-ratio: 2) and (max-width: 767px),
+              (min-resolution: 192dpi)           and (max-width: 767px) {
+        #banner__panel-{{ bp_id }} .banner__bg-image {
+          {% if bp_background_image_small %}
+            background-image: url({{ bp_background_image_small | img_url: '1200x' }});
+          {% elsif bp_background_image %}
+            background-image: url({{ bp_background_image | img_url: '1200x' }});
+          {% endif %}
+        }
+      }
+    </style>
+
+    {% if has_background_image or has_bg_video %}
+      <div class="banner__bg-container">
+        {% comment %} BANNER BACKGROUND - IMAGE {% endcomment %}
+        {% if has_background_image %}
+          {% include 'image_tag'
+            image: bp_background_image,
+            object_fit: cover,
+            object_position: center,
+          %}
+        {% endif %}
+
+        {% comment %} BANNER BACKGROUND - VIDEO {% endcomment %}
+        {% if has_bg_video %}
+          {% include 'video'
+              video_custom_class: "banner__bg-video",
+              video_module_id: bp_id,
+              video_id: bp_video.id,
+              video_type: bp_video.type,
+              video_background: true,
+              video_inline: true,
+              video_controls: false,
+              video_cover_container: true
+          %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if bp_overlay == "light" or bp_overlay == "dark" %}
+      <div class="banner__overlay banner__overlay--{{ bp_overlay }}"></div>
+    {% endif %}
+
+    <div class="container-fluid-max">
+      <div class="banner__content-container banner__content-container--{{ bp_content_alignment }}">
+        {% if has_eyebrow %}
+          <div class="banner__eyebrow banner__eyebrow--dotted">{{ bp_eyebrow }}</div>
+        {% endif %}
+        {% if has_title %}
+          <{{ title_semantic_tag }} class="banner__title {{ bp_title_style_tag }} text-uppercase">{{ bp_title }}</{{ title_semantic_tag }}>
+        {% endif %}
+        {% if has_text %}
+          <div class="banner__text p1">{{ bp_text }}</div>
+        {% endif %}
+
+        {% capture cta_html %}
+          {% if has_cta %}
+            <a href="{{ bp_cta_url }}" class="banner__cta btn btn-primary">{{ bp_cta_text }}</a>
+          {% endif %}
+           {% if has_cta_2 %}
+            <a href="{{ bp_cta_url_2 }}" class="banner__cta btn btn-primary">{{ bp_cta_text_2 }}</a>
+          {% endif %}
+        {% endcapture %}
+
+        {% if cta_html != blank %}
+          <div class="banner__cta-group cta-group">{{ cta_html }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

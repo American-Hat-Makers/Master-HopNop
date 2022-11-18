@@ -1,0 +1,48 @@
+{%- comment %}
+
+  Article Card
+  ------------------------------------------------------------------------------
+
+  Usage:
+
+  {% include 'article-card',
+              article: { article },
+  %}
+
+{% endcomment -%}
+
+{% if article.metafields.custom_fields["custom_thumbnail"] != blank %}
+  {% assign article_image = article.metafields.custom_fields["custom_thumbnail"] %}
+{% else %}
+  {% assign article_image = article.image %}
+{% endif %}
+
+{% if article != blank %}
+  <div class="article-card">
+    <div class="article-card__image">
+      <a href="{{ article.url }}" title="Go to {{ article.title }}">
+        {% include 'image_tag'
+          image: article_image,
+          object_fit: cover
+        %}
+      </a>
+    </div>
+    <div class="article-card__info">
+      <a href="{{ article.url }}" title="Go to  {{ article.title }}">
+        <span class="article-card__info-tags">
+          {% for tag in article.tags %}
+            {% if tag contains 'category' %}
+              {{ tag | remove: 'category:' }}
+            {% endif %}
+          {% endfor %}
+        </span>
+        <h6 class="article-card__info-title h6">
+          {{ article.title | truncate: 70  }}
+        </h6>
+      </a>
+      <p class="description">{%if article.excerpt_or_content != ''%}{{ article.excerpt_or_content  | strip_html | truncatewords: 23  }}<a class="read_more" href="{{ article.url }}" title="Go to  {{ article.title }}"><b style="font-size:15px;"> More</b></a>{%endif%}</p>
+		{% comment %}{{ "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here" | truncate: 150  }}{%endcomment%}
+    </div>
+  </div>
+{% endif %}
+
