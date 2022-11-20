@@ -89,7 +89,9 @@
           {{ content_for_header }}
   {% endcomment %}
           {{ content_for_header
-           
+            | replace: '<script','<script type="lazyload2"'
+            | replace: 'defer="defer" src','data-src='
+            | replace: 'type="module"',''
           }}
 {%- render 'bold-options-hybrid' -%}
 
@@ -363,7 +365,7 @@ uid:"__INSERT_EMAIL_HERE__"
   <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'vendor.min.js' | asset_url }}"></script><!--<![endif]-->
   <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}"></script><![endif]-->
 
-  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" defer data-src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
   <!--[if lt IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
 </body>
 </html>
