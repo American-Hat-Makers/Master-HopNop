@@ -66,7 +66,11 @@
   {% render 'hs-minify-css' with filename: 'theme.css' %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% if template.name == "product" or template.name == "index" %}
   <script type="lazyload2" data-src="{{ "slick.min.js" | asset_url }}"></script>
+  {% else %}
+  <script src="{{ "slick.min.js" | asset_url }}"></script>
+  {% endif %}
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 
