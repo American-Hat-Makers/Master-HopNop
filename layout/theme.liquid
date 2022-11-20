@@ -88,11 +88,13 @@
   {% comment %}
           {{ content_for_header }}
   {% endcomment %}
+<!--   Start header -->
           {{ content_for_header
             | replace: '<script','<script type="lazyload2"'
             | replace: 'defer="defer" src','data-src='
             | replace: 'type="module"',''
           }}
+<!--   End header -->
 {%- render 'bold-options-hybrid' -%}
 
   {% if template == 'product' and product.metafields.inventory.ShappifyHidden or product.type contains '_HIDDEN_' %}<meta name='robots' content='noindex'>{% endif %}
