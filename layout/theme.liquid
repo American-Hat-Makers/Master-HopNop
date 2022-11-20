@@ -65,7 +65,7 @@
 	<link rel="stylesheet" href="{{ 'slick.min.css' | asset_url }}"/>
   {% render 'hs-minify-css' with filename: 'theme.css' %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
-<script src="{{ 'jquery.min.js' | asset_url }}"></script>
+<script type="lazyload2" data-src="{{ 'jquery.min.js' | asset_url }}"></script>
 
   <script src="{{ "slick.min.js" | asset_url }}"></script>
 
