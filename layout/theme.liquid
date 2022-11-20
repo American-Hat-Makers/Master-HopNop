@@ -88,8 +88,15 @@
 
   <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
   <!--[if lt IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
-  
+
+  {% comment %}
           {{ content_for_header }}
+  {% endcomment %}
+          {{ content_for_header
+            | replace: '<script','<script type="lazyload"'
+            | replace: 'defer="defer" src','data-src='
+            | replace: 'type="module"',''
+          }}
 {%- render 'bold-options-hybrid' -%}
 
   {% if template == 'product' and product.metafields.inventory.ShappifyHidden or product.type contains '_HIDDEN_' %}<meta name='robots' content='noindex'>{% endif %}
