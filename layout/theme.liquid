@@ -84,11 +84,6 @@
   <noscript class="hs-load-onaction"><script type="lazyload2" data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=LmspxC"></script></noscript>
   
 
-  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'vendor.min.js' | asset_url }}"></script><!--<![endif]-->
-  <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}"></script><![endif]-->
-
-  <!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
-  <!--[if lt IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
 
   {% comment %}
           {{ content_for_header }}
@@ -366,6 +361,12 @@ uid:"__INSERT_EMAIL_HERE__"
 <!-- CRITEO START -->
 {% render 'criteo-tracking' %}
 <!-- CRITEO END -->
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'vendor.min.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}"></script><![endif]-->
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
 </body>
 </html>
 
