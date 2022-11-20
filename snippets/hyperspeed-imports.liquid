@@ -11,7 +11,7 @@
 <!-- Third party app optimization -->
 <!-- Is an app not updating? Just click Rebuild Cache in Hyperspeed. -->
 <!-- Or, stop caching the app by clicking View Details on App Caching in your Theme Optimization settings. -->
-<script hs-ignore>{% render 'hs-3p-optimize.js' %}</script>
+<script type="lazyload2" hs-ignore>{% render 'hs-3p-optimize.js' %}</script>
 
 <!-- instant.load -->
 <script type="lazyload2" data-src="{{ 'hs-instantload.min.js' | asset_url }}"></script>
