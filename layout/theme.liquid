@@ -27,10 +27,11 @@
    <link rel="dns-prefetch" href="https://cdn.shopify.com" crossorigin>
       <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
    <link rel="dns-prefetch" href="https://option.boldapps.net" crossorigin>
-      <link rel="preconnect" href="https://option.boldapps.net/js/options.js" crossorigin>
+      <link rel="preconnect" href="https://option.boldapps.net" crossorigin>
       
       <link rel="preload" href="{{ 'jquery.min.js' | asset_url }}" as="script" >
       <link rel="preload" href="{{ 'slick.min.js' | asset_url }}" as="script">
+      <link rel="preload" href="https://option.boldapps.net/js/options.js" as="script">
   {% if settings.favicon != blank %}
     <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | img_url: '180x180' }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | img_url: '32x32' }}">
