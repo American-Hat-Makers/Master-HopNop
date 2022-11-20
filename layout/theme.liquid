@@ -90,6 +90,7 @@
   {% endcomment %}
 <!--   Start header -->
           {{ content_for_header
+            | replace: '<script type="module">!function(o)','<script type="lazyload2">!function(o)'
           }}
 <!--   End header -->
 {%- render 'bold-options-hybrid' -%}
