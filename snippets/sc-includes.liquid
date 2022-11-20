@@ -10,5 +10,9 @@ THIS IS A GENERATED ASSET OF INCLUDES FOR INSTALLED BOLD APPLICATIONS SO DO NOT 
 <script>
     window.BOLD.common.cacheParams.options = 1668616601;
 </script>
-{{ 'bold-options.css' | asset_url | stylesheet_tag }}
+<link type="lazyload2" data-href="{{ 'bold-options.css' | asset_url }}">
+<link type="lazyload2" data-href="https://option.boldapps.net/js/options.js">
+{% comment %}
+{{ 'bold-options.css' | asset_url }}
 {{ 'https://option.boldapps.net/js/options.js' | script_tag }}
+{% endcomment %}
