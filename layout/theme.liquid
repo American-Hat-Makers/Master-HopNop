@@ -221,13 +221,13 @@
 <script type="text/javascript">
   var json_product = {{ product | json }};
 </script>
-<script>
+<script type="lazyload2">
 var event_name="view_item"
   var ecomm_prodid=[];
   for(var i=0;i<json_product.variants.length;i++)
     ecomm_prodid.push(json_product.variants[i].id);
 </script>
-<script type="text/javascript">
+<script type="lazyload2">
   var google_tag_params = {
     ecomm_prodid: ecomm_prodid,
     ecomm_pagetype: 'product',
@@ -235,14 +235,14 @@ var event_name="view_item"
   };
 </script>
 {% elsif template contains 'collection' %}
-<script type="text/javascript">
+<script type="lazyload2">
 var event_name="view_item_list"
   var google_tag_params = {
     ecomm_pagetype: 'category'
   };
 </script>
 {% elsif template contains 'cart' %}
-<script type="text/javascript">
+<script type="lazyload2">
 var event_name="add_to_cart"
   var id = new Array();
   {% for item in cart.items %}
@@ -256,21 +256,21 @@ var event_name="add_to_cart"
    };
 </script>
 {% elsif template contains 'search' %}
-<script type="text/javascript">
+<script type="lazyload2">
   var event_name="view_search_results"
   var google_tag_params = {
     ecomm_pagetype: 'searchresults'
   };
 </script>
 {% elsif template contains 'index' %}
-<script type="text/javascript">
+<script type="lazyload2">
   var event_name="home"
   var google_tag_params = {
     ecomm_pagetype: 'home'
   };
 </script>
 {% else %}
-<script type="text/javascript">
+<script type="lazyload2">
   var event_name="other"
   var google_tag_params = {
     ecomm_pagetype: 'other'
@@ -279,7 +279,7 @@ var event_name="add_to_cart"
 {% endif %}
   
   
-<script>
+<script type="lazyload2">
    gtag('event',event_name, {
     'ecomm_prodid':window.google_tag_params.ecomm_prodid,
     'ecomm_pagetype':window.google_tag_params.ecomm_pagetype,
@@ -290,7 +290,7 @@ var event_name="add_to_cart"
   });
 </script>
  
-<script>
+<script type="lazyload2">
   var variantID = (new URL(location.href)).searchParams.get('variant');
   jQuery(document).ajaxSuccess(function(event, xhr, settings) {
     if (settings.url == "/cart/add.js" || settings.url == "/cart/update.js" ||  settings.url == "/cart") {
