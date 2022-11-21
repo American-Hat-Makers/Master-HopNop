@@ -52,7 +52,7 @@
               </div>
             {% else %}
               <div class="product-card__gallery-image" data-product-card-gallery style="padding: 0px;background: none;">
-                <img alt="{{ product.featured_image.alt | escape }}" class="lazyload hs-lazyload hs-id-9d58dedb" data-src="{{ product.featured_image.src | img_url: product_image_dimension }}" data-variant-image="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="/>
+                <img alt="{{ product.featured_image.alt | escape }}" loading="lazy" src="{{ product.featured_image.src | img_url: product_image_dimension }}" data-variant-image=""/>
               </div>
             {% endif %}
 
