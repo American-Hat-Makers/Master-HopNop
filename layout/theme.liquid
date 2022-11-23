@@ -391,12 +391,12 @@ jQuery(document).ready(function(){
 	if (jQuery("body").hasClass("loop-returns-activated")) {
 		jQuery('.order-summary__section--discount').hide();
 	}
-  $(".header-cart__badge").click(function(){
+  $(".header-cart__badge").click(function(e){
     e.preventDefault();
     $(".ajax-cart-backdrop").addClass("is-visible");
     $(".ajax-cart-container").addClass("is-open asd ");
   })
-  $(".ajax-cart__close").click(function(){
+  $(".ajax-cart__close").click(function(e){
     e.preventDefault();
     $(".ajax-cart-container").removeClass("is-open asd ");
     $(".ajax-cart-backdrop").removeClass("is-visible");
