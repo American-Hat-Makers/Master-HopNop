@@ -1,5 +1,5 @@
 {%- if request.design_mode -%}
-  {{ filename | asset_url | stylesheet_tag }}
+  <link type="lazyload2" data-href='{{ filename | asset_url }}'>
 {%- else -%}
   {{ filename | asset_url | append: '&enable_css_minification=1' | stylesheet_tag }}
 {%- endif -%}
