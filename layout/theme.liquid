@@ -1,5 +1,4 @@
-{% if template.name == "index" or template.name == "product" %}
-  {% comment %} Changing this will turn on / off the fixed header behavior {% endcomment %}
+ {% comment %} Changing this will turn on / off the fixed header behavior {% endcomment %}
 {% assign FIXED_HEADER = true %}
 
 <!doctype html>
@@ -449,6 +448,3 @@ jQuery(document).ready(function(){
   <meta itemprop="telephone" content="(800) 642 3428">
   <meta itemprop="sameAs" content="https://www.facebook.com/AmericanHatMakers/,https://www.instagram.com/americanhatmakers/,https://www.linkedin.com/company/american-hat-makers/">
 </div>
-{% else %}
-  {% include 'base' %}
-{% endif %}
