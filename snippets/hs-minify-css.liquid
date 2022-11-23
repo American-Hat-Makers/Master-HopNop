@@ -1,4 +1,4 @@
-{% if lazyload and lazyload == false %}
+{% if lazyload == false %}
 {%- if request.design_mode -%}
   {{ filename | asset_url | stylesheet_tag }}
 {%- else -%}
