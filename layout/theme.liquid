@@ -61,7 +61,7 @@
   
   {% include 'social-meta-tags' %}
 
-  <link rel="stylesheet" href="https://use.typekit.net/hqm3cnr.css"> 
+  <link type="lazyload2" data-href="https://use.typekit.net/hqm3cnr.css"> 
 	<link rel="stylesheet" type="text/css" href="{{ 'slick.min.css' | asset_url }}"/>
   {% render 'hs-minify-css' with filename: 'theme.css' %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
@@ -108,7 +108,7 @@
  
   
 {% render 'hs-minify-css' with filename: 'custom-fields.css' %}
-<script defer src="{{ 'custom-fields-widgets.js' | asset_url }}"></script>
+<script 0 src="{{ 'custom-fields-widgets.js' | asset_url }}"></script>
   <script async src="https://tools.luckyorange.com/core/lo.js?site-id=edea5cbe"></script>
 {{ 'custom-fields.css' | asset_url | stylesheet_tag }}
 <script defer src="{{ 'custom-fields-widgets.js' | asset_url }}"></script>
