@@ -69,7 +69,7 @@
   {% if template.name == "product" %}
     <script>{% include 'slick' %}</script>
     {% else %}
-  <script src="{{ 'slick.min.js' | asset_url }}"></script>
+  <script type="lazyload2" data-src="{{ 'slick.min.js' | asset_url }}"></script>
     {% endif %}
   <script>
     document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
