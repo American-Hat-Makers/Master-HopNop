@@ -54,7 +54,8 @@
   {% comment %} Content Card Icon {% endcomment %}
   {% if background_image != blank %}
     <div class="content-card__bg-container">
-      <div class="content-card__bg-image " role="img" aria-label="{{ cc_background_image_alt }}" style="" >
+      <div class="content-card__bg-image " role="img" aria-label="{{ cc_background_image_alt }}" style="position:relative" >
+          <img src="{{ background_image }}" style="position:absolute">
       </div>
     </div>
   {% endif %}
