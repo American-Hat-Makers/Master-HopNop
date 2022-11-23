@@ -132,7 +132,7 @@
 {% render 'hs-minify-css' with filename: 'custom-fields.css' %}
 <script type="lazyload2" data-src="{{ 'custom-fields-widgets.js' | asset_url }}"></script>
   <script type="lazyload2" data-src="https://tools.luckyorange.com/core/lo.js?site-id=edea5cbe"></script>
-{{ 'custom-fields.css' | asset_url | stylesheet_tag }}
+<link type="lazyload2" data-href="{{ 'custom-fields.css' | asset_url  }}">
 </head>
 
 {% capture body_class %}
