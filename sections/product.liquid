@@ -419,6 +419,13 @@
       ]
     });
 </script>
+<script>
+  $("document").ready(function(){
+    $(".measureVideo").each(function(){
+      $(this).attr("src",$(this).attr("data-source"));
+    })
+  })
+</script>
 <style>
 /* findify-recommendation Section */
 .findify-recommendation .findify-components--cards--product__image-wrap {
