@@ -135,7 +135,7 @@
 
   
   <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5XC46KR"
+  <noscript><iframe loading="lazy" src="https://www.googletagmanager.com/ns.html?id=GTM-5XC46KR"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
@@ -177,8 +177,8 @@
   {% include 'slideup-template' %}
   {% include 'findify-tagging' %}
   {% include 'third-party-scripts-foot' %}
-     <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
-  <script>
+     <script type="lazyload2" data-src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+  <script type="lazyload2">
     var klaviyo = klaviyo || [];
     klaviyo.init({
       account: "LmspxC",
@@ -280,7 +280,7 @@ var event_name="add_to_cart"
 {% endif %}
   
   
-<script>
+<script type="lazyload2">
    gtag('event',event_name, {
     'ecomm_prodid':window.google_tag_params.ecomm_prodid,
     'ecomm_pagetype':window.google_tag_params.ecomm_pagetype,
