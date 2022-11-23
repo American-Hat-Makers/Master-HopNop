@@ -74,7 +74,7 @@
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
 <script src="{{ 'jquery.min.js' | asset_url }}"></script>
 {% if template.name == "product" %}
-  <script type="lazyload2" data-src="{{ "slick.min.js" | asset_url }}"></script>
+  <script src="{{ "slick.min.js" | asset_url }}"></script>
 {% else %}
   <script src="{{ "slick.min.js" | asset_url }}"></script>
 {% endif %}
