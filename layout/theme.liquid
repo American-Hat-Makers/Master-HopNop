@@ -99,17 +99,7 @@
   {% endcomment %}
 <!--   Start header -->
           {{ content_for_header
-            | replace: '<script type="module">!function(o)','<script type="lazyload2">!function(o)'
-            | replace: '<script>!function(o){function n()','<script type="lazyload2" >!function(o){function n()'
-            | replace: '<script>window.ShopifyPay','<script type="lazyload2">window.ShopifyPay'
-            | replace: '<script>(function() {
-  function asyncLoad() {','<script type="lazyload2">(function() {
-  function asyncLoad() {'
-            | replace: '<script>!function(o){o.addEventListener','<script type="lazyload2">!function(o){o.addEventListener'
-            | replace: ' data-source-attribution="shopify.loadfeatures" defer="defer" src',' data-source-attribution="shopify.loadfeatures" type="lazyload2" data-src'
-            | replace: '<script crossorigin="anonymous" defer="defer" src','<script crossorigin="anonymous" type="lazyload2" data-src'
-            | replace: 'data-source-attribution="shopify.dynamic-checkout" defer="defer" src','data-source-attribution="shopify.dynamic-checkout" type="lazyload2" data-src'
-            | replace: 'defer="defer" src','type="lazyload2" data-src'
+           
           }}
 <!--   End header -->
   
