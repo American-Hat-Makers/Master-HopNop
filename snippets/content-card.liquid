@@ -55,7 +55,7 @@
   {% if background_image != blank %}
     <div class="content-card__bg-container">
       <div class="content-card__bg-image " role="img" aria-label="{{ cc_background_image_alt }}" style="position:relative;width:100%" >
-          <img src="{{ background_image }}" style="position:absolute;width:100%;object-fit:contain">
+          <img loading="lazy" src="{{ background_image }}" style="position:absolute;width:100%;object-fit:contain">
       </div>
     </div>
   {% endif %}
