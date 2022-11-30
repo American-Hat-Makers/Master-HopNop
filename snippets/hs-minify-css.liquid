@@ -1,15 +1,14 @@
-{% if lazyload == false %}
-{%- if request.design_mode -%}
-  {{ filename | asset_url | stylesheet_tag }}
-{%- else -%}
-  {{ filename | asset_url | append: '&enable_css_minification=1' | stylesheet_tag }}
-{%- endif -%}
-{%- else -%}
+{% if lazyload == true %}
 {%- if request.design_mode -%}
   <link type="lazyload2" data-href='{{ filename | asset_url }}'>
 {% else %}
   <link type="lazyload2" data-href="{{ filename | asset_url | append: '&enable_css_minification=1' }}">
 {%- endif -%}
-  
+{%- else -%}
+{%- if request.design_mode -%}
+  {{ filename | asset_url | stylesheet_tag }}
+{%- else -%}
+  {{ filename | asset_url | append: '&enable_css_minification=1' | stylesheet_tag }}
+{%- endif -%}
   
   {% endif %}
