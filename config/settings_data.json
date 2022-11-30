@@ -1877,7 +1877,7 @@
       "pencil-banner": {
         "type": "pencil-banner",
         "settings": {
-          "banner_enabled": true,
+          "banner_enabled": false,
           "banner_content": "<p><strong>Black Friday 25% off Sitewide with code \"BF25\"!<\/strong><\/p>",
           "banner_mobile_content": "<p><strong>Black Friday 25% off Sitewide with code \"BF25\"!<\/strong><\/p>"
         }
@@ -5914,12 +5914,12 @@
         "settings": {
           "content_max_width": 850,
           "content_alignment": "center",
-          "eyebrow": "<t>Use Code: BF25<\/t>",
-          "title": "<t>25% off sitewide black friday sale<\/t>",
+          "eyebrow": "",
+          "title": "Shop All Hats",
           "text": "",
           "cta_text": "Shop All Hats",
           "cta_url": "shopify:\/\/collections\/all-hats",
-          "image": "shopify:\/\/shop_images\/bFriday-homepage-banner-1.jpg"
+          "image": "shopify:\/\/shop_images\/Untitled_design_b3656880-78fa-4641-93f7-16fd6420760e.jpg"
         }
       },
       "16511785089369cc20": {
