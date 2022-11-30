@@ -17,7 +17,7 @@
     {{ content_for_header }}
 
     {{ checkout_stylesheets }}
-    {% render 'hs-minify-css' with filename: 'checkout.css' %}
+    {% render 'hs-minify-css' with filename: 'checkout.css',lazyload:false %}
 
     {{ checkout_scripts }}
 
