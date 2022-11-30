@@ -64,7 +64,11 @@
   <link type="lazyload2" data-href="https://use.typekit.net/hqm3cnr.css"> 
 	<link rel="stylesheet" type="text/css" href="{{ 'slick.min.css' | asset_url }}"/>
   {% render 'hs-minify-css' with filename: 'theme.css', lazyload: false %}
+  {% if template.name == "index" or template.name == "product" %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
+    {% else %}
+  {% render 'hs-minify-css' with filename: 'pb-styles.scss.css',lazyload:false %}
+    {% endif %}
 <script src="{{ 'jquery.min.js' | asset_url }}"></script>
   {% if template.name == "product" %}
     <script>{% include 'slick' %}</script>
