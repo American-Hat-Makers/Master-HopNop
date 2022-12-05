@@ -1877,9 +1877,9 @@
       "pencil-banner": {
         "type": "pencil-banner",
         "settings": {
-          "banner_enabled": false,
-          "banner_content": "<p><strong>Black Friday 25% off Sitewide with code \"BF25\"!<\/strong><\/p>",
-          "banner_mobile_content": "<p><strong>Black Friday 25% off Sitewide with code \"BF25\"!<\/strong><\/p>"
+          "banner_enabled": true,
+          "banner_content": "<p><strong>Use \"12DAYS\" for Buy one get one free on sale page!<\/strong><\/p>",
+          "banner_mobile_content": "<p><strong>Use \"12DAYS\" for Buy one get one free on sale page!<\/strong><\/p>"
         }
       },
       "mobile-menu": {
