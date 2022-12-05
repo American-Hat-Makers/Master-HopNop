@@ -5914,12 +5914,12 @@
         "settings": {
           "content_max_width": 850,
           "content_alignment": "center",
-          "eyebrow": "",
-          "title": "Shop All Hats",
-          "text": "",
+          "eyebrow": "Use Code: 12DAYS",
+          "title": "Get them the gift they want!",
+          "text": "<p>Buy one get one Free! 12 day sale page only!<\/p>",
           "cta_text": "Shop All Hats",
           "cta_url": "shopify:\/\/collections\/all-hats",
-          "image": "shopify:\/\/shop_images\/Untitled_design_b3656880-78fa-4641-93f7-16fd6420760e.jpg"
+          "image": "shopify:\/\/shop_images\/12-days-banner.jpg"
         }
       },
       "16511785089369cc20": {
