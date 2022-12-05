@@ -70,8 +70,12 @@ This file can be re-written at any time.
 
   <link type="lazyload2" data-href="https://use.typekit.net/hqm3cnr.css"> 
 	<link rel="stylesheet" type="text/css" href="{{ 'slick.min.css' | asset_url }}"/>
-  {% render 'hs-minify-css' with filename: 'theme.css', lazyload: false %}
+  {% render 'hs-minify-css' with filename: 'theme.css' %}
+  {% if template.name == "index" or template.name == "product" %}
+  {% render 'hs-minify-css' with filename: 'pb-styles.scss.css',lazyload:true %}
+    {% else %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
+    {% endif %}
 <script src="{{ 'jquery.min.js' | asset_url }}"></script>
   {% if template.name == "product" %}
     <script>{% include 'slick' %}</script>
@@ -116,7 +120,7 @@ This file can be re-written at any time.
             | replace: ' data-source-attribution="shopify.loadfeatures" defer="defer" src',' data-source-attribution="shopify.loadfeatures" type="lazyload2" data-src'
             | replace: '<script crossorigin="anonymous" defer="defer" src','<script crossorigin="anonymous" type="lazyload2" data-src'
             | replace: 'data-source-attribution="shopify.dynamic-checkout" defer="defer" src','data-source-attribution="shopify.dynamic-checkout" type="lazyload2" data-src'
-            | replace: 'defer="defer" src','type="lazyload2" data-src'
+           
           }}
 <!--   End header -->
   
