@@ -6816,6 +6816,108 @@
           "content_alignment_3": "center",
           "content_max_width_3": 450
         }
+      },
+      "page-returns": {
+        "type": "page-returns",
+        "blocks": {
+          "06a664b9-fdee-400e-a88d-16d7baf5ce83": {
+            "type": "banner-panel",
+            "settings": {
+              "title": "Returns",
+              "text": "",
+              "font_size": "banner__panel--text-large",
+              "cta_text": "",
+              "cta_url": "",
+              "light_text": true,
+              "content_alignment": "center",
+              "content_max_width": 450,
+              "background_base": "shopify:\/\/shop_images\/Crusher-BomberBrown-ToolWrap-Black-LeatherAccessories-LeatherHat-AmericanHatMakers_2.jpg"
+            }
+          },
+          "b32b3205-fcc5-4487-8a93-dc5e595da78e": {
+            "type": "rich-text",
+            "settings": {
+              "eyebrow": "",
+              "title": "American Hat Makers Return Policy",
+              "read_more": false,
+              "text": "We want you as happy as you can be with your decision and so please don't hesitate to return or exchange.",
+              "cta_title": "Click Here to Return",
+              "cta_url": "https:\/\/returns.americanhatmakers.com\/#\/",
+              "content_alignment": "center",
+              "content_max_width": 700,
+              "background_color": "bg-white"
+            }
+          },
+          "56965ad9-c07f-4d40-bd86-2873ef4ae4f0": {
+            "type": "promo",
+            "settings": {
+              "p_layout": "right",
+              "p_background_color": "#fffcf4",
+              "p_content_max_width": 550,
+              "p_content_alignment": "center",
+              "p_eyebrow": "",
+              "p_title": "",
+              "p_text": "<p>We always hope you love what you ordered but if for some reason you do not, we will gladly accept un-used, or defective merchandise for return or exchange within 30 days from the shipping date.<\/p><p>Unless you are processing an exchange, $7.00 will be deducted from your refund for return shipping. Orders returned from Canada are subject to a higher cost due to shipping charges. Original shipping costs are non-refundable. Items purchased outside of the North American are not eligible for returns due to customs issues. All Sales Items are \"Final Sale” and are non returnable. This means Sale items are specified items are not eligible for return or exchange.<\/p><p>Your refund will go back to the original method of payment used to make the purchase. We usually process returns quickly, but just in case, please allow up to 14 business days from when we receive the items for your account to be refunded.<\/p>",
+              "p_cta_text": "",
+              "p_cta_url": "",
+              "p_image": "shopify:\/\/shop_images\/Fazenda-White-Havana-Oatmeal-Bondi-Oatmeal-Ladies-FeltWideBrimHat-AmericanHatMakers_7.jpg",
+              "p_cta_image_url": ""
+            }
+          },
+          "bcea8224-d35e-4a5c-adfc-1e0bcabc4b4e": {
+            "type": "html",
+            "settings": {
+              "section_html": "<br>\n<h2 style=\"text-align:center\">Return FAQ's<\/h2>"
+            }
+          }
+        },
+        "block_order": [
+          "06a664b9-fdee-400e-a88d-16d7baf5ce83",
+          "b32b3205-fcc5-4487-8a93-dc5e595da78e",
+          "56965ad9-c07f-4d40-bd86-2873ef4ae4f0",
+          "bcea8224-d35e-4a5c-adfc-1e0bcabc4b4e"
+        ],
+        "settings": {
+          "dots": true,
+          "autoplay": true,
+          "animation": "slide",
+          "autoplay_speed": "7000",
+          "banner_height": "large",
+          "eyebrow_1": "",
+          "title_1": "",
+          "text_1": "",
+          "cta_text_1_1": "",
+          "cta_url_1_1": "",
+          "cta_text_2_1": "",
+          "cta_url_2_1": "",
+          "light_text_1": false,
+          "overlay_1": "",
+          "content_alignment_1": "center",
+          "content_max_width_1": 450,
+          "video_url_1": "",
+          "eyebrow_2": "",
+          "title_2": "",
+          "text_2": "",
+          "cta_text_1_2": "",
+          "cta_url_1_2": "",
+          "cta_text_2_2": "",
+          "cta_url_2_2": "",
+          "light_text_2": false,
+          "overlay_2": "",
+          "content_alignment_2": "center",
+          "content_max_width_2": 450,
+          "eyebrow_3": "",
+          "title_3": "",
+          "text_3": "",
+          "cta_text_1_3": "",
+          "cta_url_1_3": "",
+          "cta_text_2_3": "",
+          "cta_url_2_3": "",
+          "light_text_3": false,
+          "overlay_3": "",
+          "content_alignment_3": "center",
+          "content_max_width_3": 450
+        }
       }
     },
     "content_for_index": [
