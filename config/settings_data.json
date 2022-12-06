@@ -6693,12 +6693,57 @@
               "content_max_width": 450,
               "background_base": "shopify:\/\/shop_images\/Amarillo-Palm-Ladies-SunHat-AmericanHatMakers_1_a6ee981d-1a54-4c30-91d9-995621f1c4a5.jpg"
             }
+          },
+          "e410745e-6990-4eca-b632-278e61603254": {
+            "type": "rich-text",
+            "settings": {
+              "eyebrow": "",
+              "title": "",
+              "read_more": false,
+              "text": "For a handful of years we have put on an event, Hat Day in The Sun, to bring awareness about skin cancer and the damage the sun can have on you. On this day, we gift large brim sun hats to our community along with educational information.<br><br>\nA few months ago, we wanted to open up and see what else we could do for our cancer outreach. We now give hats to our local cancer center to patients going through chemo who have lost their hair.",
+              "cta_title": "Shop Wide Brim Hats",
+              "cta_url": "shopify:\/\/collections\/mens-wide-brim-hats",
+              "content_alignment": "center",
+              "content_max_width": 700,
+              "background_color": "bg-white"
+            }
+          },
+          "0b6612eb-ab70-4864-b079-4ec7b89f46b8": {
+            "type": "banner-panel",
+            "settings": {
+              "title": "Hats for Heros",
+              "text": "",
+              "font_size": "banner__panel--text-large",
+              "cta_text": "",
+              "cta_url": "",
+              "light_text": true,
+              "content_alignment": "center",
+              "content_max_width": 450,
+              "background_base": "shopify:\/\/shop_images\/Untitled_design_9bdcd20c-0802-4e60-8b65-3af6087a9290.jpg"
+            }
+          },
+          "b9021d71-4ac2-4ffa-b526-95f546d62bf6": {
+            "type": "rich-text",
+            "settings": {
+              "eyebrow": "",
+              "title": "We give back to those who serve",
+              "read_more": false,
+              "text": "We also launched Hats for American Heroes, which aims to give back to those who have given and continue to give their all for us.<br><br>We want to show support and gratitude for those on active duty, retired veterans, and the wounded, injured, or sick. We hope that our efforts will not only help our heroes, but also inspire others to volunteer, donate, and support the men and women who so selflessly put their lives on the line for our freedoms.<br><br>If you're an American Hero, or you know one, contact us!",
+              "cta_title": "Contact us",
+              "cta_url": "shopify:\/\/pages\/contact-us",
+              "content_alignment": "center",
+              "content_max_width": 700,
+              "background_color": "bg-white"
+            }
           }
         },
         "block_order": [
           "2841c122-c4a9-4160-b174-6ef947e2929d",
           "7e0612ad-62d2-46e6-85a0-1d93946ac9b6",
-          "542bc873-3c53-4109-88cc-8e9d54d482f0"
+          "542bc873-3c53-4109-88cc-8e9d54d482f0",
+          "e410745e-6990-4eca-b632-278e61603254",
+          "0b6612eb-ab70-4864-b079-4ec7b89f46b8",
+          "b9021d71-4ac2-4ffa-b526-95f546d62bf6"
         ],
         "settings": {
           "dots": true,
