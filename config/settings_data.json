@@ -6655,20 +6655,50 @@
           "2841c122-c4a9-4160-b174-6ef947e2929d": {
             "type": "banner-panel",
             "settings": {
-              "title": "",
+              "title": "American Hat Makers Charity",
               "text": "",
               "font_size": "banner__panel--text-large",
               "cta_text": "",
               "cta_url": "",
-              "light_text": false,
+              "light_text": true,
               "content_alignment": "center",
               "content_max_width": 450,
-              "background_base": "shopify:\/\/shop_images\/Crusher-BomberBrown-Copper-Men-Kids-Ladies-LeatherHat-AmericanHatMakers_5.jpg"
+              "background_base": "shopify:\/\/shop_images\/Crusher-BomberBrown-Copper-Men-Kids-Ladies-LeatherHat-AmericanHatMakers_5_c7752bb7-6715-4322-8562-50e76ab70404.jpg"
+            }
+          },
+          "7e0612ad-62d2-46e6-85a0-1d93946ac9b6": {
+            "type": "rich-text",
+            "settings": {
+              "eyebrow": "",
+              "title": "We believe in giving back to the community",
+              "read_more": false,
+              "text": "American Hat Makers has been actively supporting different causes to give back and show gratitude. We believe that it is in paying it forward that we can help and make a difference in the lives of the people around us.",
+              "cta_title": "",
+              "cta_url": "",
+              "content_alignment": "center",
+              "content_max_width": 700,
+              "background_color": "bg-white"
+            }
+          },
+          "542bc873-3c53-4109-88cc-8e9d54d482f0": {
+            "type": "banner-panel",
+            "settings": {
+              "title": "Cancer Awareness",
+              "text": "",
+              "font_size": "banner__panel--text-large",
+              "cta_text": "",
+              "cta_url": "",
+              "light_text": true,
+              "content_alignment": "center",
+              "content_max_width": 450,
+              "background_base": "shopify:\/\/shop_images\/Amarillo-Palm-Ladies-SunHat-AmericanHatMakers_1_a6ee981d-1a54-4c30-91d9-995621f1c4a5.jpg"
             }
           }
         },
         "block_order": [
-          "2841c122-c4a9-4160-b174-6ef947e2929d"
+          "2841c122-c4a9-4160-b174-6ef947e2929d",
+          "7e0612ad-62d2-46e6-85a0-1d93946ac9b6",
+          "542bc873-3c53-4109-88cc-8e9d54d482f0"
         ],
         "settings": {
           "dots": true,
