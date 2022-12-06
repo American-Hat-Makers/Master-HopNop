@@ -2173,7 +2173,7 @@
         "type": "ajax-cart",
         "settings": {
           "empty_text": "<p>Your bag is empty<\/p>",
-          "minicart_message": ""
+          "minicart_message": "<p><\/p>"
         }
       },
       "page-cms": {
@@ -6647,6 +6647,69 @@
           "cd12466d-5e3e-45f7-8386-34acea14cd17"
         ],
         "settings": {
+        }
+      },
+      "page-charity": {
+        "type": "page-charity",
+        "blocks": {
+          "2841c122-c4a9-4160-b174-6ef947e2929d": {
+            "type": "banner-panel",
+            "settings": {
+              "title": "",
+              "text": "",
+              "font_size": "banner__panel--text-large",
+              "cta_text": "",
+              "cta_url": "",
+              "light_text": false,
+              "content_alignment": "center",
+              "content_max_width": 450,
+              "background_base": "shopify:\/\/shop_images\/Crusher-BomberBrown-Copper-Men-Kids-Ladies-LeatherHat-AmericanHatMakers_5.jpg"
+            }
+          }
+        },
+        "block_order": [
+          "2841c122-c4a9-4160-b174-6ef947e2929d"
+        ],
+        "settings": {
+          "dots": true,
+          "autoplay": true,
+          "animation": "slide",
+          "autoplay_speed": "7000",
+          "banner_height": "large",
+          "eyebrow_1": "",
+          "title_1": "",
+          "text_1": "",
+          "cta_text_1_1": "",
+          "cta_url_1_1": "",
+          "cta_text_2_1": "",
+          "cta_url_2_1": "",
+          "light_text_1": false,
+          "overlay_1": "",
+          "content_alignment_1": "center",
+          "content_max_width_1": 450,
+          "video_url_1": "",
+          "eyebrow_2": "",
+          "title_2": "",
+          "text_2": "",
+          "cta_text_1_2": "",
+          "cta_url_1_2": "",
+          "cta_text_2_2": "",
+          "cta_url_2_2": "",
+          "light_text_2": false,
+          "overlay_2": "",
+          "content_alignment_2": "center",
+          "content_max_width_2": 450,
+          "eyebrow_3": "",
+          "title_3": "",
+          "text_3": "",
+          "cta_text_1_3": "",
+          "cta_url_1_3": "",
+          "cta_text_2_3": "",
+          "cta_url_2_3": "",
+          "light_text_3": false,
+          "overlay_3": "",
+          "content_alignment_3": "center",
+          "content_max_width_3": 450
         }
       }
     },
