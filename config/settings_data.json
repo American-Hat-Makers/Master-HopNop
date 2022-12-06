@@ -6735,6 +6735,34 @@
               "content_max_width": 700,
               "background_color": "bg-white"
             }
+          },
+          "50bbd721-c22d-4d32-afc3-9f658f2ebd49": {
+            "type": "banner-panel",
+            "settings": {
+              "title": "AHM goes carbon neutral",
+              "text": "",
+              "font_size": "banner__panel--text-large",
+              "cta_text": "",
+              "cta_url": "",
+              "light_text": true,
+              "content_alignment": "center",
+              "content_max_width": 450,
+              "background_base": "shopify:\/\/shop_images\/Eden-reforestation-project-1.jpg"
+            }
+          },
+          "e8d884ef-bf13-4a9a-8c85-83fafed323c9": {
+            "type": "rich-text",
+            "settings": {
+              "eyebrow": "",
+              "title": "",
+              "read_more": false,
+              "text": "We have been working with EcoDrive to help offset our carbon footprint from shipping by planting trees. This campaign has a total of 21,097 trees planted and 14,345,960lbs of carbon has  been removed.<br><br>We all want a cleaner and healthier plenet and so we continue to advocate in cleaning the beaches and ocean. Also we help educate people of the importance of taking care of the environment.",
+              "cta_title": "",
+              "cta_url": "",
+              "content_alignment": "center",
+              "content_max_width": 700,
+              "background_color": "bg-white"
+            }
           }
         },
         "block_order": [
@@ -6743,7 +6771,9 @@
           "542bc873-3c53-4109-88cc-8e9d54d482f0",
           "e410745e-6990-4eca-b632-278e61603254",
           "0b6612eb-ab70-4864-b079-4ec7b89f46b8",
-          "b9021d71-4ac2-4ffa-b526-95f546d62bf6"
+          "b9021d71-4ac2-4ffa-b526-95f546d62bf6",
+          "50bbd721-c22d-4d32-afc3-9f658f2ebd49",
+          "e8d884ef-bf13-4a9a-8c85-83fafed323c9"
         ],
         "settings": {
           "dots": true,
