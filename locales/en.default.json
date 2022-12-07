@@ -346,7 +346,9 @@
         "optional_address2_label": "apt, suite, company (optional)",
         "address2_label": "apt, suite, company (optional)",
         "email_or_phone_placeholder": "ENTER YOUR PHONE",
-        "phone_label": "Phone Number"
+        "phone_label": "Phone Number",
+        "email_label": "EMAIL FOR ORDER CONFIRMATION",
+        "email_placeholder": "EMAIL FOR ORDER CONFIRMATION"
       },
       "field_errors": {
         "shipping_line_phone_blank": "Phone number is required for shipping & delivery notifications",
