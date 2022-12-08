@@ -1,4 +1,3 @@
-{% assign hs_product_description = product.description | replace: ' src="', ' loading="lazy" class="lazyload" data-src="' %}
 <style type="text/css">
 /*   h5.active-tab a img {
     -moz-transform: rotate(180deg) !important;
@@ -249,7 +248,7 @@
 {% comment %}
 <div class="product-tab-space">
   <div class="product-small-description">
-    {{ hs_product_description | split: '<!-- split -->' | first }}
+    {{ product.description | split: '<!-- split -->' | first }}
   </div>
   {% include 'product-description-tab-new' %}
 </div>

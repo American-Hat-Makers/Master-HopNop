@@ -316,7 +316,7 @@
 
 <script>
   // Getting Short description from Shopify Description
-  var shopifyDescriptionString = JSON.stringify({{ hs_product_description | json }});
+  var shopifyDescriptionString = JSON.stringify({{ product.description | json }});
   var startPosition = shopifyDescriptionString.search("<!--Short Description Start-->");
   var endPosition = shopifyDescriptionString.search("<!--Short Description End-->");
   if(startPosition > 0) {

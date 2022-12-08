@@ -196,7 +196,6 @@
   }
 </style>
 
-{% assign hs_product_description = product.description | replace: ' src="', ' loading="lazy" class="lazyload" data-src="' %}
 {%- comment %}
 
   Product Detail Snippet
@@ -270,7 +269,7 @@
     {% else %}
       <div class="product__description" data-description>
         <h4 class="product__description-title">Description</h4>
-        {% assign short_description = hs_product_description | strip_html | truncate:200 %}
+        {% assign short_description = product.description | strip_html | truncate:200 %}
         {% if short_description.size > 200 %}
           <div class="rte" data-short-text>
             <p>
@@ -278,10 +277,10 @@
             </p>
           </div>
           <div class="rte" data-full-text>
-            {{ hs_product_description }}
+            {{ product.description }}
           </div>
         {% else %}
-          {{ hs_product_description }}
+          {{ product.description }}
         {% endif %}
         {% if short_description.size > 200 %}
           <div class="description-toggler" data-description-toggler>
@@ -367,7 +366,7 @@
       <div class="accordian-box">
         <ul class="accordion">
 
-          {% assign description_parts_product = hs_product_description | split: '<!--Drop Down Start-->' | last %}
+          {% assign description_parts_product = product.description | split: '<!--Drop Down Start-->' | last %}
           {% assign description_parts = description_parts_product | split: '<h5>' %}
           
           {% for part in description_parts %}

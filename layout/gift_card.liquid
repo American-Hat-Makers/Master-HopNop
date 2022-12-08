@@ -24,10 +24,10 @@
 
   <meta name="description" content="{{ 'gift_cards.issued.subtext' | t }}">
 
-  {% render 'hs-minify-css' with filename: 'theme.css' %}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.min.js' | asset_url }}"></script><!--<![endif]-->
-  <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}"></script><![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
 
   {{ content_for_header }}
 

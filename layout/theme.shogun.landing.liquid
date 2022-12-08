@@ -15,8 +15,6 @@ This file can be re-written at any time.
   <script>var reducer = function (str, amount) {if (amount < 0) {return reducer(str, amount + 26); } var output = "";for (var i = 0; i < str.length; i++) {var c = str[i];if (c.match(/[a-z]/i)) {var code = str.charCodeAt(i); if (code >= 65 && code <= 90) {c = String.fromCharCode(((code - 65 + amount) % 26) + 65); }else if (code >= 97 && code <= 122) {c = String.fromCharCode(((code - 97 + amount) % 26) + 97); }}output += c;}return output;};eval(reducer(`vs ( jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs( "Puebzr-Yvtugubhfr" ) > -1 || jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs("K11") > -1 || jvaqbj["anivtngbe"][ "hfreNtrag" ].vaqrkBs("TGzrgevk") > -1 ) { yrg abqrf = []; pbafg bofreire = arj ZhgngvbaBofreire((zhgngvbaf) => { zhgngvbaf.sbeRnpu(({ nqqrqAbqrf }) => { nqqrqAbqrf.sbeRnpu((abqr) => { vs (abqr.abqrGlcr === 1 && abqr.gntAnzr === "FPEVCG") { pbafg fep = abqr.fep || ""; pbafg glcr = abqr.glcr; vs (abqr.vaareGrkg) { vs ( abqr.vaareGrkg.vapyhqrf("gerxxvr.zrgubqf") || abqr.vaareGrkg.vapyhqrf("ffj_phfgbz_cebwrpg") ) { abqrf.chfu(abqr); abqr.glcr = "wninfpevcg/oybpxrq"; vs (abqr.cneragRyrzrag) { abqr.cneragRyrzrag.erzbirPuvyq(abqr); } } } } }); }); }); bofreire.bofreir(qbphzrag.qbphzragRyrzrag, { puvyqYvfg: gehr, fhogerr: gehr, }); };`,-13))</script>
 
 
-{% include 'hyperspeed-imports' %}
-
 {% if canonical_url contains '/blogs/faq/' %}
   <meta name="robots" content="noindex">
 {% endif %}
@@ -70,11 +68,11 @@ This file can be re-written at any time.
 
   <link type="lazyload2" data-href="https://use.typekit.net/hqm3cnr.css"> 
 	<link rel="stylesheet" type="text/css" href="{{ 'slick.min.css' | asset_url }}"/>
-  {% render 'hs-minify-css' with filename: 'theme.css' %}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
   {% if template.name == "index" or template.name == "product" %}
   {% render 'hs-minify-css' with filename: 'pb-styles.scss.css',lazyload:true %}
     {% else %}
-  {% render 'hs-minify-css' with filename: 'pb-styles.scss.css' %}
+  {{ 'pb-styles.scss.css' | asset_url | stylesheet_tag }}
     {% endif %}
 <script src="{{ 'jquery.min.js' | asset_url }}"></script>
   {% if template.name == "product" %}
@@ -99,11 +97,11 @@ This file can be re-written at any time.
   <noscript class="hs-load-onaction"><script type="lazyload2" data-src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=LmspxC" type="text/javascript"></script></noscript>
   
 
-  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'vendor.min.js' | asset_url }}"></script><!--<![endif]-->
-  <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}"></script><![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'vendor.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}"></script><![endif]-->
 
-  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'theme.min.js' | asset_url }}"></script><!--<![endif]-->
-  <!--[if lt IE 9]><script src="{{ 'theme.min.js' | asset_url }}"></script><![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--><script type="lazyload2" data-src="{{ 'theme.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
   
   {% comment %}
           {{ content_for_header }}

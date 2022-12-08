@@ -17,15 +17,15 @@
     {{ content_for_header }}
 
     {{ checkout_stylesheets }}
-    {% render 'hs-minify-css' with filename: 'checkout.css' %}
+    {{ 'checkout.css' | asset_url | stylesheet_tag }}
 
     {{ checkout_scripts }}
 
-    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.min.js' | asset_url }}" type="hyperscript/defer-load"></script><!--<![endif]-->
-    <!--[if lt IE 9]><script src="{{ 'vendor.min.js' | asset_url }}" type="hyperscript/defer-load"></script><![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'vendor.js' | asset_url }}" type="hyperscript/defer-load"></script><!--<![endif]-->
+    <!--[if lt IE 9]><script src="{{ 'vendor.js' | asset_url }}" type="hyperscript/defer-load"></script><![endif]-->
 
-    <!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'checkout.min.js' | asset_url }}"></script><!--<![endif]-->
-    <!--[if lt IE 9]><script src="{{ 'checkout.min.js' | asset_url }}"></script><![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!--><script defer src="{{ 'checkout.js' | asset_url }}"></script><!--<![endif]-->
+    <!--[if lt IE 9]><script src="{{ 'checkout.js' | asset_url }}"></script><![endif]-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </script>
 
