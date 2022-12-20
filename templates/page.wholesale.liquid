@@ -1,3 +1,394 @@
-{% section 'page-wholesale' %}
+<!-- {% section 'page-wholesale' %} -->
+<style>
+  @media screen and (min-width: 767px) {
+    #headerContainer {
+      position: relative;
+    }
+    #headerTitle {
+      position: absolute;
+      bottom: calc(50% - 86px);
+      color: white;
+    }
+    .intro-column {
+      width: 28% !important;
+    }
+    .intro-column-1 {
+      margin-left: 4% !important;
+    }
+    .intro-column-3 {
+      margin-right: 4%;
+    }
+    #shopFaire {
+      padding: 42px;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    #headerTitle {
+      margin-left: calc(50% - 433px);
+      bottom: calc(50% - 54px);
+    }
+  }
+  #headerContainer {
+    text-align: center;
+  }
+  #catalogSection {
+    text-align: center;
+    align-content: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 0;
+    margin-bottom: 24px;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+  }
+  .learnMoreParagraph {
+    margin-bottom: 0;
+  }
+  #learnMoreHeader {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid black;
+  }
+  #introRow {
+    border-bottom: 1px solid gray;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+  .intro-column {
+    background-color: #f2f2f2;
+    border: none !important;
+    padding: 26px !important;
+  }
+  .intro-column-1 {
+    margin-right: 2%;
+  }
+  .intro-column-2 {
+    margin-left: 2% !important;
+    margin-right: 2%;
+  }
+  .intro-column-3 {
+    margin-left: 2% !important;
+    margin-right: 2%;
+  }
+  .intro-p {
+    text-align: center;
+  }
+  .intro-header-2 {
+    text-align: center;
+  }
+  .twoUpColumn {
+    border: none !important;
+  }
+  @media screen and (max-width: 766px) {
+    .intro-column {
+      width: 100% !important;
+    }
+    .twoUpColumn {
+      width: 100% !important;
+    }
+  }
+  .threeUpColumn {
+    width: 33% !important;
+    margin-left: 0 !important;
+  }
+  .centered-column {
+    display: flex;
+    flex-wrap: inherit;
+    align-content: center;
+  }
+  .centered-paragraph {
+    text-align: center;
+  }
+  #shopFaire {
+    background-color: #f2f2f2;
+  }
+  #shopFaireHeader {
+    text-align: center;
+    padding-left: 35px;
+    padding-right: 35px;
+    line-height: 32px;
+  }
+  #faqHeader {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 30px;
+    margin-bottom: 20px;
+    border-top: 1px solid gray;
+  }
+  #questionsP {
+    font-size: 2.0rem;
+    text-align: center;
+  }
+  #magazine-logos {
+    position: relative;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: #F2F2F2;
+    padding: 30px;
+  }
+  #magazine-title {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 766px) {
+    #magazine-logos {
+      width: 100vw;
+      left: calc((-100vw + 100%)/2);
+    }
+    #magazine-img {
+      max-width: 100%;
+    }
+    #magazine-title {
+      margin-bottom: 0px;
+      border-top: 1px solid #e9e9e9;
+      padding-top: 10px;
+    }
+    .btn {
+      min-width: 0px;
+    }
+    #shopFaire {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  }
+  #worldWideSection {
+    text-align: center;
+    background-color: #F2F2F2;
+    padding: 25px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  #celeb-title {
+    text-align: center;
+    width: 100%;
+  }
+  .celeb-row {
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0px;
+  }
+  .celeb-col {
+    width: fit-content !important;
+    border: none !important;
+    margin-left: 0.5% !important;
+    margin-right: 0.5% !important;
+    padding: 0px !important;
+  }
+  .celeb-img {
+    border-radius: 50%;
+  }
+  .celeb-p {
+    text-align: center;
+    margin-bottom: 0px !important;
+  }
+  .centered-div {
+    display: flex;
+    align-items: center;
+  }
+  .no-bottom-margin {
+    margin-bottom: 0px;
+  }
+  .quotes-column {
+    margin-left: 1% !important;
+    margin-right: 1% !important;
+  }
+</style>
 
+<!-- Header Container -->
+<div id="headerContainer" class="container">
+  <img src="//cdn.shopify.com/s/files/1/2624/7744/files/wholesale_page_1_1800x.jpg?v=1645906151">
+  <h1 id="headerTitle">#1 Hat Wholesale in the USA</h1>
+</div>
+
+<!-- 3 Up Wholesale intro -->
+<div id="introRow" class="row">
+  <div class="column intro-column intro-column-1 centered-div">
+    <div>
+      <h2 class="intro-header-2">Est. 1972</h2>
+      <p class="intro-p no-bottom-margin">With over five decades of experience from big box to botiques our team is prepared to help you grow</p>
+    </div>
+  </div>
+  <div class="column intro-column intro-column-2 centered-div">
+    <div>
+      <h2 class="intro-header-2">Family Business</h2>
+      <p class="intro-p no-bottom-margin">Second generation USA owned and operated wholesale and manufacturing</p>
+    </div>
+  </div>
+  <div class="column intro-column intro-column-3 centered-div">
+    <div>
+      <h2 class="intro-header-2">Fast Ship Times</h2>
+      <p class="intro-p no-bottom-margin">Offering the fastest lead times in the hat industry. In stock items ship in under 72 hours</p>
+    </div>
+  </div>
+</div>
+
+<!-- Upper Banner -->
+<div id="trust-banner">
+  <h3 style="text-align: center;">We are one of the most trusted hat companies in the USA with fast shipping times and ready to ship stock.</p>
+</div>
+
+<div class="row">
+  <div class="column twoUpColumn centered-column">
+    <p style="font-size: 1.5rem;">We offer two amazing ways to keep your shelves and your customers happy. We have partnered with the premiere wholesale platform in the US. Faire offers a simple and mind blowing shopping experience from us and thousands of other retailers. So you can keep all your suppliers in a centralized space</p>
+  </div>
+  <div class="column twoUpColumn">
+    <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/wholesale_cut_and_sew_484923c5-d624-4ca9-9736-46c1dbadef06.jpg?v=1666032423">
+  </div>
+</div>
+
+<!-- Faire Sign Up iFrame -->
+<iframe
+  src="https://www.faire.com/embed/bw_6wh4wte566"
+  width="500"
+  height="700"
+  scrolling="no"
+  style="margin:0 auto;border:none;display:block;max-width:100%;"></iframe>
+
+<!-- Last Faire Pitch -->
+<div class="row" style="border-top: 1px solid gray;">
+  <div class="column twoUpColumn">
+    <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/Cynthia_Cantolan_-_working.jpg?v=1670873237">
+  </div>
+  <div class="column twoUpColumn centered-column">
+    <p>If Faire is not for you and you want to spend some time with our amazing and knowledgeable sales team, we have real life hard working Americans on the other end of our phones to help you curate the best collection for your clientele. Tasha, Cynthia, and Brenda have been with our company for a conbines 18 years and have helped hundreds of brands from botiques to big box stores gorw their hat sales and develop lifetime customers.</p>
+  </div>
+</div>
+
+<div id="shopFaire">
+  <h5 id="shopFaireHeader">With so many years of experience, we have continued to grow with our partners so that our relationship can last for years to come</h5>
+  <p style="text-align: center">Take the next step to become a proud American Hat Makers distributor.</p>
+  <div style="text-align: center;">
+    <button
+      class="btn btn-primary"
+      style="text-align: center;"
+      onclick="window.open('https://cdn.shopify.com/s/files/1/2624/7744/files/AHM2023-Catalog-Email-Version.pdf?v=1670008982')">Shop Faire</button>
+    <button
+      class="btn btn-primary"
+      style="text-align: center;"
+      onclick="window.open('https://americanhatmakers.com/pages/contact-us')">Contact Us</button>
+  </div>
+</div>
+
+<!-- FAQ's-->
+<h2 id="faqHeader">Commonly Asked Questions</h2>
 {% section 'custom-fields-pages' %}
+
+<!-- Still have more questions? -->
+<div class="row">
+  <div class="column twoUpColumn centered-column">
+    <p id="questionsP">Still have questions? Let one of our top sales team members help guide you to becoming one of our top partners</p>
+  </div>
+  <div class="column twoUpColumn">
+    <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/IMG_8296.jpg?v=1671486043">
+  </div>
+</div>
+
+<!-- Sign up form for Tasha -->
+<div id="MethodSignUp">
+  <iframe
+    src="https://MIurl.cc/ZGL1ylrmI"
+    frameborder="0"
+    style="width: 100%; height: 1025px; border: 0;"
+    gt=""
+    iframe=""
+    id="methodFrame"></iframe>
+</div>
+
+<!-- Wholesale Catalog Div -->
+<div id="catalogSection">
+  <h2>View our wholesale Catalog Below</h2>
+  <button
+    class="btn btn-primary"
+    style="text-align: center;"
+    onclick="window.open('https://cdn.shopify.com/s/files/1/2624/7744/files/AHM2023-Catalog-Email-Version.pdf?v=1670008982','_blank')">Wholesale Catalog</button>
+</div>
+
+<!-- Quotes Header -->
+<div class="row" style="justify-content: center;">
+  <h3 style="text-align: center;">See what some of our wholesale customers have said about us</h3>
+  <div class="column intro-column centered-div quotes-column">
+    <div>
+      <p style="text-align: center;">"Have nothing but good to say about American Hat Company. Quality products at good prices that our customers love."</p>
+      <p class="no-bottom-margin" style="text-align: center;">- Ginger</p>
+    </div>
+  </div>
+  <div class="column intro-column centered-div quotes-column">
+    <div>
+      <p style="text-align: center;">"My customers are going to absolutely love this addition to our line of in Texas! thank you for providing an amazing experience and service."</p>
+      <p class="no-bottom-margin" style="text-align: center;">- Penny</p>
+    </div>
+  </div>
+  <div class="column intro-column centered-div quotes-column">
+    <div>
+      <p style="text-align: center;">"We seem to be ordering new stock every week. They are nice quality and the customers love them."</p>
+      <p class="no-bottom-margin" style="text-align: center;">- John</p>
+    </div>
+  </div>
+</div>
+
+<div id="companyVideo">
+  <h2 style="text-align: center; margin-top:20px;">Learn more about our Company</h2>
+  <div style="padding:52.73% 0 0 0;position:relative;">
+    <iframe
+      src="https://player.vimeo.com/video/430105431?h=1379c771a8&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowfullscreen
+      style="position:absolute;top:0;left:0;width:100%;height:100%;"
+      title="American Hat Makers Brand Evolution"></iframe>
+  </div>
+  <script src="https://player.vimeo.com/api/player.js"></script>
+</div>
+
+<!-- As Seen In section -->
+<h5 id="magazine-title" style="text-align: center">Our Hats Have Been Seen In</h5>
+<div id="magazine-logos">
+  <img id="magazine-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Magazine-Logos-grey.png?v=1666642130">
+</div>
+
+<!-- Our Partners -->
+<div class="row">
+  <div class="column twoUpColumn centered-column" style="justify-content: center;">
+    <h2>Private Label</h2>
+    <p>For 5 decades, American Hat Makers has been the chosen choice in hat shops around the world. We are proud to have produced hats for these companies and so many more!</p>
+  </div>
+  <div class="column twoUpColumn">
+    <img src="https://cdn.shopify.com/s/files/1/2624/7744/files/we-have-made-hats-for.png?v=1671479943">
+  </div>
+</div>
+
+<!-- Hats around the world -->
+<div id="worldWideSection">
+  <p style="font-size: 1.5rem;">American Hat Maker hats aren't just worn here in the United States, our hats have been exported to China, Nepal, Australia, Germany, and Japan just to name a few. Partnering with American Hat Makers will have you with a brand you can feel comfortable selling because we stand with you.</p>
+</div>
+
+<!-- As Seen On Section -->
+<h2 id="celeb-title">Our Hats Have Been Seen On</h2>
+<div class="row celeb-row">
+  <div class="column celeb-col">
+    <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Jason-Momoa-AHM.jpg?v=1666643157">
+    <p class="p celeb-p">Jason Momoa</p>
+  </div>
+  <div class="column celeb-col">
+    <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Steven-Tyler-AHM.jpg?v=1666115563">
+    <p class="p celeb-p">Steven Tyler</p>
+  </div>
+  <div class="column celeb-col">
+    <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Viola-Davis-AHM.jpg?v=1666115562">
+    <p class="p celeb-p">Viola Davis</p>
+  </div>
+  <div class="column celeb-col">
+    <img class="img celeb-img" src="https://cdn.shopify.com/s/files/1/2624/7744/files/Jamie-Foxx-AHM.jpg?v=1666117136">
+    <p class="p celeb-p">Jamie Foxx</p>
+  </div>
+</div>
+
+<!-- Infographic Section -->
+<img src="https://cdn.shopify.com/s/files/1/2624/7744/files/quality_craftsmanship.png?v=1668185067">
+
+<!-- <h2 style="text-align: center;">Wholesale or Retail reviews will go here</h2> -->
