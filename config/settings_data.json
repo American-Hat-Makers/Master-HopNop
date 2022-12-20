@@ -1877,7 +1877,7 @@
       "pencil-banner": {
         "type": "pencil-banner",
         "settings": {
-          "banner_enabled": true,
+          "banner_enabled": false,
           "banner_content": "<p><strong>Use \"12DAYS\" for Buy one get one free on sale page!<\/strong><\/p>",
           "banner_mobile_content": "<p><strong>Use \"12DAYS\" for Buy one get one free on sale page!<\/strong><\/p>"
         }
@@ -5914,11 +5914,11 @@
         "settings": {
           "content_max_width": 850,
           "content_alignment": "center",
-          "eyebrow": "Use Code: 12DAYS",
-          "title": "Get them the gift they really want!",
-          "text": "<p>Buy one get one Free! Select styles only!<\/p>",
-          "cta_text": "Shop Sale",
-          "cta_url": "shopify:\/\/collections\/super-sale",
+          "eyebrow": "",
+          "title": "Happy Holidays!",
+          "text": "<p>From our family to yours<\/p>",
+          "cta_text": "Shop All Hats",
+          "cta_url": "shopify:\/\/collections\/all-hats",
           "image": "shopify:\/\/shop_images\/12-days-banner_1b20afce-dc56-4d3b-b1b2-71f857b00c69.jpg"
         }
       },
