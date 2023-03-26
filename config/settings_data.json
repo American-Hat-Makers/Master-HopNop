@@ -1899,7 +1899,7 @@
             "type": "mobile_nav",
             "settings": {
               "title": "SALE HATS",
-              "url": "shopify:\/\/collections\/closeout-hats",
+              "url": "shopify:\/\/collections\/closeout",
               "linklist_title_1": "",
               "linklist_1": "",
               "linklist_bottom_title_1": "",
@@ -2077,7 +2077,7 @@
             "type": "nav_item_alt",
             "settings": {
               "title": "SALE",
-              "url": "shopify:\/\/collections\/closeout-hats",
+              "url": "shopify:\/\/collections\/closeout",
               "position": "left",
               "linklist_title_1": "",
               "linklist_1": "",
@@ -6045,7 +6045,7 @@
               "title": "SALE HATS",
               "text": "",
               "cta_text": "Shop Now",
-              "cta_url": "shopify:\/\/collections\/closeout-hats",
+              "cta_url": "shopify:\/\/collections\/closeout",
               "background_image": "shopify:\/\/shop_images\/Cannes-Taupe-Ladies-FeltHat-AmericanHatMakers.webp"
             }
           },
