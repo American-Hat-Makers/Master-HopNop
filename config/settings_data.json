@@ -1972,7 +1972,7 @@
             "type": "mobile_nav_alt",
             "settings": {
               "title": "HAT BANDS",
-              "url": "shopify:\/\/collections\/hat-bands",
+              "url": "shopify:\/\/collections\/leather-hat-bands",
               "linklist_1": "",
               "linklist_bottom_title_1": "",
               "linklist_bottom_url_1": ""
@@ -5029,7 +5029,7 @@
               "text": "",
               "font_size": "banner__panel--text-large",
               "cta_text": "Shop All",
-              "cta_url": "shopify:\/\/collections\/hat-bands",
+              "cta_url": "shopify:\/\/collections\/leather-hat-bands",
               "light_text": true,
               "content_alignment": "center",
               "content_max_width": 750,
